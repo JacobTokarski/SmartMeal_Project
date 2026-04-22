@@ -1,4 +1,4 @@
-package org.example.project
+package org.example.smartmeal
 
 interface Platform {
     val name: String

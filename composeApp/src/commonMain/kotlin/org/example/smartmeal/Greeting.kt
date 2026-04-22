@@ -1,4 +1,4 @@
-package org.example.project
+package org.example.smartmeal
 
 class Greeting {
     private val platform = getPlatform()

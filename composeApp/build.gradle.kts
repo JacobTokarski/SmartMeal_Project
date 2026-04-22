@@ -51,6 +51,9 @@ kotlin {
             implementation(libs.voyager.transitions)
             implementation(libs.voyager.koin)
             implementation(libs.napier)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.client.logging)
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

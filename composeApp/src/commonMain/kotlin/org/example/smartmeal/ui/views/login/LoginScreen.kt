@@ -16,7 +16,7 @@ import org.jetbrains.compose.resources.painterResource
 import smartmeal_project.composeapp.generated.resources.Res
 
 
-class LoginScreen: Screen {
+object LoginScreen: Screen {
     @Composable
     override fun Content() {
         LoginContent()

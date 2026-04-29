@@ -1,9 +1,7 @@
 package org.example.smartmeal.ui.views.login
 
-import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -34,7 +32,7 @@ class LoginViewModel: ViewModel() {
         _uiState.value = uiState.value.copy(password = newValue, error = null,)
     }
 
-    fun LoginSignIn() {
+    fun onLoginClick() {
 
         viewModelScope.launch {
 

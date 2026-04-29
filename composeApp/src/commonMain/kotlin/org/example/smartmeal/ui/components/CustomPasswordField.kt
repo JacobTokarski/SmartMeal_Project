@@ -1,5 +1,6 @@
 package org.example.smartmeal.ui.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -83,12 +84,13 @@ fun CustomPasswordField(
             VisualTransformation.None,
 
         singleLine = true,
+        modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(15.dp),
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = Colors.Primary,
-            unfocusedContainerColor = Colors.Primary,
-            unfocusedIndicatorColor = Color.White,
-            focusedIndicatorColor = Color.White
+            focusedContainerColor = Color.White,
+            unfocusedContainerColor = Color.White,
+            unfocusedIndicatorColor = Colors.Primary,
+            focusedIndicatorColor = Colors.Primary
         )
     )
 }

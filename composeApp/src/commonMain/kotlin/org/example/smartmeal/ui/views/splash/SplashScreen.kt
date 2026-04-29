@@ -57,6 +57,7 @@ fun SplashContent() {
                     .height(300.dp)
                     .width(300.dp)
             )
+
         }
     }
 }

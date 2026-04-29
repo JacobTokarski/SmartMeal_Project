@@ -1,5 +1,7 @@
 package org.example.smartmeal.ui.components
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,8 +43,7 @@ fun CustomTextField(
                 Icon(
                     painter = painterResource(icon),
                     contentDescription = null,
-                    modifier = Modifier
-                        .size(24.dp),
+                    modifier = Modifier.size(24.dp),
                     tint = Colors.Primary
                 )
             }

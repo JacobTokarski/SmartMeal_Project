@@ -1,5 +1,7 @@
 package org.example.smartmeal.ui.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -20,12 +22,14 @@ fun CustomButtonField(
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier,
+        modifier = modifier
+            .fillMaxWidth()
+            .height(50.dp),
         enabled = enabled,
         shape = RoundedCornerShape(15.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color.White,
-            contentColor = Colors.Primary
+            containerColor = Colors.Primary,
+            contentColor = Color.White
         )
     ) {
         Text(text = text)

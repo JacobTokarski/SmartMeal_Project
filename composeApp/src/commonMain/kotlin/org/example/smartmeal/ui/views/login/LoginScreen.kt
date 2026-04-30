@@ -61,7 +61,7 @@ fun LoginContent(
             LoginHeader()
 
             LoginForm(
-                email = state.emailorusername,
+                email = state.email,
                 password = state.password,
                 onEmailChange = { viewModel.onEmailChange(it)},
                 onPasswordChange = { viewModel.onPasswordChange(it)},

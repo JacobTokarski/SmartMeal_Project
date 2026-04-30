@@ -12,7 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -21,7 +20,7 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun CustomTextField(
+fun CustomEmailField(
     value: String,
     onValueChange: (String) -> Unit,
     placeholder: String,
@@ -49,7 +48,12 @@ fun CustomTextField(
             }
         },
         singleLine = true,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .border(
+                border = BorderStroke(width = 1.5.dp, color = Colors.Primary),
+                shape = RoundedCornerShape(15.dp)
+            )
+            .fillMaxWidth(),
         shape = RoundedCornerShape(15.dp),
         colors = TextFieldDefaults.colors(
             focusedIndicatorColor = Colors.Primary,

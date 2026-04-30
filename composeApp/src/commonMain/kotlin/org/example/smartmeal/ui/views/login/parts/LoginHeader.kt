@@ -19,6 +19,7 @@ import smartmeal_project.composeapp.generated.resources.pic_logo
 
 @Composable
 fun LoginHeader() {
+
     Image(
         painter = painterResource(Res.drawable.pic_logo),
         contentDescription = null,

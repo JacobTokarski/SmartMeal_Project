@@ -36,6 +36,9 @@ import org.example.smartmeal.ui.components.CustomEmailField
 import org.example.smartmeal.ui.components.CustomPasswordField
 import org.example.smartmeal.ui.theme.Colors
 import org.example.smartmeal.ui.views.login.LoginScreen
+import org.example.smartmeal.ui.views.register.parts.RegisterFooter
+import org.example.smartmeal.ui.views.register.parts.RegisterForm
+import org.example.smartmeal.ui.views.register.parts.RegisterHeader
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import smartmeal_project.composeapp.generated.resources.Res
@@ -85,131 +88,28 @@ fun RegisterContent(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp),
-                verticalAlignment = Alignment.Top,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Row(
-                    modifier = Modifier
-                        .offset(y = 40.dp)
-                        .clickable { onBackClick() },
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        painter = painterResource(Res.drawable.ic_arrow),
-                        contentDescription = null,
-                        tint = Colors.Primary
-                    )
 
-                    Spacer(modifier = Modifier.width(5.dp))
-
-                    Text(
-                        text = "Back",
-                        fontSize = 12.sp,
-                        color = Colors.Primary
-                    )
-                }
-
-                Image(
-                    painter = painterResource(Res.drawable.pic_reg_leaf),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .wrapContentWidth(Alignment.End)
-                        .offset(x = 56.dp)
-                        .width(112.dp)
-                        .height(200.dp)
-
-                )
-            }
-
-            Text(
-                text = "Sign Up",
-                fontSize = 30.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Left,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .offset(y = -(60).dp),
-                color = Colors.Primary
+            RegisterHeader(
+                onBackClick = onBackClick
             )
 
-            CustomEmailField(
-                value = state.username,
-                onValueChange = { viewModel.onNicknameChange(it) },
-                placeholder = "Username",
-                leadingIcon = Res.drawable.ic_person
+            RegisterForm(
+                username = state.username,
+                onNicknameChange = { viewModel.onNicknameChange(it)},
+                email = state.email,
+                onEmailChange = { viewModel.onEmailChange(it)},
+                confirmEmail = state.confirmEmail,
+                onEmailConfirm = { viewModel.onEmailConfirm(it)},
+                password = state.password,
+                onPasswordChange = { viewModel.onPasswordChange(it)},
+                confirmPassword = state.confirmPassword,
+                onPasswordConfirm = { viewModel.onPasswordConfirm(it) },
+                onRegisterClick = { viewModel.onRegisterClick()}
             )
 
-            Spacer(modifier = Modifier.height(30.dp))
-
-            CustomEmailField(
-                value = state.email,
-                onValueChange = { viewModel.onEmailChange(it) },
-                placeholder = "Email",
-                leadingIcon = Res.drawable.ic_person
+            RegisterFooter(
+                onLoginClick = onLoginClick
             )
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            CustomEmailField(
-                value = state.confirmEmail,
-                onValueChange = { viewModel.onEmailConfirm(it) },
-                placeholder = "Confirm Email",
-                leadingIcon = Res.drawable.ic_person
-            )
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            CustomPasswordField(
-                value = state.password,
-                onValueChange = { viewModel.onPasswordChange(it) },
-                placeholder = "Password",
-                leadingIcon = Res.drawable.ic_lock,
-                isPassword = true
-            )
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            CustomPasswordField(
-                value = state.confirmPassword,
-                onValueChange = { viewModel.onPasswordConfirm(it) },
-                placeholder = "Confirm Password",
-                leadingIcon = Res.drawable.ic_lock,
-                isPassword = true
-            )
-
-            Spacer(modifier = Modifier.height(60.dp))
-
-            CustomButtonField(
-                text = "Sign Up",
-                onClick = onLoginClick,
-                modifier = Modifier
-            )
-
-            Spacer(modifier = Modifier.height(60.dp))
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(5.dp)
-            ) {
-                Text(
-                    text = "Already have an account?",
-                    fontSize = 15.sp,
-                    color = Colors.Primary
-                )
-
-                Text(
-                    text = "Sign In",
-                    fontSize = 15.sp,
-                    color = Colors.Primary,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .clickable { onLoginClick() }
-                )
-            }
         }
     }
 }

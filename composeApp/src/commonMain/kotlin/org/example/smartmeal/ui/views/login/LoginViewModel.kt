@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 
 data class LoginUIState(
-    val emailorusername: String = "",
+    val email: String = "",
     val password: String = "",
     val isLoading: Boolean = false,
     val error: String? = null,
@@ -25,7 +25,7 @@ class LoginViewModel: ViewModel() {
 
 
     fun onEmailChange(newValue: String) {
-        _uiState.value = uiState.value.copy(emailorusername = newValue, error = null)
+        _uiState.value = uiState.value.copy(email = newValue, error = null)
     }
 
     fun onPasswordChange(newValue: String) {

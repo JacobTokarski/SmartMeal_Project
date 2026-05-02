@@ -14,9 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.example.smartmeal.ui.components.CustomButtonField
 import org.example.smartmeal.ui.components.CustomPasswordField
-import org.example.smartmeal.ui.components.CustomTextField
+import org.example.smartmeal.ui.components.CustomEmailField
 import org.example.smartmeal.ui.theme.Colors
-import org.example.smartmeal.ui.views.login.LoginViewModel
 import org.jetbrains.compose.resources.painterResource
 import smartmeal_project.composeapp.generated.resources.Res
 import smartmeal_project.composeapp.generated.resources.ic_lock
@@ -31,10 +30,10 @@ fun LoginForm(
     onPasswordChange: (String) -> Unit,
     onLoginClick: () -> Unit,
 ) {
-    CustomTextField(
+    CustomEmailField(
         value = email,
         onValueChange = onEmailChange,
-        placeholder = "Email or User Name",
+        placeholder = "Email",
         leadingIcon = Res.drawable.ic_person
     )
 

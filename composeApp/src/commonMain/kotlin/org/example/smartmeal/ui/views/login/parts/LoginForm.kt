@@ -16,6 +16,7 @@ import org.example.smartmeal.ui.components.CustomButtonField
 import org.example.smartmeal.ui.components.CustomPasswordField
 import org.example.smartmeal.ui.components.CustomEmailField
 import org.example.smartmeal.ui.theme.Colors
+import org.example.smartmeal.ui.utils.AuthError
 import org.jetbrains.compose.resources.painterResource
 import smartmeal_project.composeapp.generated.resources.Res
 import smartmeal_project.composeapp.generated.resources.ic_lock
@@ -26,6 +27,8 @@ import smartmeal_project.composeapp.generated.resources.pic_socials
 fun LoginForm(
     email: String,
     password: String,
+    emailError: AuthError,
+    passwordError: AuthError,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onLoginClick: () -> Unit,
@@ -34,7 +37,8 @@ fun LoginForm(
         value = email,
         onValueChange = onEmailChange,
         placeholder = "Email",
-        leadingIcon = Res.drawable.ic_person
+        leadingIcon = Res.drawable.ic_person,
+        error = emailError
     )
 
     Spacer(modifier = Modifier.height(40.dp))
@@ -44,7 +48,8 @@ fun LoginForm(
         onValueChange = onPasswordChange,
         placeholder = "Password",
         leadingIcon = Res.drawable.ic_lock,
-        isPassword = true
+        isPassword = true,
+        error = passwordError
     )
 
     Spacer(modifier = Modifier.height(30.dp))

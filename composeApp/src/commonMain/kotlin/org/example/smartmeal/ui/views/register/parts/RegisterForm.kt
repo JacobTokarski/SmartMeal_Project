@@ -8,6 +8,8 @@ import androidx.compose.ui.unit.dp
 import org.example.smartmeal.ui.components.CustomButtonField
 import org.example.smartmeal.ui.components.CustomEmailField
 import org.example.smartmeal.ui.components.CustomPasswordField
+import org.example.smartmeal.ui.utils.AuthError
+import org.example.smartmeal.ui.views.register.RegisterUIState
 import smartmeal_project.composeapp.generated.resources.Res
 import smartmeal_project.composeapp.generated.resources.ic_lock
 import smartmeal_project.composeapp.generated.resources.ic_person
@@ -15,6 +17,7 @@ import smartmeal_project.composeapp.generated.resources.ic_person
 @Composable
 
 fun RegisterForm(
+    state: RegisterUIState,
     username: String,
     onNicknameChange: (String) -> Unit,
     email: String,
@@ -31,7 +34,8 @@ fun RegisterForm(
         value = username,
         onValueChange = onNicknameChange,
         placeholder = "Username",
-        leadingIcon = Res.drawable.ic_person
+        leadingIcon = Res.drawable.ic_person,
+        error = state.usernameError
     )
 
     Spacer(modifier = Modifier.height(30.dp))
@@ -40,7 +44,8 @@ fun RegisterForm(
         value = email,
         onValueChange = onEmailChange,
         placeholder = "Email",
-        leadingIcon = Res.drawable.ic_person
+        leadingIcon = Res.drawable.ic_person,
+        error = state.emailError
     )
 
     Spacer(modifier = Modifier.height(30.dp))
@@ -49,7 +54,8 @@ fun RegisterForm(
         value = confirmEmail,
         onValueChange = onEmailConfirm,
         placeholder = "Confirm Email",
-        leadingIcon = Res.drawable.ic_person
+        leadingIcon = Res.drawable.ic_person,
+        error = state.confirmEmailError
     )
 
     Spacer(modifier = Modifier.height(30.dp))
@@ -59,7 +65,8 @@ fun RegisterForm(
         onValueChange = onPasswordChange,
         placeholder = "Password",
         leadingIcon = Res.drawable.ic_lock,
-        isPassword = true
+        isPassword = true,
+        error = state.passwordError
     )
 
     Spacer(modifier = Modifier.height(30.dp))
@@ -69,7 +76,8 @@ fun RegisterForm(
         onValueChange = onPasswordConfirm,
         placeholder = "Confirm Password",
         leadingIcon = Res.drawable.ic_lock,
-        isPassword = true
+        isPassword = true,
+        error = state.confirmPasswordError
     )
 
     Spacer(modifier = Modifier.height(60.dp))

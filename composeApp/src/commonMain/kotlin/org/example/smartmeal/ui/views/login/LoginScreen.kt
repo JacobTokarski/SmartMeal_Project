@@ -63,6 +63,8 @@ fun LoginContent(
             LoginForm(
                 email = state.email,
                 password = state.password,
+                emailError = state.emailError,
+                passwordError = state.passwordError,
                 onEmailChange = { viewModel.onEmailChange(it)},
                 onPasswordChange = { viewModel.onPasswordChange(it)},
                 onLoginClick = {viewModel.onLoginClick()}

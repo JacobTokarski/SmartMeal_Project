@@ -9,6 +9,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -23,6 +24,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.example.smartmeal.ui.theme.Colors
+import org.example.smartmeal.ui.utils.AuthError
+import org.example.smartmeal.ui.utils.asString
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import smartmeal_project.composeapp.generated.resources.Res
@@ -35,15 +38,26 @@ fun CustomPasswordField(
     onValueChange: (String) -> Unit,
     placeholder: String,
     leadingIcon: DrawableResource? = null,
-    isPassword: Boolean = false
+    isPassword: Boolean = false,
+    error: AuthError = AuthError.None
 
 ) {
-
+    val isError = error != AuthError.None
     var passwordVisible by remember { mutableStateOf(false) }
 
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
+        isError = isError,
+        supportingText = {
+            if (isError) {
+                Text(
+                    text = error.asString(),
+                    color = Colors.Error,
+                    fontSize = 12.sp
+                )
+            }
+        },
         placeholder = {
             Text(
                 text = placeholder,
@@ -86,18 +100,15 @@ fun CustomPasswordField(
             VisualTransformation.None,
 
         singleLine = true,
-        modifier = Modifier
-            .border(
-                border = BorderStroke(width = 1.5.dp, color = Colors.Primary),
-                shape = RoundedCornerShape(15.dp)
-            )
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(15.dp),
-        colors = TextFieldDefaults.colors(
+        colors = OutlinedTextFieldDefaults.colors(
             focusedContainerColor = Color.White,
             unfocusedContainerColor = Color.White,
-            unfocusedIndicatorColor = Colors.Primary,
-            focusedIndicatorColor = Colors.Primary
+            errorContainerColor = Color.White,
+            focusedBorderColor = Colors.Primary,
+            unfocusedBorderColor = Colors.Primary,
+            errorBorderColor = Colors.Error,
         )
     )
 }

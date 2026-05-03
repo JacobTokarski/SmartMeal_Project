@@ -29,11 +29,11 @@ class LoginViewModel: ViewModel() {
 
 
     fun onEmailChange(newValue: String) {
-        _uiState.value = uiState.value.copy(email = newValue, error = null)
+        _uiState.value = uiState.value.copy(email = newValue, emailError = AuthError.None)
     }
 
     fun onPasswordChange(newValue: String) {
-        _uiState.value = uiState.value.copy(password = newValue, error = null,)
+        _uiState.value = uiState.value.copy(password = newValue, passwordError = AuthError.None,)
     }
 
     fun onLoginClick() {

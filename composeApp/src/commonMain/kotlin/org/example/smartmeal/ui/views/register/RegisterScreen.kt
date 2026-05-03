@@ -94,17 +94,18 @@ fun RegisterContent(
             )
 
             RegisterForm(
+                state = state,
                 username = state.username,
-                onNicknameChange = { viewModel.onNicknameChange(it)},
+                onNicknameChange = { viewModel.onNicknameChange(it) },
                 email = state.email,
-                onEmailChange = { viewModel.onEmailChange(it)},
+                onEmailChange = { viewModel.onEmailChange(it) },
                 confirmEmail = state.confirmEmail,
-                onEmailConfirm = { viewModel.onEmailConfirm(it)},
+                onEmailConfirm = { viewModel.onEmailConfirm(it) },
                 password = state.password,
-                onPasswordChange = { viewModel.onPasswordChange(it)},
+                onPasswordChange = { viewModel.onPasswordChange(it) },
                 confirmPassword = state.confirmPassword,
                 onPasswordConfirm = { viewModel.onPasswordConfirm(it) },
-                onRegisterClick = { viewModel.onRegisterClick()}
+                onRegisterClick = { viewModel.onRegisterClick() },
             )
 
             RegisterFooter(

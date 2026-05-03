@@ -33,23 +33,23 @@ class RegisterViewModel: ViewModel() {
     val uiState: StateFlow<RegisterUIState> = _uiState.asStateFlow()
 
     fun onNicknameChange(newValue: String) {
-        _uiState.value = uiState.value.copy(username = newValue, error = null)
+        _uiState.value = uiState.value.copy(username = newValue, usernameError = AuthError.None)
     }
 
     fun onEmailChange(newValue: String) {
-        _uiState.value = uiState.value.copy(email = newValue, error = null)
+        _uiState.value = uiState.value.copy(email = newValue, emailError = AuthError.None)
     }
 
     fun onEmailConfirm(newValue: String) {
-        _uiState.value = uiState.value.copy(confirmEmail = newValue, error = null)
+        _uiState.value = uiState.value.copy(confirmEmail = newValue, confirmEmailError = AuthError.None)
     }
 
     fun onPasswordChange(newValue: String) {
-        _uiState.value = uiState.value.copy(password = newValue, error = null)
+        _uiState.value = uiState.value.copy(password = newValue, passwordError = AuthError.None)
     }
 
     fun onPasswordConfirm(newValue: String) {
-        _uiState.value = uiState.value.copy(confirmPassword = newValue, error = null)
+        _uiState.value = uiState.value.copy(confirmPassword = newValue, confirmPasswordError = AuthError.None)
     }
 
     fun onRegisterClick() {
@@ -60,7 +60,7 @@ class RegisterViewModel: ViewModel() {
 
         val mailError = when {
             currentState.email.isBlank() -> AuthError.EmptyField
-            currentState.email.contains("@") -> AuthError.InvalidEmailFormat
+            !currentState.email.contains("@") -> AuthError.InvalidEmailFormat
             else -> AuthError.None
         }
 
@@ -93,8 +93,8 @@ class RegisterViewModel: ViewModel() {
         val isDataValid = listOf(usernameError, mailError, confirmMailError, passwordError, confirmPasswordError)
             .all { it == AuthError.None }
 
-//        if (isDataValid) {
-//            // W przyszłości logika Firebase-a
-//        }
+        if (isDataValid) {
+            // W przyszłości logika Firebase-a
+        }
     }
 }

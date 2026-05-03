@@ -6,7 +6,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.example.smartmeal.ui.utils.AuthError
 
 data class RegisterUIState(
     val username: String = "",
@@ -17,6 +19,11 @@ data class RegisterUIState(
     val confirmEmail: String = "",
     val isRegisterSuccessful: Boolean = false,
     val isLoading: Boolean = false,
+    val usernameError: AuthError = AuthError.None,
+    val emailError: AuthError = AuthError.None,
+    val confirmEmailError: AuthError = AuthError.None,
+    val passwordError: AuthError = AuthError.None,
+    val confirmPasswordError: AuthError = AuthError.None
 )
 
 class RegisterViewModel: ViewModel() {
@@ -47,15 +54,47 @@ class RegisterViewModel: ViewModel() {
 
     fun onRegisterClick() {
 
-        viewModelScope.launch {
+        val currentState = _uiState.value
 
-            val currentState = _uiState.value
+        val usernameError = if (currentState.username.isBlank()) AuthError.EmptyField else AuthError.None
 
-            _uiState.value = currentState.copy(isLoading = true, error = null)
-
-            delay(1500)
-
-            _uiState.value = currentState.copy(isLoading = false, isRegisterSuccessful = true)
+        val mailError = when {
+            currentState.email.isBlank() -> AuthError.EmptyField
+            currentState.email.contains("@") -> AuthError.InvalidEmailFormat
+            else -> AuthError.None
         }
+
+        val confirmMailError = if (currentState.email != currentState.confirmEmail) {
+            AuthError.EmailsDoNotMatch
+        } else
+            AuthError.None
+
+        val passwordError = when {
+            currentState.password.isBlank() -> AuthError.EmptyField
+            currentState.password.length < 6 -> AuthError.PasswordTooShort
+            !currentState.password.any { it.isUpperCase()} -> AuthError.MissingUppercase
+            !currentState.password.any { it.isLetterOrDigit()} -> AuthError.MissingSpecialChar
+            else -> AuthError.None
+        }
+
+        val confirmPasswordError = if (currentState.password != currentState.confirmPassword) {
+            AuthError.PasswordsDoNotMatch
+        } else
+            AuthError.None
+
+        _uiState.update { it.copy(
+            usernameError = usernameError,
+            emailError = mailError,
+            confirmEmailError = confirmMailError,
+            passwordError = passwordError,
+            confirmPasswordError = confirmPasswordError
+        ) }
+
+        val isDataValid = listOf(usernameError, mailError, confirmMailError, passwordError, confirmPasswordError)
+            .all { it == AuthError.None }
+
+//        if (isDataValid) {
+//            // W przyszłości logika Firebase-a
+//        }
     }
 }

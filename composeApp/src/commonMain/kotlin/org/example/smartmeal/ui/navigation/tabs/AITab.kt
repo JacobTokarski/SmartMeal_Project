@@ -7,6 +7,7 @@ import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import org.jetbrains.compose.resources.painterResource
 import smartmeal_project.composeapp.generated.resources.Res
+import smartmeal_project.composeapp.generated.resources.ic_ai_bottom
 import smartmeal_project.composeapp.generated.resources.ic_lock
 
 object AITab: Tab {
@@ -21,7 +22,7 @@ object AITab: Tab {
     @Composable
     get() {
         val title = "AI"
-        val icon = painterResource(Res.drawable.ic_lock)
+        val icon = painterResource(Res.drawable.ic_ai_bottom)
 
         return remember {
             TabOptions(

@@ -7,6 +7,7 @@ import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import org.jetbrains.compose.resources.painterResource
 import smartmeal_project.composeapp.generated.resources.Res
+import smartmeal_project.composeapp.generated.resources.ic_cutlery_bottom
 import smartmeal_project.composeapp.generated.resources.ic_lock
 
 object CutleryTab: Tab {
@@ -21,8 +22,8 @@ object CutleryTab: Tab {
     override val options: TabOptions
     @Composable
     get() {
-        val title = "Cutlery"
-        val icon = painterResource(Res.drawable.ic_lock) // Testowo
+        val title = "Jadłospis"
+        val icon = painterResource(Res.drawable.ic_cutlery_bottom)
 
         return remember{
             TabOptions(

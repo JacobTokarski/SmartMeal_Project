@@ -38,7 +38,7 @@ fun RegisterForm(
         error = state.usernameError
     )
 
-    Spacer(modifier = Modifier.height(30.dp))
+    Spacer(modifier = Modifier.height(20.dp))
 
     CustomEmailField(
         value = email,
@@ -48,7 +48,7 @@ fun RegisterForm(
         error = state.emailError
     )
 
-    Spacer(modifier = Modifier.height(30.dp))
+    Spacer(modifier = Modifier.height(20.dp))
 
     CustomEmailField(
         value = confirmEmail,
@@ -58,7 +58,7 @@ fun RegisterForm(
         error = state.confirmEmailError
     )
 
-    Spacer(modifier = Modifier.height(30.dp))
+    Spacer(modifier = Modifier.height(20.dp))
 
     CustomPasswordField(
         value = password,
@@ -69,7 +69,7 @@ fun RegisterForm(
         error = state.passwordError
     )
 
-    Spacer(modifier = Modifier.height(30.dp))
+    Spacer(modifier = Modifier.height(20.dp))
 
     CustomPasswordField(
         value = confirmPassword,
@@ -80,7 +80,7 @@ fun RegisterForm(
         error = state.confirmPasswordError
     )
 
-    Spacer(modifier = Modifier.height(60.dp))
+    Spacer(modifier = Modifier.height(40.dp))
 
     CustomButtonField(
         text = "Sign Up",
@@ -88,5 +88,5 @@ fun RegisterForm(
         modifier = Modifier
     )
 
-    Spacer(modifier = Modifier.height(60.dp))
+    Spacer(modifier = Modifier.height(50.dp))
 }

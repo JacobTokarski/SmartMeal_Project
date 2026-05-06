@@ -78,8 +78,7 @@ fun RegisterHeader(
         textAlign = TextAlign.Left,
         modifier = Modifier
             .fillMaxWidth()
-            .offset(y = -(60).dp),
+            .offset(y = -(50).dp),
         color = Colors.Primary
     )
-
 }

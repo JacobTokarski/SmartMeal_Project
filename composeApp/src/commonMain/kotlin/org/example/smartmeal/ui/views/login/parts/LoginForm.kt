@@ -41,7 +41,7 @@ fun LoginForm(
         error = emailError
     )
 
-    Spacer(modifier = Modifier.height(40.dp))
+    Spacer(modifier = Modifier.height(20.dp))
 
     CustomPasswordField(
         value = password,
@@ -52,7 +52,7 @@ fun LoginForm(
         error = passwordError
     )
 
-    Spacer(modifier = Modifier.height(30.dp))
+    Spacer(modifier = Modifier.height(20.dp))
 
     Text(
         text = "Forget Password?",
@@ -64,7 +64,7 @@ fun LoginForm(
         fontSize = 15.sp
     )
 
-    Spacer(modifier = Modifier.height(30.dp))
+    Spacer(modifier = Modifier.height(25.dp))
 
     CustomButtonField(
         text = "Sign In",
@@ -72,7 +72,7 @@ fun LoginForm(
         modifier = Modifier
     )
 
-    Spacer(modifier = Modifier.height(60.dp))
+    Spacer(modifier = Modifier.height(45.dp))
 
     Image(
         painter = painterResource(Res.drawable.pic_socials),
@@ -81,6 +81,4 @@ fun LoginForm(
             .height(92.dp)
             .width(272.dp)
     )
-
-    Spacer(modifier = Modifier.height(60.dp))
 }

@@ -35,6 +35,4 @@ fun LoginHeader() {
             .fillMaxWidth(),
         color = Colors.Primary
     )
-
-    Spacer(modifier = Modifier.height(40.dp))
 }

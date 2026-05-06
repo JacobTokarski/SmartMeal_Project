@@ -19,9 +19,9 @@ fun AuthError.asString(): String = when (this) {
     is AuthError.None -> ""
     is AuthError.EmptyField -> "Field cannot be empty!"
     is AuthError.InvalidEmailFormat -> "Your email is missing @"
-    is AuthError.PasswordTooShort -> "Password must be at least 6 characters short"
+    is AuthError.PasswordTooShort -> "Password must be at least 6 characters long!"
     is AuthError.MissingUppercase -> "Password is missing uppercase"
     is AuthError.MissingSpecialChar -> "Password must contain special char"
-    is AuthError.PasswordsDoNotMatch -> "Password do not match"
-    is AuthError.EmailsDoNotMatch -> "Email do not match"
+    is AuthError.PasswordsDoNotMatch -> "Passwords do not match"
+    is AuthError.EmailsDoNotMatch -> "Emails do not match"
 }

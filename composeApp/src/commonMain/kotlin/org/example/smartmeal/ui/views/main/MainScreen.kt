@@ -67,10 +67,8 @@ object MainScreen: Screen {
 private fun RowScope.TabNavigationItem(tab: Tab) {
 
     val tabNavigator = LocalTabNavigator.current
-
     val isSelected = tabNavigator.current == tab
-
-    val contentColor = if (isSelected) Colors.Primary else Color.LightGray
+    val contentColor = if (isSelected) Colors.Primary else Colors.Not_Selected
 
     NavigationBarItem(
         selected = isSelected,
@@ -111,12 +109,12 @@ private fun RowScope.TabNavigationItem(tab: Tab) {
         label = {
             Text(
                 text = tab.options.title,
-                fontSize = 11.sp,
+                fontSize = 12.sp,
                 color = contentColor,
                 fontWeight = if (isSelected) FontWeight.Medium else FontWeight.Normal
             )
         },
-
+        alwaysShowLabel = false,
         colors = NavigationBarItemDefaults.colors(
             indicatorColor = Color.Transparent
         )

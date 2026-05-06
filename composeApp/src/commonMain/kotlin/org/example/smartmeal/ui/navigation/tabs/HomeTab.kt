@@ -1,9 +1,10 @@
 package org.example.smartmeal.ui.navigation.tabs
-
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SecondaryScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRowDefaults
@@ -34,9 +35,8 @@ object HomeTab : Tab {
         var selectedTab by remember { mutableStateOf(RecipesSubTab.Main) }
 
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.White)
+            modifier = Modifier.fillMaxSize().background(Color.White)
+                .padding(horizontal = 20.dp, vertical = 10.dp)
         ) {
             SecondaryScrollableTabRow(
                 selectedTabIndex = selectedTab.ordinal,
@@ -44,9 +44,10 @@ object HomeTab : Tab {
                 edgePadding = 0.dp,
                 indicator = {
                     TabRowDefaults.SecondaryIndicator(
-                        Modifier.tabIndicatorOffset(selectedTab.ordinal),
+                        modifier = Modifier.tabIndicatorOffset(selectedTab.ordinal)
+                            .padding(horizontal = 16.dp, vertical = 10.dp),
                         color = Colors.Primary,
-                        height = 3.dp
+                        height = 2.dp
                     )
                 },
                 divider = {}
@@ -61,8 +62,10 @@ object HomeTab : Tab {
                         text = {
                             Text(
                                 text = tab.title,
-                                color = if (isSelected) Colors.Primary else Color.LightGray,
-                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                                modifier = Modifier
+                                    .padding(bottom = 4.dp),
+                                color = if (isSelected) Colors.Primary else Colors.Not_Selected,
+                                fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
                                 fontSize = 15.sp
                             )
                         }
@@ -71,7 +74,8 @@ object HomeTab : Tab {
             }
 
             Box(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
@@ -84,8 +88,7 @@ object HomeTab : Tab {
     }
 
     override val options: TabOptions
-        @Composable
-        get() {
+        @Composable get() {
             val title = "Przepisy"
             val icon = painterResource(Res.drawable.ic_recipes_bottom)
 

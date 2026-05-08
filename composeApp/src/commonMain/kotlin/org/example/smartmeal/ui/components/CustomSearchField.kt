@@ -1,6 +1,5 @@
 package org.example.smartmeal.ui.components
 
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -48,15 +47,17 @@ fun CustomSearchField(
                 )
             }
         },
+
         singleLine = true,
         modifier = Modifier
             .fillMaxWidth(),
         shape = RoundedCornerShape(15.dp),
         colors = TextFieldDefaults.colors(
-            unfocusedIndicatorColor = Colors.Primary, //
-            unfocusedContainerColor = Colors.Primary, //
-            focusedIndicatorColor = Colors.Primary, //
-            focusedContainerColor = Colors.Primary //
+            unfocusedIndicatorColor = Colors.Secondary_Button,
+            unfocusedContainerColor = Colors.Secondary_Button,
+            focusedIndicatorColor = Colors.Secondary_Button,
+            focusedContainerColor = Colors.Secondary_Button,
+            focusedTextColor = Color.White
         )
     )
 }

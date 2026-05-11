@@ -1,6 +1,5 @@
 package org.example.smartmeal.ui.navigation.tabs
 import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,7 +23,9 @@ import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import org.example.smartmeal.ui.theme.Colors
 import org.example.smartmeal.ui.utils.RecipesSubTab
+import org.example.smartmeal.ui.views.own.OwnContent
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.viewmodel.koinViewModel
 import smartmeal_project.composeapp.generated.resources.Res
 import smartmeal_project.composeapp.generated.resources.ic_recipes_bottom
 
@@ -64,7 +65,7 @@ object HomeTab : Tab {
                                 text = tab.title,
                                 modifier = Modifier
                                     .padding(bottom = 4.dp),
-                                color = if (isSelected) Colors.Primary else Colors.Not_Selected,
+                                color = if (isSelected) Colors.Primary else Colors.NotSelected,
                                 fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
                                 fontSize = 15.sp
                             )
@@ -78,11 +79,25 @@ object HomeTab : Tab {
                     .fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = "Selected view: ${selectedTab.title}", // Testowo aby zobaczyć czy przełączanie działa
-                    fontSize = 18.sp,
-                    color = Color.Gray
-                )
+
+                when (selectedTab) {
+
+                    RecipesSubTab.Main -> {
+                        Text("Widok Główny", modifier = Modifier.align(Alignment.Center))
+                    }
+
+                    RecipesSubTab.Search -> {
+                        Text("Widok Szukania", modifier = Modifier.align(Alignment.Center))
+                    }
+
+                    RecipesSubTab.Own-> {
+                        OwnContent(viewModel = koinViewModel())
+                    }
+
+                    RecipesSubTab.Favorites-> {
+                        Text("Widok Ulubiony", modifier = Modifier.align(Alignment.Center))
+                    }
+                }
             }
         }
     }

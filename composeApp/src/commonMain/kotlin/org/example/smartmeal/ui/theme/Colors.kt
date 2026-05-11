@@ -5,5 +5,8 @@ import androidx.compose.ui.graphics.Color
 object Colors {
     val Primary = Color(0xFF0A6E43)
     val Error = Color(0xFFFF2727)
-    val Not_Selected = Color(0xFF8E8E8E) // na razie zostajemy z takim nazewnictwem
+    val NotSelected = Color(0xFF8E8E8E)
+    val Secondary_Button = Color(0xFF299969)
+    val Secondary_Form = Color(0xFFA9D1C0)
+    val Text_Form = Color(0xFF0C151D)
 }

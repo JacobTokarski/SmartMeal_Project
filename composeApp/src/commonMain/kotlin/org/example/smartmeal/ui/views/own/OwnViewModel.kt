@@ -5,12 +5,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import org.example.smartmeal.ui.utils.Recipe
+import org.koin.viewmodel.emptyState
 
 data class OwnRecipeUIState(
-    val recipes: List<Recipe> = listOf(
-        Recipe(title = "Grillowany łosoś", calories = "450kcal", time = "25min", hasImage = true),
-        Recipe(title = "Burger wieprzowy", calories = "1500kcal", time = "35min", hasImage = false)
-    ),
+    val recipes: List<Recipe> = emptyList(),
     val searchQuery: String = "",
     val isLoading: Boolean = false,
     val isFormVisible: Boolean = false
@@ -29,15 +27,9 @@ class OwnViewModel: ViewModel() {
         _uiState.value = _uiState.value.copy(searchQuery = newQuery)
     }
 
-    fun onEditRecipe() {} //
-
-    fun onDeleteRecipe() {} //
+    fun onDeleteRecipe() {} // tutaj będzie się znajdować logika usuwania naszego przepisu
 
     fun onAddRecipe(newRecipe: Recipe) {
-
-//        _uiState.value = _uiState.value.copy(
-//            recipes = listOf("Nowy Przepis")
-//        )
 
         _uiState.update {
             it.copy(

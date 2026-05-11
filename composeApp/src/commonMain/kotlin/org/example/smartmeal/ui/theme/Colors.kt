@@ -7,4 +7,6 @@ object Colors {
     val Error = Color(0xFFFF2727)
     val NotSelected = Color(0xFF8E8E8E)
     val Secondary_Button = Color(0xFF299969)
+    val Secondary_Form = Color(0xFFA9D1C0)
+    val Text_Form = Color(0xFF0C151D)
 }

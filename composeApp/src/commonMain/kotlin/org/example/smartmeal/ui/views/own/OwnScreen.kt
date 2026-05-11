@@ -1,5 +1,6 @@
 package org.example.smartmeal.ui.views.own
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,7 +13,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -20,11 +20,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import org.example.smartmeal.ui.components.CustomRecipeCard
 import org.example.smartmeal.ui.views.own.parts.OwnEmptyState
 import org.example.smartmeal.ui.views.own.parts.OwnFooter
 import org.example.smartmeal.ui.views.own.parts.OwnHeader
+import org.example.smartmeal.ui.views.own_form.OwnFormScreen
 import org.koin.compose.viewmodel.koinViewModel
 
 object OwnScreen : Screen {
@@ -37,8 +42,6 @@ object OwnScreen : Screen {
         )
     }
 }
-
-// - Na razie logika wstępna
 
 @Composable
 fun OwnContent(
@@ -73,9 +76,29 @@ fun OwnContent(
                 when {
 
                     state.isFormVisible -> {
-                        Text(
-                            text = "Description for now"
-                        )
+                        Dialog(
+                            onDismissRequest = { viewModel.onToggleForm(false) },
+                            properties = DialogProperties(
+                                usePlatformDefaultWidth = false,
+                                dismissOnBackPress = true
+                            )
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(Color.White)
+                            ) {
+                                OwnFormScreen(
+                                    onSaveClick = { newRecipe ->
+                                        viewModel.onAddRecipe(newRecipe)
+                                        viewModel.onToggleForm(false)
+                                    },
+                                    onBackClick = {
+                                        viewModel.onToggleForm(false)
+                                    }
+                                )
+                            }
+                        }
                     }
 
                     state.recipes.isEmpty() -> {
@@ -105,11 +128,11 @@ fun OwnContent(
                 }
             }
 
-            if (!state.isFormVisible) {
-                OwnFooter(
-                    onAddClick = { viewModel.onToggleForm(true) }
-                )
-            }
+            OwnFooter(
+                onAddClick = {
+                    viewModel.onToggleForm(true)
+                }
+            )
         }
     }
 }

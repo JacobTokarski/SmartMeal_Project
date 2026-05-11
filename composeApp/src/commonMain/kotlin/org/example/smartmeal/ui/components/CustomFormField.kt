@@ -18,6 +18,7 @@ fun CustomFormField(
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
+        modifier = modifier,
         singleLine = true,
         shape = RoundedCornerShape(15.dp),
         colors = OutlinedTextFieldDefaults.colors(

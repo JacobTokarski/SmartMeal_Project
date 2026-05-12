@@ -17,6 +17,7 @@ import org.jetbrains.compose.resources.painterResource
 import smartmeal_project.composeapp.generated.resources.Res
 import smartmeal_project.composeapp.generated.resources.pic_logo
 
+
 @Composable
 fun LoginHeader() {
 

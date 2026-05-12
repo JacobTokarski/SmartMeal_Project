@@ -21,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -68,7 +67,7 @@ private fun RowScope.TabNavigationItem(tab: Tab) {
 
     val tabNavigator = LocalTabNavigator.current
     val isSelected = tabNavigator.current == tab
-    val contentColor = if (isSelected) Colors.Primary else Colors.Not_Selected
+    val contentColor = if (isSelected) Colors.Primary else Colors.NotSelected
 
     NavigationBarItem(
         selected = isSelected,

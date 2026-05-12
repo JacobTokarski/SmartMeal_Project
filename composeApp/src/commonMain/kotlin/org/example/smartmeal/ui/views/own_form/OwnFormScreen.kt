@@ -36,13 +36,15 @@ fun OwnFormScreen(
     ) {
         OwnFormHeader(
             onSaveClick = {
-                val newRecipe = Recipe(
-                    title = title,
-                    time = time,
-                    calories = calories,
-                    hasImage = false
-                )
-                onSaveClick(newRecipe)
+                if (title.isNotBlank()) {
+                    val newRecipe = Recipe(
+                        title = title,
+                        time = if (time.isNotEmpty()) "$time min" else "",
+                        calories = if (calories.isNotEmpty()) "$calories kcal" else "",
+                        hasImage = true
+                    )
+                    onSaveClick(newRecipe)
+                }
             },
             onBackClick = onBackClick
         )

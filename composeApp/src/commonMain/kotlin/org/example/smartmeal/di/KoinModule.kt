@@ -3,6 +3,7 @@ package org.example.smartmeal.di
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import org.example.smartmeal.data.remote.createHttpClient
+import org.example.smartmeal.ui.views.cutlery.CutleryViewModel
 import org.example.smartmeal.ui.views.login.LoginViewModel
 import org.example.smartmeal.ui.views.own.OwnViewModel
 import org.example.smartmeal.ui.views.register.RegisterViewModel
@@ -15,6 +16,7 @@ val appModule = module {
     factory { LoginViewModel() }
     factory { RegisterViewModel() }
     factory { OwnViewModel() }
+    factory { CutleryViewModel() }
 }
 
 fun initKoin(appDeclaration: KoinAppDeclaration = {}) =

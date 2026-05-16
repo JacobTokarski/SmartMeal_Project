@@ -19,11 +19,15 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,6 +42,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cafe.adriel.voyager.core.screen.Screen
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.atStartOfDayIn
+import kotlinx.datetime.toLocalDateTime
 import org.example.smartmeal.ui.components.CustomCutleryCard
 import org.example.smartmeal.ui.theme.Colors
 import org.example.smartmeal.ui.views.login.LoginViewModel
@@ -45,6 +52,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import smartmeal_project.composeapp.generated.resources.Res
 import smartmeal_project.composeapp.generated.resources.ic_calendar
+import kotlin.time.Instant
 
 
 class CutleryScreen : Screen {
@@ -83,7 +91,8 @@ fun CutleryContent(
             ) {
                 Column() {
                     Text(
-                        text = "Maj", //
+                        text = viewModel.selectedDate.month.name.lowercase()
+                            .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
                         color = Colors.Primary
@@ -227,6 +236,40 @@ fun CutleryContent(
 
                         Spacer(modifier = Modifier.height(20.dp))
                     }
+                }
+            }
+
+            if (showDataPicker) {
+                val dataPickerState = rememberDatePickerState(
+                    initialSelectedDateMillis = viewModel.selectedDate
+                        .atStartOfDayIn(TimeZone.currentSystemDefault())
+                        .toEpochMilliseconds()
+                )
+
+                DatePickerDialog(
+                    onDismissRequest = { showDataPicker = false },
+                    confirmButton = {
+                        TextButton(
+                            onClick = {
+                                dataPickerState.selectedDateMillis?.let { millis ->
+                                    viewModel.selectedDate = kotlinx.datetime.LocalDate
+                                        .fromEpochDays((millis / 86400000).toInt())
+                                }
+                                showDataPicker = false
+                            }) {
+                            Text("Accept", color = Colors.Primary)
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(
+                            onClick = {
+                                showDataPicker = false
+                            }) {
+                            Text("Cancel") //
+                        }
+                    }) {
+
+                    DatePicker(state = dataPickerState)
                 }
             }
         }

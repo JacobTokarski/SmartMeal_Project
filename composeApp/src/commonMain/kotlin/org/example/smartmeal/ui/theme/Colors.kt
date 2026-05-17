@@ -9,4 +9,7 @@ object Colors {
     val Secondary_Button = Color(0xFF299969)
     val Secondary_Form = Color(0xFFA9D1C0)
     val Text_Form = Color(0xFF0C151D)
+    val Icon_Back = Color(0xFFC2D1CB)
+    val Icon_Selected = Color(0xFF2D7A4D)
+    val Icon_NotSelected = Color(0xFFE8EBE8)
 }

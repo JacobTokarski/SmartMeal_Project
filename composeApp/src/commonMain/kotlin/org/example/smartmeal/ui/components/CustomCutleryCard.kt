@@ -1,5 +1,6 @@
 package org.example.smartmeal.ui.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -36,13 +37,14 @@ fun CustomCutleryCard(
     Surface(
         modifier = Modifier
             .fillMaxWidth(),
-        shape = RoundedCornerShape(20.dp), //
+        shape = RoundedCornerShape(20.dp),
         color = Color.White,
-        shadowElevation = 3.dp //
+        shadowElevation = 3.dp
     ) {
         Row(
             modifier = Modifier
-                .padding(horizontal = 15.dp, vertical = 15.dp)
+                .padding(horizontal = 15.dp, vertical = 15.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
                 modifier = Modifier.weight(1f)

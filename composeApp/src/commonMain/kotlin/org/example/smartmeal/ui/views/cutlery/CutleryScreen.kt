@@ -40,19 +40,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import cafe.adriel.voyager.core.screen.Screen
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
-import kotlinx.datetime.toLocalDateTime
 import org.example.smartmeal.ui.components.CustomCutleryCard
 import org.example.smartmeal.ui.theme.Colors
-import org.example.smartmeal.ui.views.login.LoginViewModel
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import smartmeal_project.composeapp.generated.resources.Res
 import smartmeal_project.composeapp.generated.resources.ic_calendar
-import kotlin.time.Instant
 
 
 class CutleryScreen : Screen {
@@ -95,13 +91,13 @@ fun CutleryContent(
                             .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
-                        color = Colors.Primary
+                        color = Color.Black
                     )
 
                     Text(
                         text = "2026",
                         fontSize = 14.sp,
-                        color = Color.Gray
+                        color = Color.Black
                     )
                 }
 
@@ -109,7 +105,7 @@ fun CutleryContent(
                     onClick = { showDataPicker = true },
                     modifier = Modifier
                         .clip(RoundedCornerShape(12.dp))
-                        .background(Colors.Primary.copy(alpha = 0.1f))
+                        .background(Colors.Icon_Back)
                 ) {
                     Icon(
                         painter = painterResource(Res.drawable.ic_calendar),
@@ -122,8 +118,8 @@ fun CutleryContent(
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 20.dp), //
-                contentPadding = PaddingValues(horizontal = 24.dp), //
+                    .padding(vertical = 15.dp),
+                contentPadding = PaddingValues(horizontal = 24.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(calendarDays) { day ->
@@ -134,7 +130,7 @@ fun CutleryContent(
                         modifier = Modifier
                             .size(60.dp)
                             .clip(CircleShape)
-                            .background(if (isSelected) Colors.Primary else Colors.NotSelected) //
+                            .background(if (isSelected) Colors.Icon_Selected else Colors.Icon_NotSelected) //
                             .clickable {
                                 viewModel.selectedDate = day.date
                             },
@@ -143,9 +139,19 @@ fun CutleryContent(
                     ) {
                         Text(
                             text = day.dayName,
-                            color = if (isSelected) Color.White else Color.Black,
+                            color = if (isSelected) Color.White else Color.Black, //
                             fontSize = 12.sp,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.SemiBold,
+                            lineHeight = 10.sp
+                        )
+
+                        Spacer(modifier = Modifier.height(3.dp))
+
+                        Text(
+                            text = day.dayNumber,
+                            color = if (isSelected) Color.White else Color.Black, //
+                            fontSize = 12.sp,
+                            lineHeight = 10.sp
                         )
 
                         if (day.isToday) {
@@ -162,7 +168,6 @@ fun CutleryContent(
                     }
                 }
             }
-
 
             Box(
                 modifier = Modifier
@@ -187,7 +192,7 @@ fun CutleryContent(
                                     .padding(vertical = 12.dp)
                             )
 
-                            Spacer(modifier = Modifier.width(10.dp))
+                            Spacer(modifier = Modifier.width(8.dp))
 
                             Text(
                                 text = "${viewModel.selectedDate.dayOfMonth}",
@@ -221,6 +226,8 @@ fun CutleryContent(
                                     .padding(vertical = 12.dp)
                             )
                         }
+
+                        Spacer(modifier = Modifier.height(10.dp))
                     }
 
                     items(

@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import org.example.smartmeal.ui.theme.Colors
 import org.jetbrains.compose.resources.painterResource
 import smartmeal_project.composeapp.generated.resources.Res
+import smartmeal_project.composeapp.generated.resources.ic_checked
 import smartmeal_project.composeapp.generated.resources.ic_delete
 import smartmeal_project.composeapp.generated.resources.ic_edit
 import smartmeal_project.composeapp.generated.resources.pic_burger
@@ -42,14 +43,18 @@ import smartmeal_project.composeapp.generated.resources.pic_camera
 fun CustomRecipeCard(
     title: String,
     hasImage: Boolean = false,
-    calories: String = "1500 kcal", // dane na razie przypisane statycznie, potem będzie pobierać je z formularza
-    time: String = "35 minut",  // dane na razie przypisane statycznie, potem będzie pobierać je z formularza
+    calories: String = "1500 kcal",
+    time: String = "35 minut",
+    isSelectionMode: Boolean = false,
+    isSelected: Boolean = false,
+    onClick: () -> Unit,
     onEditClick: () -> Unit = {},
     onDeleteClick: () -> Unit = {},
 ) {
     Column(
         modifier = Modifier
             .width(168.dp)
+            .clickable { onClick() }
     ) {
         Box(
             modifier = Modifier
@@ -58,8 +63,15 @@ fun CustomRecipeCard(
                 .clip(RoundedCornerShape(15.dp))
                 .background(Color.White)
                 .then(
-                    if (!hasImage) Modifier.border(1.dp, Colors.Primary, RoundedCornerShape(15.dp))
-                    else Modifier
+                    when {
+                        isSelectionMode && isSelected -> Modifier
+                            .border(2.dp, Colors.Primary, RoundedCornerShape(15.dp))
+
+                        !hasImage -> Modifier
+                            .border(1.dp, Colors.Primary, RoundedCornerShape(15.dp))
+
+                        else -> Modifier
+                    }
                 )
         ) {
             if (hasImage) {
@@ -80,50 +92,82 @@ fun CustomRecipeCard(
                 )
             }
 
+            if (isSelectionMode && isSelected) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Colors.Primary.copy(alpha = 0.2f))
+                )
+            }
+
             Row(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .padding(8.dp),
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                val iconBackground =
-                    if (hasImage) Color.White.copy(alpha = 0.8f) else Color.Transparent
+                if (isSelectionMode) {
 
-                Box(
-                    modifier = Modifier
-                        .size(28.dp)
-                        .clip(CircleShape)
-                        .background(iconBackground)
-                        .clickable { onEditClick() }, //
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        painter = painterResource(Res.drawable.ic_edit),
-                        contentDescription = "Edit icon",
-                        modifier = Modifier
-                            .size(20.dp)
-                    )
-                }
+                    // 1 -> Tryb wyboru dania do jadłospisu
 
-                Box(
-                    modifier = Modifier
-                        .size(28.dp)
-                        .clip(CircleShape)
-                        .background(iconBackground)
-                        .clickable { onDeleteClick() }, //
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        painter = painterResource(Res.drawable.ic_delete),
-                        contentDescription = "Delete icon",
+                    if (isSelected) {
+                        Box(
+                            modifier = Modifier
+                                .size(28.dp)
+                                .clip(CircleShape)
+                                .background(Colors.Primary),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painter = painterResource(Res.drawable.ic_checked),
+                                contentDescription = null,
+//                                tint = Color.White
+                                modifier = Modifier
+                                    .size(20.dp) //
+                            )
+                        }
+                    }
+                } else {
+
+                    // 2 -> Tworzenie własnego przepisu kosz/edycja
+                    val iconBackground =
+                        if (hasImage) Color.White.copy(alpha = 0.8f) else Color.Transparent
+
+                    Box(
                         modifier = Modifier
-                            .size(20.dp)
-                    )
+                            .size(28.dp)
+                            .clip(CircleShape)
+                            .background(iconBackground)
+                            .clickable { onEditClick() }, //
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            painter = painterResource(Res.drawable.ic_edit),
+                            contentDescription = "Edit icon",
+                            modifier = Modifier
+                                .size(20.dp)
+                        )
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .size(28.dp)
+                            .clip(CircleShape)
+                            .background(iconBackground)
+                            .clickable { onDeleteClick() }, //
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            painter = painterResource(Res.drawable.ic_delete),
+                            contentDescription = "Delete icon",
+                            modifier = Modifier
+                                .size(20.dp)
+                        )
+                    }
                 }
             }
 
             if (hasImage) {
-
                 Box(
                     modifier = Modifier
                         .align(Alignment.BottomStart)

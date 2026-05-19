@@ -18,7 +18,12 @@ val appModule = module {
     factory { RegisterViewModel() }
     factory { OwnViewModel() }
     factory { CutleryViewModel() }
-    factory { SelectionViewModel() }
+    factory {
+        SelectionViewModel(
+            mealName = get(),
+            selectedDate = get()
+        )
+    }
 }
 
 fun initKoin(appDeclaration: KoinAppDeclaration = {}) =

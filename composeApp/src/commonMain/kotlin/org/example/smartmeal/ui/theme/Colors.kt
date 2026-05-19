@@ -12,4 +12,6 @@ object Colors {
     val Icon_Back = Color(0xFFC2D1CB)
     val Icon_Selected = Color(0xFF2D7A4D)
     val Icon_NotSelected = Color(0xFFE8EBE8)
+
+    val Delete = Color(0xFFD81F1F)
 }

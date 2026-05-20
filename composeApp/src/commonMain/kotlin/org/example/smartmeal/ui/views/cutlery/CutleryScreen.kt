@@ -37,14 +37,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
+import org.example.smartmeal.data.repository.DietPlanRepository
+import org.example.smartmeal.data.repository.RecipeRepository
 import org.example.smartmeal.ui.components.CustomCutleryCard
+import org.example.smartmeal.ui.components.CustomFilledRecipeCard
 import org.example.smartmeal.ui.theme.Colors
+import org.example.smartmeal.ui.views.selection.SelectionScreen
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import smartmeal_project.composeapp.generated.resources.Res
@@ -68,6 +76,7 @@ fun CutleryContent(
 ) {
     val calendarDays = remember { viewModel.getCalendarDays() }
     var showDataPicker by remember { mutableStateOf(false) }
+    val navigator = LocalNavigator.currentOrThrow
 
     Surface(
         modifier = Modifier
@@ -95,7 +104,7 @@ fun CutleryContent(
                     )
 
                     Text(
-                        text = "2026",
+                        text = "${viewModel.selectedDate.year}",
                         fontSize = 14.sp,
                         color = Color.Black
                     )
@@ -130,7 +139,7 @@ fun CutleryContent(
                         modifier = Modifier
                             .size(60.dp)
                             .clip(CircleShape)
-                            .background(if (isSelected) Colors.Icon_Selected else Colors.Icon_NotSelected) //
+                            .background(if (isSelected) Colors.Icon_Selected else Colors.Icon_NotSelected)
                             .clickable {
                                 viewModel.selectedDate = day.date
                             },
@@ -235,12 +244,37 @@ fun CutleryContent(
                         key = { it }
                     ) { category ->
 
-                        CustomCutleryCard(
-                            recipeName = category,
-                            onAddClick = {},
-                            onDeleteClick = {}
-                        )
+                        val assignedRecipeId =
+                            DietPlanRepository.getRecipeId(viewModel.selectedDate, category)
 
+                        val selectedRecipe = assignedRecipeId?.let { id ->
+                            RecipeRepository.userRecipes.find { it.id == id }
+                        }
+
+                        if (selectedRecipe != null) {
+                            CustomFilledRecipeCard(
+                                mealName = category,
+                                recipeTitle = selectedRecipe.title,
+                                calories = selectedRecipe.calories,
+                                time = selectedRecipe.time,
+                                hasImage = selectedRecipe.hasImage,
+                                onDeleteClick = {
+                                    DietPlanRepository.removeRecipe(
+                                        viewModel.selectedDate,
+                                        category
+                                    )
+                                }
+                            )
+                        } else {
+                            CustomCutleryCard(
+                                recipeName = category,
+                                onAddClick = {
+                                    val rootNavigator = navigator.parent ?: navigator
+                                    rootNavigator.push(SelectionScreen(mealName = category, selectedDate = viewModel.selectedDate))
+                                },
+                                onDeleteClick = {} //
+                            )
+                        }
                         Spacer(modifier = Modifier.height(20.dp))
                     }
                 }
@@ -259,7 +293,7 @@ fun CutleryContent(
                         TextButton(
                             onClick = {
                                 dataPickerState.selectedDateMillis?.let { millis ->
-                                    viewModel.selectedDate = kotlinx.datetime.LocalDate
+                                    viewModel.selectedDate = LocalDate
                                         .fromEpochDays((millis / 86400000).toInt())
                                 }
                                 showDataPicker = false

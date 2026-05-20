@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import org.example.smartmeal.ui.theme.Colors
-import org.example.smartmeal.ui.utils.RecipesSubTab
+import org.example.smartmeal.ui.utils.RecipesSubTabHome
 import org.example.smartmeal.ui.views.own.OwnContent
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -33,7 +33,7 @@ object HomeTab : Tab {
     @Composable
     override fun Content() {
 
-        var selectedTab by remember { mutableStateOf(RecipesSubTab.Main) }
+        var selectedTab by remember { mutableStateOf(RecipesSubTabHome.Main) }
 
         Column(
             modifier = Modifier.fillMaxSize().background(Color.White)
@@ -53,7 +53,7 @@ object HomeTab : Tab {
                 },
                 divider = {}
             ) {
-                RecipesSubTab.entries.forEach { tab ->
+                RecipesSubTabHome.entries.forEach { tab ->
 
                     val isSelected = selectedTab == tab
 
@@ -82,19 +82,19 @@ object HomeTab : Tab {
 
                 when (selectedTab) {
 
-                    RecipesSubTab.Main -> {
+                    RecipesSubTabHome.Main -> {
                         Text("Widok Główny", modifier = Modifier.align(Alignment.Center))
                     }
 
-                    RecipesSubTab.Search -> {
+                    RecipesSubTabHome.Search -> {
                         Text("Widok Szukania", modifier = Modifier.align(Alignment.Center))
                     }
 
-                    RecipesSubTab.Own-> {
+                    RecipesSubTabHome.Own-> {
                         OwnContent(viewModel = koinViewModel())
                     }
 
-                    RecipesSubTab.Favorites-> {
+                    RecipesSubTabHome.Favorites-> {
                         Text("Widok Ulubiony", modifier = Modifier.align(Alignment.Center))
                     }
                 }

@@ -7,6 +7,7 @@ import org.example.smartmeal.ui.views.cutlery.CutleryViewModel
 import org.example.smartmeal.ui.views.login.LoginViewModel
 import org.example.smartmeal.ui.views.own.OwnViewModel
 import org.example.smartmeal.ui.views.register.RegisterViewModel
+import org.example.smartmeal.ui.views.selection.SelectionViewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
@@ -17,6 +18,12 @@ val appModule = module {
     factory { RegisterViewModel() }
     factory { OwnViewModel() }
     factory { CutleryViewModel() }
+    factory {
+        SelectionViewModel(
+            mealName = get(),
+            selectedDate = get()
+        )
+    }
 }
 
 fun initKoin(appDeclaration: KoinAppDeclaration = {}) =

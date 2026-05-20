@@ -31,6 +31,7 @@ import org.example.smartmeal.ui.views.own.parts.OwnFooter
 import org.example.smartmeal.ui.views.own.parts.OwnHeader
 import org.example.smartmeal.ui.views.own_form.OwnFormScreen
 import org.koin.compose.viewmodel.koinViewModel
+import kotlin.time.Clock
 
 object OwnScreen : Screen {
     @Composable
@@ -90,7 +91,20 @@ fun OwnContent(
                             ) {
                                 OwnFormScreen(
                                     onSaveClick = { newRecipe ->
+
+                                        val globalRecipe = org.example.smartmeal.data.repository.CustomRecipe(
+                                            id = Clock.System.now().toEpochMilliseconds().toString(),
+                                            title = newRecipe.title,
+                                            hasImage = newRecipe.hasImage,
+                                            calories = newRecipe.calories,
+                                            time = newRecipe.time,
+                                            isFavorite = false
+                                        )
+
+                                        org.example.smartmeal.data.repository.RecipeRepository.addRecipe(globalRecipe)
+
                                         viewModel.onAddRecipe(newRecipe)
+
                                         viewModel.onToggleForm(false)
                                     },
                                     onBackClick = {
@@ -121,6 +135,9 @@ fun OwnContent(
                                     time = currentRecipe.time,
                                     onEditClick = {}, //
                                     onDeleteClick = {}, //
+                                    isSelected = false,
+                                    isSelectionMode = false,
+                                    onClick = {}, //
                                 )
                             }
                         }

@@ -68,7 +68,7 @@ fun LoginContent(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .systemBarsPadding()
-                .padding(horizontal = 15.dp, vertical = 20.dp),
+                .padding(horizontal = 15.dp, vertical = 15.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
@@ -86,8 +86,6 @@ fun LoginContent(
                 onPasswordChange = { viewModel.onPasswordChange(it)},
                 onLoginClick = {viewModel.onLoginClick()}
             )
-
-            Spacer(modifier = Modifier.weight(1f))
 
             Spacer(modifier = Modifier.height(30.dp))
 

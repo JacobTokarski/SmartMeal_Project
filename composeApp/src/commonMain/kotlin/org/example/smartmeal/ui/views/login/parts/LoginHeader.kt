@@ -28,7 +28,7 @@ fun LoginHeader() {
     )
 
     Text(
-        text = "Sign In",
+        text = "Zaloguj się",
         fontSize = 30.sp,
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.Left,

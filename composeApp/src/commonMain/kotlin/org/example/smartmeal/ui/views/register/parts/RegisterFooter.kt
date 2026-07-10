@@ -22,13 +22,13 @@ fun RegisterFooter(
         horizontalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         Text(
-            text = "Already have an account?",
+            text = "Posiadasz już konto?",
             fontSize = 15.sp,
             color = Colors.Primary
         )
 
         Text(
-            text = "Sign In",
+            text = "Zaloguj się",
             fontSize = 15.sp,
             color = Colors.Primary,
             fontWeight = FontWeight.Bold,

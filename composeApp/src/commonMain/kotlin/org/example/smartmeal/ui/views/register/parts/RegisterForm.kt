@@ -33,7 +33,7 @@ fun RegisterForm(
     CustomEmailField(
         value = username,
         onValueChange = onNicknameChange,
-        placeholder = "Username",
+        placeholder = "Nazwa użytkownika",
         leadingIcon = Res.drawable.ic_person,
         error = state.usernameError
     )
@@ -53,7 +53,7 @@ fun RegisterForm(
     CustomEmailField(
         value = confirmEmail,
         onValueChange = onEmailConfirm,
-        placeholder = "Confirm Email",
+        placeholder = "Potwierdź Email",
         leadingIcon = Res.drawable.ic_person,
         error = state.confirmEmailError
     )
@@ -63,7 +63,7 @@ fun RegisterForm(
     CustomPasswordField(
         value = password,
         onValueChange = onPasswordChange,
-        placeholder = "Password",
+        placeholder = "Hasło",
         leadingIcon = Res.drawable.ic_lock,
         isPassword = true,
         error = state.passwordError
@@ -74,7 +74,7 @@ fun RegisterForm(
     CustomPasswordField(
         value = confirmPassword,
         onValueChange = onPasswordConfirm,
-        placeholder = "Confirm Password",
+        placeholder = "Potwierdź Hasło",
         leadingIcon = Res.drawable.ic_lock,
         isPassword = true,
         error = state.confirmPasswordError
@@ -83,7 +83,7 @@ fun RegisterForm(
     Spacer(modifier = Modifier.height(40.dp))
 
     CustomButtonField(
-        text = "Sign Up",
+        text = "Zarejestruj się",
         onClick = onRegisterClick,
         modifier = Modifier
     )

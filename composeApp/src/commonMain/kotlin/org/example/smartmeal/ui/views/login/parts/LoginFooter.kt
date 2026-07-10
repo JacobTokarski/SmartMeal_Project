@@ -22,13 +22,13 @@ fun LoginFooter(
         horizontalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         Text(
-            text = "Don't have account?",
+            text = "Nie posiadasz konta?",
             fontSize = 15.sp,
             color = Colors.Primary
         )
 
         Text(
-            text = "Sign Up",
+            text = "Zarejestruj się",
             fontSize = 15.sp,
             color = Colors.Primary,
             fontWeight = FontWeight.Bold,

@@ -3,6 +3,8 @@ package org.example.smartmeal.ui.views.register.parts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -28,57 +31,59 @@ import smartmeal_project.composeapp.generated.resources.pic_reg_leaf
 
 @Composable
 fun RegisterHeader(
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
 ) {
-
-    Row(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 16.dp),
-        verticalAlignment = Alignment.Top,
-        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Row(
+        Box(
             modifier = Modifier
-                .offset(y = 40.dp)
-                .clickable { onBackClick() },
-            verticalAlignment = Alignment.CenterVertically
+                .fillMaxWidth()
         ) {
-            Icon(
-                painter = painterResource(Res.drawable.ic_arrow),
+            Row(
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .clickable { onBackClick() }
+                    .padding(horizontal = 10.dp, vertical = 20.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(Res.drawable.ic_arrow),
+                    contentDescription = null,
+                    tint = Colors.Primary
+                )
+
+                Spacer(modifier = Modifier.width(5.dp))
+
+                Text(
+                    text = "Cofnij",
+                    fontSize = 15.sp,
+                    color = Colors.Primary
+                )
+            }
+
+            Image(
+                painter = painterResource(Res.drawable.pic_reg_leaf),
                 contentDescription = null,
-                tint = Colors.Primary
-            )
-
-            Spacer(modifier = Modifier.width(5.dp))
-
-            Text(
-                text = "Back",
-                fontSize = 12.sp,
-                color = Colors.Primary
+                contentScale = ContentScale.None,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .offset(x = 55.dp, y = 20.dp)
+                    .width(112.dp)
+                    .height(220.dp)
             )
         }
 
-        Image(
-            painter = painterResource(Res.drawable.pic_reg_leaf),
-            contentDescription = null,
+        Text(
+            text = "Zarejestruj się",
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Left,
             modifier = Modifier
-                .wrapContentWidth(Alignment.End)
-                .offset(x = 56.dp)
-                .width(112.dp)
-                .height(200.dp)
-
+                .fillMaxWidth()
+                .offset(y = -(25).dp),
+            color = Colors.Primary
         )
     }
-
-    Text(
-        text = "Sign Up",
-        fontSize = 30.sp,
-        fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.Left,
-        modifier = Modifier
-            .fillMaxWidth()
-            .offset(y = -(50).dp),
-        color = Colors.Primary
-    )
 }

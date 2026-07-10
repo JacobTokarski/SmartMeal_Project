@@ -46,7 +46,7 @@ fun LoginForm(
     CustomPasswordField(
         value = password,
         onValueChange = onPasswordChange,
-        placeholder = "Password",
+        placeholder = "Hasło",
         leadingIcon = Res.drawable.ic_lock,
         isPassword = true,
         error = passwordError
@@ -55,7 +55,7 @@ fun LoginForm(
     Spacer(modifier = Modifier.height(20.dp))
 
     Text(
-        text = "Forget Password?",
+        text = "Zapomniałeś hasła?",
         fontWeight = FontWeight.Bold,
         color = Colors.Primary,
         modifier = Modifier
@@ -67,7 +67,7 @@ fun LoginForm(
     Spacer(modifier = Modifier.height(25.dp))
 
     CustomButtonField(
-        text = "Sign In",
+        text = "Zaloguj się",
         onClick = onLoginClick,
         modifier = Modifier
     )

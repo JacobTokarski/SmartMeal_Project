@@ -27,6 +27,7 @@ import smartmeal_project.composeapp.generated.resources.Res
 import smartmeal_project.composeapp.generated.resources.pic_leaf
 import smartmeal_project.composeapp.generated.resources.pic_logo
 import smartmeal_project.composeapp.generated.resources.pic_range
+import kotlin.time.Duration.Companion.milliseconds
 
 object SplashScreen : Screen {
     @Composable
@@ -35,7 +36,7 @@ object SplashScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
 
         LaunchedEffect(Unit) {
-            delay(2500)
+            delay(2500.milliseconds)
 
             navigator.replace(LoginScreen)
         }
@@ -66,7 +67,7 @@ fun SplashContent() {
                         .width(120.dp)
                         .height(280.dp)
                         .align(Alignment.TopStart)
-                        .offset(((-10).dp), y = ((-10).dp))
+                        .offset(((-20).dp), y = ((-10).dp))
                 )
 
 
@@ -87,7 +88,7 @@ fun SplashContent() {
                         .height(134.dp)
                         .align(Alignment.BottomEnd)
                         .navigationBarsPadding()
-                        .offset(x = 10.dp, y = 0.dp)
+                        .offset(x = 10.dp, y = 12.dp)
                 )
             }
         }

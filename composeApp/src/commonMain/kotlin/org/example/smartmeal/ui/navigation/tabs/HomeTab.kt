@@ -1,4 +1,5 @@
 package org.example.smartmeal.ui.navigation.tabs
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -63,8 +64,7 @@ object HomeTab : Tab {
                         text = {
                             Text(
                                 text = tab.title,
-                                modifier = Modifier
-                                    .padding(bottom = 4.dp),
+                                modifier = Modifier.padding(bottom = 4.dp),
                                 color = if (isSelected) Colors.Primary else Colors.NotSelected,
                                 fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
                                 fontSize = 15.sp
@@ -75,9 +75,7 @@ object HomeTab : Tab {
             }
 
             Box(
-                modifier = Modifier
-                    .fillMaxSize(),
-                contentAlignment = Alignment.Center
+                modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
             ) {
 
                 when (selectedTab) {
@@ -90,11 +88,11 @@ object HomeTab : Tab {
                         Text("Widok Szukania", modifier = Modifier.align(Alignment.Center))
                     }
 
-                    RecipesSubTabHome.Own-> {
+                    RecipesSubTabHome.Own -> {
                         OwnContent(viewModel = koinViewModel())
                     }
 
-                    RecipesSubTabHome.Favorites-> {
+                    RecipesSubTabHome.Favorites -> {
                         Text("Widok Ulubiony", modifier = Modifier.align(Alignment.Center))
                     }
                 }
@@ -109,9 +107,7 @@ object HomeTab : Tab {
 
             return remember {
                 TabOptions(
-                    index = 3u,
-                    title = title,
-                    icon = icon
+                    index = 3u, title = title, icon = icon
                 )
             }
         }

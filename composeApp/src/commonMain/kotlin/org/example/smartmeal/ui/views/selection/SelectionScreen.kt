@@ -164,6 +164,8 @@ fun SelectionContent(
                 items(recipesToShow) { recipe ->
                     CustomRecipeCard(
                         title = recipe.title,
+                        category = recipe.category,
+                        type = recipe.type,
                         hasImage = recipe.hasImage,
                         calories = recipe.calories,
                         time = recipe.time,

@@ -26,6 +26,10 @@ import org.example.smartmeal.ui.theme.Colors
 fun OwnFormBody(
     title: String,
     onTitleChange: (String) -> Unit,
+    category: String,
+    onCategoryChange: (String) -> Unit,
+    type: String,
+    onTypeChange: (String) -> Unit,
     time: String,
     onTimeChange: (String) -> Unit,
     calories: String,
@@ -39,12 +43,26 @@ fun OwnFormBody(
         verticalArrangement = Arrangement.spacedBy(15.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        Spacer(modifier = Modifier.height(10.dp))
+
         CustomEmailField(
             value = title,
             onValueChange = onTitleChange,
             placeholder = "Nazwa potrawy *",
         )
 
+        CustomEmailField(
+            value = category,
+            onValueChange = onCategoryChange,
+            placeholder = "Kategoria potrawy (np. obiad)*",
+        )
+
+        CustomEmailField(
+            value = type,
+            onValueChange = onTypeChange,
+            placeholder = "Typ kuchni (np. azjatycka) *",
+        )
 
         Row(
             modifier = Modifier
@@ -110,5 +128,7 @@ fun OwnFormBody(
                 color = Colors.Text_Form.copy(alpha = 0.5f)
             )
         }
+
+        Spacer(modifier = Modifier.height(10.dp))
     }
 }

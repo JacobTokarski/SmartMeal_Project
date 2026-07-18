@@ -36,7 +36,7 @@ import smartmeal_project.composeapp.generated.resources.ic_delete_custom
 import smartmeal_project.composeapp.generated.resources.pic_burger
 import smartmeal_project.composeapp.generated.resources.pic_camera
 
-
+// Jest to komponent wykorzystywany w ekranie "Cutlery", który wyświetla się podczas przypisania przepisu do danej kategorii (np. Śniadanie)
 @Composable
 fun CustomFilledRecipeCard(
     mealName: String,
@@ -139,7 +139,7 @@ fun CustomFilledRecipeCard(
             ) {
                 Icon(
                     painter = painterResource(Res.drawable.ic_delete_custom),
-                    contentDescription = "Deleting recipe icon",
+                    contentDescription = "Ikona do usunięcia przepisu",
                     tint = Colors.Delete,
                     modifier = Modifier
                         .size(25.dp)

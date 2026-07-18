@@ -2,7 +2,9 @@ package org.example.smartmeal.ui.views.own_form
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
@@ -27,7 +29,8 @@ fun OwnFormScreen(
     var title by remember { mutableStateOf("") }
     var time by remember { mutableStateOf("") }
     var calories by remember { mutableStateOf("") }
-
+    var category by remember { mutableStateOf(value = "")}
+    var type by remember { mutableStateOf(value = "")}
 
     Column(
         modifier = Modifier
@@ -39,6 +42,8 @@ fun OwnFormScreen(
                 if (title.isNotBlank()) {
                     val newRecipe = Recipe(
                         title = title,
+                        category = category,
+                        type = type,
                         time = if (time.isNotEmpty()) "$time min" else "",
                         calories = if (calories.isNotEmpty()) "$calories kcal" else "",
                         hasImage = true
@@ -51,13 +56,16 @@ fun OwnFormScreen(
 
         LazyColumn(
             modifier = Modifier
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 15.dp)
         ) {
-
             item {
                 OwnFormBody(
                     title = title,
                     onTitleChange = { title = it },
+                    category = category,
+                    onCategoryChange = { category = it},
+                    type = type,
+                    onTypeChange = { type = it},
                     time = time,
                     onTimeChange = { time = it },
                     calories = calories,

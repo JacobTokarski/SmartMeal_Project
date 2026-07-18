@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -29,7 +30,7 @@ fun OwnFormFooter(
 ) {
     Surface(
         modifier = Modifier
-            .fillMaxWidth()
+            .padding(horizontal = 15.dp)
             .height(156.dp)
             .clickable{} //
             .clip(RoundedCornerShape(16.dp)),

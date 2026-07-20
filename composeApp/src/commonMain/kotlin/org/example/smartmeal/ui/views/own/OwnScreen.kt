@@ -23,8 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
 import org.example.smartmeal.ui.components.CustomRecipeCard
 import org.example.smartmeal.ui.views.own.parts.OwnEmptyState
 import org.example.smartmeal.ui.views.own.parts.OwnFooter
@@ -91,10 +89,11 @@ fun OwnContent(
                             ) {
                                 OwnFormScreen(
                                     onSaveClick = { newRecipe ->
-
                                         val globalRecipe = org.example.smartmeal.data.repository.CustomRecipe(
                                             id = Clock.System.now().toEpochMilliseconds().toString(),
                                             title = newRecipe.title,
+                                            category = newRecipe.category,
+                                            type = newRecipe.type,
                                             hasImage = newRecipe.hasImage,
                                             calories = newRecipe.calories,
                                             time = newRecipe.time,
@@ -107,6 +106,7 @@ fun OwnContent(
 
                                         viewModel.onToggleForm(false)
                                     },
+
                                     onBackClick = {
                                         viewModel.onToggleForm(false)
                                     }
@@ -130,6 +130,8 @@ fun OwnContent(
                             items(state.recipes) { currentRecipe ->
                                 CustomRecipeCard(
                                     title = currentRecipe.title,
+                                    category = currentRecipe.category,
+                                    type = currentRecipe.type,
                                     hasImage = currentRecipe.hasImage,
                                     calories = currentRecipe.calories,
                                     time = currentRecipe.time,

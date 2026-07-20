@@ -95,9 +95,9 @@ fun CutleryContent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column() {
+
                     Text(
-                        text = viewModel.selectedDate.month.name.lowercase()
-                            .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
+                        text = viewModel.polishMonthsNominative[viewModel.selectedDate.month] ?: "",
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black
@@ -215,8 +215,7 @@ fun CutleryContent(
                             Spacer(modifier = Modifier.width(3.dp))
 
                             Text(
-                                text = viewModel.selectedDate.month.name.lowercase()
-                                    .replaceFirstChar { it.uppercase() },
+                                text = viewModel.polishMonthsGenitive[viewModel.selectedDate.month] ?: "",
                                 style = MaterialTheme.typography.titleMedium,
                                 color = Colors.Primary,
                                 fontWeight = FontWeight.Bold,
@@ -254,6 +253,7 @@ fun CutleryContent(
                         if (selectedRecipe != null) {
                             CustomFilledRecipeCard(
                                 mealName = category,
+                                mealCategory = selectedRecipe.type,
                                 recipeTitle = selectedRecipe.title,
                                 calories = selectedRecipe.calories,
                                 time = selectedRecipe.time,

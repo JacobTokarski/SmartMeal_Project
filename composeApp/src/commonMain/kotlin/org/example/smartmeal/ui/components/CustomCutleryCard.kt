@@ -27,6 +27,7 @@ import org.jetbrains.compose.resources.painterResource
 import smartmeal_project.composeapp.generated.resources.Res
 import smartmeal_project.composeapp.generated.resources.ic_plus
 
+// Jest to pole karty znajdującej się na ekranie "Cutlery" do której dodajemy wybrany przez nas przepis.
 
 @Composable
 fun CustomCutleryCard(
@@ -71,7 +72,7 @@ fun CustomCutleryCard(
                 shape = CircleShape,
                 color = Colors.Primary,
                 modifier = Modifier
-                    .size(36.dp)
+                    .size(30.dp)
             ) {
                 Box(
                     contentAlignment = Alignment.Center,
@@ -82,7 +83,7 @@ fun CustomCutleryCard(
                         tint = Color.White,
                         contentDescription = null,
                         modifier = Modifier
-                            .size(24.dp)
+                            .size(20.dp)
                     )
                 }
             }

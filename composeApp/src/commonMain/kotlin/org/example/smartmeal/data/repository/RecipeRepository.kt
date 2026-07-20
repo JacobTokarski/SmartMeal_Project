@@ -6,6 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 data class CustomRecipe(
     val id: String,
     val title: String,
+    val category: String,
+    val type: String,
     val hasImage: Boolean,
     val calories: String,
     val time: String,

@@ -40,6 +40,7 @@ import smartmeal_project.composeapp.generated.resources.pic_camera
 @Composable
 fun CustomFilledRecipeCard(
     mealName: String,
+    mealCategory: String,
     recipeTitle: String,
     calories: String,
     time: String,
@@ -66,6 +67,7 @@ fun CustomFilledRecipeCard(
                     .background(Color.White)
             ) {
                 if (hasImage) {
+
                     Image(
                         painter = painterResource(Res.drawable.pic_burger),
                         contentDescription = null,
@@ -75,6 +77,7 @@ fun CustomFilledRecipeCard(
                     )
 
                 } else {
+
                     Icon(
                         painter = painterResource(Res.drawable.pic_camera),
                         contentDescription = null,
@@ -92,11 +95,31 @@ fun CustomFilledRecipeCard(
                 modifier = Modifier
                     .weight(1f)
             ) {
-                Text(
-                    text = mealName,
-                    fontSize = 14.sp,
-                    color = Color.Black
-                )
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+
+                    Text(
+                        text = mealCategory,
+                        fontSize = 14.sp,
+                        color = Color.Black
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .size(5.dp)
+                            .clip(RoundedCornerShape(15.dp))
+                            .background(Color.Black)
+                    ) {}
+
+                    Text(
+                        text = mealName,
+                        fontSize = 14.sp,
+                        color = Color.Black
+                    )
+                }
 
                 Text(
                     text = recipeTitle,

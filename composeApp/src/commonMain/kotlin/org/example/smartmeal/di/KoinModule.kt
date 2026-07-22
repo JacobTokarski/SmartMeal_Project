@@ -4,6 +4,7 @@ import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import org.example.smartmeal.data.remote.createHttpClient
 import org.example.smartmeal.ui.views.cutlery.CutleryViewModel
+import org.example.smartmeal.ui.views.health.HealthViewModel
 import org.example.smartmeal.ui.views.login.LoginViewModel
 import org.example.smartmeal.ui.views.own.OwnViewModel
 import org.example.smartmeal.ui.views.profile.ProfileViewModel
@@ -20,6 +21,7 @@ val appModule = module {
     factory { OwnViewModel() }
     factory { CutleryViewModel() }
     factory { ProfileViewModel() }
+    factory { HealthViewModel() }
     factory {
         SelectionViewModel(
             mealName = get(),

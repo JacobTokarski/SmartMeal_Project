@@ -13,4 +13,5 @@ object Colors {
     val Icon_Selected = Color(0xFF2D7A4D)
     val Icon_NotSelected = Color(0xFFE8EBE8)
     val Delete = Color(0xFFD81F1F)
+    val Stats_Number = Color(0xFF2D3748)
 }

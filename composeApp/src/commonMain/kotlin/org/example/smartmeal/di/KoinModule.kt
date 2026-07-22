@@ -6,6 +6,7 @@ import org.example.smartmeal.data.remote.createHttpClient
 import org.example.smartmeal.ui.views.cutlery.CutleryViewModel
 import org.example.smartmeal.ui.views.login.LoginViewModel
 import org.example.smartmeal.ui.views.own.OwnViewModel
+import org.example.smartmeal.ui.views.profile.ProfileViewModel
 import org.example.smartmeal.ui.views.register.RegisterViewModel
 import org.example.smartmeal.ui.views.selection.SelectionViewModel
 import org.koin.core.context.startKoin
@@ -18,6 +19,7 @@ val appModule = module {
     factory { RegisterViewModel() }
     factory { OwnViewModel() }
     factory { CutleryViewModel() }
+    factory { ProfileViewModel() }
     factory {
         SelectionViewModel(
             mealName = get(),

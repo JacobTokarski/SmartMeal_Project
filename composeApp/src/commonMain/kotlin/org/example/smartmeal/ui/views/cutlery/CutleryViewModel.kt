@@ -15,10 +15,6 @@ import org.example.smartmeal.ui.utils.CalendarDay
 import kotlin.collections.plus
 import kotlin.time.Clock
 
-
-data class CutleryUIState(
-    val test: String, //
-)
 class CutleryViewModel: ViewModel() {
 
     val mealCategories = listOf("Śniadanie", "II Śniadanie", "Obiad", "Podwieczorek", "Kolacja")
@@ -41,7 +37,7 @@ class CutleryViewModel: ViewModel() {
         DayOfWeek.SUNDAY to "Nd",
     )
 
-    val polishMonthsNominative = mapOf( // Konwersja na język Polski danych miesięcy (July -> Lipiec), sam kalendarz zostaje bez zmian
+    val polishMonthsNominative = mapOf(
         Month.JANUARY to "Styczeń",
         Month.FEBRUARY to "Luty",
         Month.MARCH to "Marzec",
@@ -56,7 +52,7 @@ class CutleryViewModel: ViewModel() {
         Month.DECEMBER to "Grudzień",
     )
 
-     val polishMonthsGenitive = mapOf( // Miesiące, które przekazywać będziemy nie w nagłówku tylko w danym dniu - musi być lipcA a nie lipiec
+     val polishMonthsGenitive = mapOf(
         Month.JANUARY to "stycznia",
         Month.FEBRUARY to "lutego",
         Month.MARCH to "marca",

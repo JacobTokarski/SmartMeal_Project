@@ -28,7 +28,9 @@ import smartmeal_project.composeapp.generated.resources.Res
 import smartmeal_project.composeapp.generated.resources.ic_health_bottom
 import androidx.compose.material3.Tab
 import androidx.lifecycle.viewmodel.compose.viewModel
+import org.example.smartmeal.ui.views.bmi.BmiContent
 import org.example.smartmeal.ui.views.health.HealthContent
+import org.example.smartmeal.ui.views.tdee.TdeeContent
 import org.koin.compose.viewmodel.koinViewModel
 
 object HealthTab : Tab {
@@ -90,11 +92,11 @@ object HealthTab : Tab {
                     }
 
                     HealthSubTabs.BMI -> {
-                        Text("Widok ekranu BMI", modifier = Modifier.align(Alignment.Center))
+                        BmiContent(viewModel = koinViewModel())
                     }
 
                     HealthSubTabs.TDEE -> {
-                        Text("Widok ekranu Głównego", modifier = Modifier.align(Alignment.Center))
+                        TdeeContent(viewModel = koinViewModel())
                     }
                 }
             }

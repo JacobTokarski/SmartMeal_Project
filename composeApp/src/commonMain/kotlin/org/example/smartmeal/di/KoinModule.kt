@@ -3,12 +3,15 @@ package org.example.smartmeal.di
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import org.example.smartmeal.data.remote.createHttpClient
+import org.example.smartmeal.ui.views.bmi.BmiViewModel
 import org.example.smartmeal.ui.views.cutlery.CutleryViewModel
+import org.example.smartmeal.ui.views.health.HealthViewModel
 import org.example.smartmeal.ui.views.login.LoginViewModel
 import org.example.smartmeal.ui.views.own.OwnViewModel
 import org.example.smartmeal.ui.views.profile.ProfileViewModel
 import org.example.smartmeal.ui.views.register.RegisterViewModel
 import org.example.smartmeal.ui.views.selection.SelectionViewModel
+import org.example.smartmeal.ui.views.tdee.TdeeViewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
@@ -20,6 +23,9 @@ val appModule = module {
     factory { OwnViewModel() }
     factory { CutleryViewModel() }
     factory { ProfileViewModel() }
+    factory { HealthViewModel() }
+    factory { BmiViewModel() }
+    factory { TdeeViewModel() }
     factory {
         SelectionViewModel(
             mealName = get(),

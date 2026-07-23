@@ -85,7 +85,6 @@ fun RegisterForm(
     CustomButtonField(
         text = "Zarejestruj się",
         onClick = onRegisterClick,
-        modifier = Modifier
     )
 
     Spacer(modifier = Modifier.height(50.dp))

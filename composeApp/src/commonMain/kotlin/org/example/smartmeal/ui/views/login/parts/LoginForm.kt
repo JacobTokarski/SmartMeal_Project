@@ -69,7 +69,6 @@ fun LoginForm(
     CustomButtonField(
         text = "Zaloguj się",
         onClick = onLoginClick,
-        modifier = Modifier
     )
 
     Spacer(modifier = Modifier.height(45.dp))

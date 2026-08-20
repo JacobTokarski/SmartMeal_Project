@@ -28,9 +28,13 @@ import smartmeal_project.composeapp.generated.resources.Res
 import smartmeal_project.composeapp.generated.resources.ic_health_bottom
 import androidx.compose.material3.Tab
 import androidx.lifecycle.viewmodel.compose.viewModel
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import org.example.smartmeal.ui.views.bmi.BmiContent
+import org.example.smartmeal.ui.views.bmi_form.BmiFormScreen
 import org.example.smartmeal.ui.views.health.HealthContent
 import org.example.smartmeal.ui.views.tdee.TdeeContent
+import org.example.smartmeal.ui.views.tdee_form.TdeeFormScreen
 import org.koin.compose.viewmodel.koinViewModel
 
 object HealthTab : Tab {
@@ -38,6 +42,8 @@ object HealthTab : Tab {
     override fun Content() {
 
         var selectedTab by remember { mutableStateOf(HealthSubTabs.Main) }
+        val tabNavigator = LocalNavigator.currentOrThrow
+        val rootNavigator = tabNavigator.parent ?: tabNavigator
 
         Column(
             modifier = Modifier
@@ -92,11 +98,21 @@ object HealthTab : Tab {
                     }
 
                     HealthSubTabs.BMI -> {
-                        BmiContent(viewModel = koinViewModel())
+                        BmiContent(
+                            viewModel = koinViewModel(),
+                            onNavigateToForm = {
+                                rootNavigator.push(BmiFormScreen())
+                            }
+                        )
                     }
 
                     HealthSubTabs.TDEE -> {
-                        TdeeContent(viewModel = koinViewModel())
+                        TdeeContent(
+                            viewModel = koinViewModel(),
+                            onNavigateToForm = {
+                                rootNavigator.push(TdeeFormScreen())
+                            }
+                        )
                     }
                 }
             }

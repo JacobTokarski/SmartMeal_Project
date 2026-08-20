@@ -40,7 +40,8 @@ class TdeeScreen: Screen {
         val viewModel = koinViewModel<TdeeViewModel>()
 
         TdeeContent(
-            viewModel = viewModel
+            viewModel = viewModel,
+            onNavigateToForm = {}
         )
     }
 }
@@ -48,7 +49,8 @@ class TdeeScreen: Screen {
 
 @Composable
 fun TdeeContent(
-    viewModel: TdeeViewModel
+    viewModel: TdeeViewModel,
+    onNavigateToForm: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -73,7 +75,7 @@ fun TdeeContent(
         )
 
         Image(
-            painter = painterResource(Res.drawable.pic_tdee), //
+            painter = painterResource(Res.drawable.pic_tdee),
             contentDescription = "TDEE diagram",
             modifier = Modifier
                 .fillMaxWidth(),
@@ -88,7 +90,7 @@ fun TdeeContent(
         )
 
         Image(
-            painter = painterResource(Res.drawable.pic_tdee_pattern), //
+            painter = painterResource(Res.drawable.pic_tdee_pattern),
             contentDescription = "TDEE formula",
             modifier = Modifier
                 .fillMaxWidth(),
@@ -97,7 +99,7 @@ fun TdeeContent(
 
         CustomFormButton(
             text = "Oblicz TDEE",
-            onClick = {}, //
+            onClick = onNavigateToForm,
             enabled = true,
         )
     }

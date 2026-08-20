@@ -23,7 +23,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import org.example.smartmeal.ui.components.health.CustomFormButton
+import org.example.smartmeal.ui.views.bmi_form.BmiFormScreen
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import smartmeal_project.composeapp.generated.resources.Res
@@ -41,7 +44,8 @@ class BmiScreen : Screen {
         val viewModel = koinViewModel<BmiViewModel>()
 
         BmiContent(
-            viewModel = viewModel
+            viewModel = viewModel,
+            onNavigateToForm = {}
         )
     }
 }
@@ -49,8 +53,10 @@ class BmiScreen : Screen {
 
 @Composable
 fun BmiContent(
-    viewModel: BmiViewModel
+    viewModel: BmiViewModel,
+    onNavigateToForm: () -> Unit,
 ) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -108,7 +114,7 @@ fun BmiContent(
 
         CustomFormButton(
             text = "Oblicz BMI",
-            onClick = {}, //
+            onClick = onNavigateToForm,
             enabled = true,
         )
     }

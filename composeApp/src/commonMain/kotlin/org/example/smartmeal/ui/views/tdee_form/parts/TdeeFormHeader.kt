@@ -23,10 +23,10 @@ fun TdeeFormHeader() {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .height(100.dp) // Wysokość paska, może wymagać korekty
+            .height(100.dp)
             .statusBarsPadding(),
         color = Colors.Form_Header_Background,
-        shape = RoundedCornerShape(bottomStart = 15.dp, bottomEnd = 15.dp) // Tylko dla rogów dolnych
+        shape = RoundedCornerShape(bottomStart = 15.dp, bottomEnd = 15.dp)
     ) {
         Box(
             modifier = Modifier

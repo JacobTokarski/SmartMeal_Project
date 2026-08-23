@@ -1,4 +1,4 @@
-package org.example.smartmeal.ui.utils
+package org.example.smartmeal.model.utils.recipe
 
 enum class RecipesSubTabHome(val title: String) {
     Main("Przepisy"),

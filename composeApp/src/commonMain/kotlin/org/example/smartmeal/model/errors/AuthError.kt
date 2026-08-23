@@ -1,4 +1,4 @@
-package org.example.smartmeal.ui.utils
+package org.example.smartmeal.model.utils.errors
 
 import androidx.compose.runtime.Composable
 

@@ -1,14 +1,11 @@
 package org.example.smartmeal.ui.views.login
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import org.example.smartmeal.ui.utils.AuthError
+import org.example.smartmeal.model.utils.errors.AuthError
 
 
 data class LoginUIState(

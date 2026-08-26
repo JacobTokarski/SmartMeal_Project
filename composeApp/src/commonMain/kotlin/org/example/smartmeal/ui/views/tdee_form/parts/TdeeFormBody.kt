@@ -4,30 +4,22 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.example.smartmeal.model.health.Gender
+import org.example.smartmeal.model.health.ActivityLevel
 import org.example.smartmeal.ui.components.health.ActivityLevelSelector
-import org.example.smartmeal.ui.components.health.CustomFormAcceptButton
 import org.example.smartmeal.ui.components.health.CustomFormBmiFields
-import org.example.smartmeal.ui.components.health.CustomFormCancelButton
 import org.example.smartmeal.ui.components.health.CustomFormSelectorButton
 import org.example.smartmeal.ui.theme.Colors
-import org.example.smartmeal.ui.utils.health.Gender
-import org.example.smartmeal.ui.utils.health.calculatePAL
 
 @Composable
 fun TdeeFormBody(
@@ -39,11 +31,9 @@ fun TdeeFormBody(
     onWeightChange: (String) -> Unit,
     selectedGender: Gender?,
     onGenderSelect: (Gender) -> Unit,
-    selectedActivityLevel: calculatePAL?,
-    onActivityLevelSelect: (calculatePAL) -> Unit,
+    selectedActivityLevel: ActivityLevel?,
+    onActivityLevelSelect: (ActivityLevel) -> Unit,
 ) {
-
-    var selectedGender by remember { mutableStateOf<Gender?>(null) }
 
     Column(
         modifier = Modifier
@@ -69,7 +59,7 @@ fun TdeeFormBody(
             CustomFormSelectorButton(
                 text = "Mężczyzna",
                 isSelected = selectedGender == Gender.MALE,
-                onClick = { selectedGender = Gender.MALE },
+                onClick = { onGenderSelect(Gender.MALE) },
                 modifier = Modifier
                     .weight(1f)
             )
@@ -77,7 +67,7 @@ fun TdeeFormBody(
             CustomFormSelectorButton(
                 text = "Kobieta",
                 isSelected = selectedGender == Gender.FEMALE,
-                onClick = { selectedGender = Gender.FEMALE },
+                onClick = { onGenderSelect(Gender.FEMALE) },
                 modifier = Modifier
                     .weight(1f)
             )

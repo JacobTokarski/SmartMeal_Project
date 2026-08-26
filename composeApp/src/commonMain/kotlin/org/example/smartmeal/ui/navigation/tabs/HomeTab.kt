@@ -22,8 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import org.example.smartmeal.model.utils.recipe.RecipesSubTabHome
 import org.example.smartmeal.ui.theme.Colors
-import org.example.smartmeal.ui.utils.RecipesSubTabHome
 import org.example.smartmeal.ui.views.own.OwnContent
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel

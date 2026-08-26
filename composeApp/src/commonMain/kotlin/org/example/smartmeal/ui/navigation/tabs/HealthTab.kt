@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import org.example.smartmeal.ui.theme.Colors
-import org.example.smartmeal.ui.utils.HealthSubTabs
 import org.jetbrains.compose.resources.painterResource
 import smartmeal_project.composeapp.generated.resources.Res
 import smartmeal_project.composeapp.generated.resources.ic_health_bottom
@@ -30,6 +29,7 @@ import androidx.compose.material3.Tab
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import org.example.smartmeal.model.utils.health.HealthSubTabs
 import org.example.smartmeal.ui.views.bmi.BmiContent
 import org.example.smartmeal.ui.views.bmi_form.BmiFormScreen
 import org.example.smartmeal.ui.views.health.HealthContent
@@ -99,7 +99,6 @@ object HealthTab : Tab {
 
                     HealthSubTabs.BMI -> {
                         BmiContent(
-                            viewModel = koinViewModel(),
                             onNavigateToForm = {
                                 rootNavigator.push(BmiFormScreen())
                             }
@@ -108,7 +107,6 @@ object HealthTab : Tab {
 
                     HealthSubTabs.TDEE -> {
                         TdeeContent(
-                            viewModel = koinViewModel(),
                             onNavigateToForm = {
                                 rootNavigator.push(TdeeFormScreen())
                             }

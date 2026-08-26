@@ -17,16 +17,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import cafe.adriel.voyager.core.screen.Screen
 import org.example.smartmeal.ui.components.health.CustomFormButton
-import org.example.smartmeal.ui.views.bmi.BmiViewModel
 import org.jetbrains.compose.resources.painterResource
-import org.koin.compose.viewmodel.koinViewModel
 import smartmeal_project.composeapp.generated.resources.Res
-import smartmeal_project.composeapp.generated.resources.pic_bmi
-import smartmeal_project.composeapp.generated.resources.pic_bmi_categories
-import smartmeal_project.composeapp.generated.resources.pic_bmi_pattern
 import smartmeal_project.composeapp.generated.resources.pic_tdee
 import smartmeal_project.composeapp.generated.resources.pic_tdee_pattern
 
@@ -37,10 +31,7 @@ class TdeeScreen: Screen {
     @Composable
     override fun Content() {
 
-        val viewModel = koinViewModel<TdeeViewModel>()
-
         TdeeContent(
-            viewModel = viewModel,
             onNavigateToForm = {}
         )
     }
@@ -49,7 +40,6 @@ class TdeeScreen: Screen {
 
 @Composable
 fun TdeeContent(
-    viewModel: TdeeViewModel,
     onNavigateToForm: () -> Unit,
 ) {
     Column(

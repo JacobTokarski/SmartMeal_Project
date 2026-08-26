@@ -3,7 +3,6 @@ package org.example.smartmeal.ui.components.health
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,16 +23,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.example.smartmeal.model.health.ActivityLevel
 import org.example.smartmeal.ui.theme.Colors
-import org.example.smartmeal.ui.utils.health.calculatePAL
 import org.jetbrains.compose.resources.painterResource
 import smartmeal_project.composeapp.generated.resources.Res
 import smartmeal_project.composeapp.generated.resources.ic_arrow
-import smartmeal_project.composeapp.generated.resources.ic_delete_custom
 
 @Composable
 fun CustomActivityLevel(
-    activityLevel: calculatePAL,
+    activityLevel: ActivityLevel,
     isSelected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -98,15 +96,15 @@ fun CustomActivityLevel(
 
 @Composable
 fun ActivityLevelSelector(
-    selected: calculatePAL?,
-    onSelect: (calculatePAL) -> Unit,
+    selected: ActivityLevel?,
+    onSelect: (ActivityLevel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        calculatePAL.entries.forEach { level ->
+        ActivityLevel.entries.forEach { level ->
 
             CustomActivityLevel(
                 activityLevel = level,

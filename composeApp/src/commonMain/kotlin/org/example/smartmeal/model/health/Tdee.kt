@@ -9,7 +9,7 @@ data class TdeeEntry(
     val age: Int,
     val heightCm: Double,
     val weightKg: Double,
-    val activity: calculatePAL,
-    val bmi: Double,
+    val activity: ActivityLevel,
+    val bmr: Double,
     val tdee: Double,
 )

@@ -12,7 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.example.smartmeal.model.utils.errors.AuthError
+import org.example.smartmeal.model.errors.AuthError
 import org.example.smartmeal.ui.components.CustomButtonField
 import org.example.smartmeal.ui.components.register.CustomPasswordField
 import org.example.smartmeal.ui.components.login.CustomEmailField

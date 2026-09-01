@@ -1,6 +1,4 @@
-package org.example.smartmeal.model.utils.errors
-
-import androidx.compose.runtime.Composable
+package org.example.smartmeal.model.errors
 
 sealed class AuthError {
     object None: AuthError()
@@ -12,8 +10,6 @@ sealed class AuthError {
     object PasswordsDoNotMatch: AuthError()
     object EmailsDoNotMatch: AuthError()
 }
-
-@Composable
 
 fun AuthError.asString(): String = when (this) {
     is AuthError.None -> ""

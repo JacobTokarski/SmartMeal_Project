@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.example.smartmeal.model.utils.errors.AuthError
-import org.example.smartmeal.model.utils.errors.asString
+import org.example.smartmeal.model.errors.AuthError
+import org.example.smartmeal.model.errors.asString
 import org.example.smartmeal.ui.theme.Colors
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource

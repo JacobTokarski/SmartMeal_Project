@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import org.example.smartmeal.model.utils.errors.AuthError
+import org.example.smartmeal.model.errors.AuthError
 
 data class RegisterUIState(
     val username: String = "",

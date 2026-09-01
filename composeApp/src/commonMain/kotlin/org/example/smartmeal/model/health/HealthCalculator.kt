@@ -1,5 +1,7 @@
 package org.example.smartmeal.model.health
 
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.Month
 import kotlin.math.round
 
 enum class Gender { MALE, FEMALE}
@@ -44,4 +46,24 @@ fun calculateTDEE(
 fun formatOneDecimal(value: Double): String {
     val rounded = round(value * 10) / 10.0
     return rounded.toString()
+}
+
+private val polishMonthsGenitive = mapOf(
+    Month.JANUARY to "stycznia",
+    Month.FEBRUARY to "lutego",
+    Month.MARCH to "marca",
+    Month.APRIL to "kwietnia",
+    Month.MAY to "maja",
+    Month.JUNE to "czerwca",
+    Month.JULY to "lipca",
+    Month.AUGUST to "sierpnia",
+    Month.SEPTEMBER to "września",
+    Month.OCTOBER to "października",
+    Month.NOVEMBER to "listopada",
+    Month.DECEMBER to "grudnia",
+)
+
+fun formatPolishDate(date: LocalDate): String {
+    val month = polishMonthsGenitive[date.month] ?: ""
+    return "${date.dayOfMonth} $month"
 }

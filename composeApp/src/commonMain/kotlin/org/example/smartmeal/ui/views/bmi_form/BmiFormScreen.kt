@@ -52,7 +52,10 @@ fun BmiFormContent(
             height = state.height,
             onHeightChange = viewModel::onHeightChange,
             weight = state.weight,
-            onWeightChange = viewModel::onWeightChange
+            onWeightChange = viewModel::onWeightChange,
+            weightError = state.weightError,
+            heightError = state.heightError
+
         )
 
         BmiFormFooter(

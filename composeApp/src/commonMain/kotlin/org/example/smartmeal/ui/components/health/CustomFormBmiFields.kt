@@ -11,6 +11,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.example.smartmeal.model.health.HealthFormError
+import org.example.smartmeal.model.health.asString
 import org.example.smartmeal.ui.theme.Colors
 
 @Composable
@@ -21,10 +23,24 @@ fun CustomFormBmiFields(
     placeholder: String,
     unit: String,
     modifier: Modifier = Modifier,
+    error: HealthFormError = HealthFormError.None
 ) {
+
+    val isError = error != HealthFormError.None
+
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
+        isError = isError,
+        supportingText = {
+            if (isError) {
+                Text(
+                    text = error.asString(),
+                    color = Colors.Error,
+                    fontSize = 12.sp
+                )
+            }
+        },
         label = label?.let { labelText ->
             {
                 Text(

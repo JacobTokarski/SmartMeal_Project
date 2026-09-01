@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.example.smartmeal.model.health.Gender
 import org.example.smartmeal.model.health.ActivityLevel
+import org.example.smartmeal.model.health.HealthFormError
 import org.example.smartmeal.ui.components.health.ActivityLevelSelector
 import org.example.smartmeal.ui.components.health.CustomFormBmiFields
 import org.example.smartmeal.ui.components.health.CustomFormSelectorButton
@@ -33,6 +34,9 @@ fun TdeeFormBody(
     onGenderSelect: (Gender) -> Unit,
     selectedActivityLevel: ActivityLevel?,
     onActivityLevelSelect: (ActivityLevel) -> Unit,
+    heightError: HealthFormError,
+    ageError: HealthFormError,
+    weightError: HealthFormError,
 ) {
 
     Column(
@@ -120,6 +124,7 @@ fun TdeeFormBody(
                 onValueChange = onAgeChange,
                 placeholder = "32",
                 unit = "lata",
+                error = ageError,
                 modifier = Modifier
                     .weight(1f)
             )
@@ -129,6 +134,7 @@ fun TdeeFormBody(
                 onValueChange = onHeightChange,
                 placeholder = "178",
                 unit = "cm",
+                error = heightError,
                 modifier = Modifier
                     .weight(1f)
             )
@@ -138,6 +144,7 @@ fun TdeeFormBody(
                 onValueChange = onWeightChange,
                 placeholder = "76",
                 unit = "kg",
+                error = weightError,
                 modifier = Modifier
                     .weight(1f)
             )

@@ -7,16 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import kotlinx.coroutines.flow.MutableStateFlow
-import org.example.smartmeal.ui.views.bmi_form.BmiFormViewModel
 import org.example.smartmeal.ui.views.tdee_form.parts.TdeeFormBody
 import org.example.smartmeal.ui.views.tdee_form.parts.TdeeFormFooter
 import org.example.smartmeal.ui.views.tdee_form.parts.TdeeFormHeader
@@ -66,6 +61,9 @@ fun TdeeContent(
             onGenderSelect = viewModel::onGenderSelect,
             selectedActivityLevel = state.selectedActivity,
             onActivityLevelSelect = viewModel::onActivityLevel,
+            ageError = state.ageError,
+            heightError = state.heightError,
+            weightError = state.weightError,
         )
 
         TdeeFormFooter(

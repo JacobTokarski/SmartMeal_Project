@@ -6,9 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.example.smartmeal.ui.components.CustomButtonField
-import org.example.smartmeal.ui.components.CustomEmailField
-import org.example.smartmeal.ui.components.CustomPasswordField
-import org.example.smartmeal.ui.utils.AuthError
+import org.example.smartmeal.ui.components.login.CustomEmailField
+import org.example.smartmeal.ui.components.register.CustomPasswordField
 import org.example.smartmeal.ui.views.register.RegisterUIState
 import smartmeal_project.composeapp.generated.resources.Res
 import smartmeal_project.composeapp.generated.resources.ic_lock

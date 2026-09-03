@@ -4,8 +4,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import org.example.smartmeal.ui.utils.Recipe
-import org.koin.viewmodel.emptyState
+import org.example.smartmeal.model.utils.recipe.Recipe
 
 data class OwnRecipeUIState(
     val recipes: List<Recipe> = emptyList(),

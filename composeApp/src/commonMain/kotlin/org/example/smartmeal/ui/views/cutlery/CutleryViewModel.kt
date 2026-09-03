@@ -7,19 +7,14 @@ import androidx.lifecycle.ViewModel
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Month
-import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
 import kotlinx.datetime.plus
-import kotlinx.datetime.todayIn
-import org.example.smartmeal.ui.utils.CalendarDay
-import kotlin.collections.plus
+import org.example.smartmeal.model.utils.cutlery.CalendarDay
 import kotlin.time.Clock
 
 class CutleryViewModel: ViewModel() {
 
     val mealCategories = listOf("Śniadanie", "II Śniadanie", "Obiad", "Podwieczorek", "Kolacja")
-
-    //    private val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
 
     private val today = kotlinx.datetime.LocalDate.Companion.fromEpochDays(
         (Clock.System.now().toEpochMilliseconds() / 86400000).toInt()

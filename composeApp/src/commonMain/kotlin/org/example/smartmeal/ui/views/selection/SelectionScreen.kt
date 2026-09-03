@@ -2,7 +2,6 @@ package org.example.smartmeal.ui.views.selection
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,7 +24,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -35,10 +33,10 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.datetime.LocalDate
+import org.example.smartmeal.model.utils.recipe.RecipeSubTabSelection
 import org.example.smartmeal.ui.components.CustomRecipeCard
 import org.example.smartmeal.ui.components.CustomSearchField
 import org.example.smartmeal.ui.theme.Colors
-import org.example.smartmeal.ui.utils.RecipeSubTabSelection
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 import smartmeal_project.composeapp.generated.resources.Res

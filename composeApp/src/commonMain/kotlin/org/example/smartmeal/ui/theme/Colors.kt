@@ -14,4 +14,7 @@ object Colors {
     val Icon_NotSelected = Color(0xFFE8EBE8)
     val Delete = Color(0xFFD81F1F)
     val Stats_Number = Color(0xFF2D3748)
+    val Form_Activity_Background = Color(0xFFE3F1EA)
+    val Form_Header_Background = Color(0xFF7AB79B)
+    val Form_Selector_Background = Color(0xFFE3F1EA)
 }

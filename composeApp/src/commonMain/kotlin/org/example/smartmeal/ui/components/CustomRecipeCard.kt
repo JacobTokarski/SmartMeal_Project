@@ -24,14 +24,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.example.smartmeal.model.home.RecipeCardAction
 import org.example.smartmeal.ui.theme.Colors
 import org.jetbrains.compose.resources.painterResource
 import smartmeal_project.composeapp.generated.resources.Res
@@ -39,6 +38,7 @@ import smartmeal_project.composeapp.generated.resources.ic_checked
 import smartmeal_project.composeapp.generated.resources.ic_clock
 import smartmeal_project.composeapp.generated.resources.ic_delete
 import smartmeal_project.composeapp.generated.resources.ic_edit
+import smartmeal_project.composeapp.generated.resources.ic_heart
 import smartmeal_project.composeapp.generated.resources.pic_burger
 import smartmeal_project.composeapp.generated.resources.pic_camera
 
@@ -47,14 +47,11 @@ fun CustomRecipeCard(
     title: String,
     category: String,
     type: String,
+    action: RecipeCardAction,
     hasImage: Boolean = false,
     calories: String = "1500 kcal",
     time: String = "35 minut",
-    isSelectionMode: Boolean = false,
-    isSelected: Boolean = false,
     onClick: () -> Unit,
-    onEditClick: () -> Unit = {},
-    onDeleteClick: () -> Unit = {},
 ) {
     Column(
         modifier = Modifier
@@ -65,7 +62,7 @@ fun CustomRecipeCard(
             .clickable { onClick() }
             .then(
                 when {
-                    isSelectionMode && isSelected -> Modifier
+                    action is RecipeCardAction.Selection && action.isSelected -> Modifier
                         .border(2.dp, Colors.Primary, RoundedCornerShape(15.dp))
 
                     !hasImage -> Modifier
@@ -78,17 +75,15 @@ fun CustomRecipeCard(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .aspectRatio(0.85f) //
+                .aspectRatio(0.85f)
         ) {
             if (hasImage) {
-
                 Image(
                     painter = painterResource(Res.drawable.pic_burger),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
                 )
-
             } else {
 
                 Icon(
@@ -101,7 +96,7 @@ fun CustomRecipeCard(
                 )
             }
 
-            if (isSelectionMode && isSelected) {
+            if (action is RecipeCardAction.Selection && action.isSelected) {
 
                 Box(
                     modifier = Modifier
@@ -109,8 +104,6 @@ fun CustomRecipeCard(
                         .background(Colors.Primary.copy(alpha = 0.2f))
                 )
             }
-
-            // Kontener przedstawiający informację na temat typu kuchni (np. azjatycka)
 
             Box(
                 modifier = Modifier
@@ -131,71 +124,94 @@ fun CustomRecipeCard(
                 )
             }
 
-
             Row(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .padding(8.dp),
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                if (isSelectionMode) {
+                when (action) {
 
-                    // 1 -> Tryb wyboru dania do jadłospisu
+                    is RecipeCardAction.Selection -> {
+                        if (action.isSelected) {
+                            Box(
+                                modifier = Modifier
+                                    .size(28.dp)
+                                    .clip(CircleShape)
+                                    .background(Colors.Primary),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    painter = painterResource(Res.drawable.ic_checked),
+                                    contentDescription = null,
+                                    tint = Color.White,
+                                    modifier = Modifier
+                                        .size(20.dp)
+                                )
+                            }
+                        }
+                    }
 
-                    if (isSelected) {
+                    is RecipeCardAction.EditDelete -> {
+
+                        val iconBackground =
+                            if (hasImage) Color.White.copy(alpha = 0.5f) else Color.Transparent
+
                         Box(
                             modifier = Modifier
                                 .size(28.dp)
                                 .clip(CircleShape)
-                                .background(Colors.Primary),
+                                .background(iconBackground)
+                                .clickable { action.onEditClick() },
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                painter = painterResource(Res.drawable.ic_checked),
-                                contentDescription = null,
-//                                tint = Color.White
+                                painter = painterResource(Res.drawable.ic_edit),
+                                contentDescription = "Ikona edycji",
                                 modifier = Modifier
-                                    .size(20.dp) //
+                                    .size(20.dp)
+                            )
+                        }
+
+                        Box(
+                            modifier = Modifier
+                                .size(28.dp)
+                                .clip(CircleShape)
+                                .background(iconBackground)
+                                .clickable { action.onDeleteClick() },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painter = painterResource(Res.drawable.ic_delete),
+                                contentDescription = "Delete icon",
+                                modifier = Modifier
+                                    .size(20.dp)
                             )
                         }
                     }
-                } else {
 
-                    // 2 -> Tworzenie własnego przepisu kosz/edycja
+                    is RecipeCardAction.Favorite -> {
+                        val iconBackground =
+                            if (hasImage) Color.White.copy(alpha = 0.5f) else Color.Transparent
 
-                    val iconBackground =
-                        if (hasImage) Color.White.copy(alpha = 0.8f) else Color.Transparent
-
-                    Box(
-                        modifier = Modifier
-                            .size(28.dp)
-                            .clip(CircleShape)
-                            .background(iconBackground)
-                            .clickable { onEditClick() }, // tutaj będzie dodana logika edycji danego przepisu
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            painter = painterResource(Res.drawable.ic_edit),
-                            contentDescription = "Ikona edycji",
+                        Box(
                             modifier = Modifier
-                                .size(20.dp)
-                        )
-                    }
-
-                    Box(
-                        modifier = Modifier
-                            .size(28.dp)
-                            .clip(CircleShape)
-                            .background(iconBackground)
-                            .clickable { onDeleteClick() }, // tutaj będzie dodana logika usuwania danego przepisu
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            painter = painterResource(Res.drawable.ic_delete),
-                            contentDescription = "Delete icon",
-                            modifier = Modifier
-                                .size(20.dp)
-                        )
+                                .size(28.dp)
+                                .clip(CircleShape)
+                                .background(iconBackground)
+                                .clickable { action.onToggle() },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painter = painterResource(
+                                    if (action.isFavorite) Res.drawable.ic_edit // Ikona będzie do poprawy
+                                    else Res.drawable.ic_heart
+                                ),
+                                contentDescription = "Favorite Home Icon",
+                                modifier = Modifier.size(20.dp),
+                                tint = Colors.Icon_Color
+                            )
+                        }
                     }
                 }
             }
@@ -218,8 +234,8 @@ fun CustomRecipeCard(
                         painter = painterResource(Res.drawable.ic_clock), // Na razie taka ikona
                         contentDescription = "Ikona zegara",
                         modifier = Modifier
-                            .size(10.dp), //
-                        tint = Color(0xFF4A3324) //
+                            .size(10.dp),
+                        tint = Color(0xFF4A3324)
 
                     )
 
@@ -286,6 +302,7 @@ fun CustomRecipeCard(
                 }
             }
         }
+
 
         Column(
             modifier = Modifier

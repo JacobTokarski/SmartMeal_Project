@@ -6,6 +6,7 @@ import org.example.smartmeal.data.remote.createHttpClient
 import org.example.smartmeal.ui.views.bmi_form.BmiFormViewModel
 import org.example.smartmeal.ui.views.cutlery.CutleryViewModel
 import org.example.smartmeal.ui.views.health.HealthViewModel
+import org.example.smartmeal.ui.views.home.HomeViewModel
 import org.example.smartmeal.ui.views.login.LoginViewModel
 import org.example.smartmeal.ui.views.own.OwnViewModel
 import org.example.smartmeal.ui.views.profile.ProfileViewModel
@@ -26,6 +27,7 @@ val appModule = module {
     factory { HealthViewModel() }
     factory { TdeeFormViewModel() }
     factory { BmiFormViewModel() }
+    factory { HomeViewModel() }
     factory {
         SelectionViewModel(
             mealName = get(),

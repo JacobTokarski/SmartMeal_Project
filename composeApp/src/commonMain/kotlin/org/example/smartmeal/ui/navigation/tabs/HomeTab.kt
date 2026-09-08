@@ -20,10 +20,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import org.example.smartmeal.model.utils.recipe.RecipesSubTabHome
 import org.example.smartmeal.ui.theme.Colors
+import org.example.smartmeal.ui.views.home.HomeContent
 import org.example.smartmeal.ui.views.own.OwnContent
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -81,7 +83,7 @@ object HomeTab : Tab {
                 when (selectedTab) {
 
                     RecipesSubTabHome.Main -> {
-                        Text("Widok Główny", modifier = Modifier.align(Alignment.Center))
+                        HomeContent(viewModel = koinViewModel())
                     }
 
                     RecipesSubTabHome.Search -> {

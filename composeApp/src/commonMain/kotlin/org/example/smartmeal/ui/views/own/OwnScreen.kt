@@ -23,6 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import cafe.adriel.voyager.core.screen.Screen
+import org.example.smartmeal.data.repository.CustomRecipe
+import org.example.smartmeal.data.repository.RecipeRepository
+import org.example.smartmeal.model.home.RecipeCardAction
 import org.example.smartmeal.ui.components.CustomRecipeCard
 import org.example.smartmeal.ui.views.own.parts.OwnEmptyState
 import org.example.smartmeal.ui.views.own.parts.OwnFooter
@@ -89,7 +92,7 @@ fun OwnContent(
                             ) {
                                 OwnFormScreen(
                                     onSaveClick = { newRecipe ->
-                                        val globalRecipe = org.example.smartmeal.data.repository.CustomRecipe(
+                                        val globalRecipe = CustomRecipe(
                                             id = Clock.System.now().toEpochMilliseconds().toString(),
                                             title = newRecipe.title,
                                             category = newRecipe.category,
@@ -100,7 +103,7 @@ fun OwnContent(
                                             isFavorite = false
                                         )
 
-                                        org.example.smartmeal.data.repository.RecipeRepository.addRecipe(globalRecipe)
+                                        RecipeRepository.addRecipe(globalRecipe)
 
                                         viewModel.onAddRecipe(newRecipe)
 
@@ -135,11 +138,11 @@ fun OwnContent(
                                     hasImage = currentRecipe.hasImage,
                                     calories = currentRecipe.calories,
                                     time = currentRecipe.time,
-                                    onEditClick = {}, //
-                                    onDeleteClick = {}, //
-                                    isSelected = false,
-                                    isSelectionMode = false,
-                                    onClick = {}, //
+                                    onClick = {},
+                                    action = RecipeCardAction.EditDelete(
+                                        onEditClick = {},
+                                        onDeleteClick = {}
+                                    ), //
                                 )
                             }
                         }

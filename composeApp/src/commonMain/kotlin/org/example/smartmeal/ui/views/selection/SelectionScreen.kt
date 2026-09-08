@@ -33,6 +33,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.datetime.LocalDate
+import org.example.smartmeal.model.home.RecipeCardAction
 import org.example.smartmeal.model.utils.recipe.RecipeSubTabSelection
 import org.example.smartmeal.ui.components.CustomRecipeCard
 import org.example.smartmeal.ui.components.CustomSearchField
@@ -167,8 +168,9 @@ fun SelectionContent(
                         hasImage = recipe.hasImage,
                         calories = recipe.calories,
                         time = recipe.time,
-                        isSelectionMode = true,
-                        isSelected = viewModel.selectedRecipeId == recipe.id,
+                        action = RecipeCardAction.Selection(
+                            isSelected = recipe.id == viewModel.selectedRecipeId,
+                        ),
                         onClick = { viewModel.toggleRecipeSelection(recipe.id)},
                     )
                 }

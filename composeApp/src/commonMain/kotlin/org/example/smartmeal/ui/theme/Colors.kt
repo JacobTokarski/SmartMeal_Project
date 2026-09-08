@@ -10,6 +10,7 @@ object Colors {
     val Secondary_Form = Color(0xFFA9D1C0)
     val Text_Form = Color(0xFF0C151D)
     val Icon_Back = Color(0xFFC2D1CB)
+    val Icon_Color = Color(0xFFFDFDFD)
     val Icon_Selected = Color(0xFF2D7A4D)
     val Icon_NotSelected = Color(0xFFE8EBE8)
     val Delete = Color(0xFFD81F1F)

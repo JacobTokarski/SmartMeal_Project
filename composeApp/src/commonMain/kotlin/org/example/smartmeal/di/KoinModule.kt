@@ -11,6 +11,7 @@ import org.example.smartmeal.ui.views.login.LoginViewModel
 import org.example.smartmeal.ui.views.own.OwnViewModel
 import org.example.smartmeal.ui.views.profile.ProfileViewModel
 import org.example.smartmeal.ui.views.register.RegisterViewModel
+import org.example.smartmeal.ui.views.search.SearchViewModel
 import org.example.smartmeal.ui.views.selection.SelectionViewModel
 import org.example.smartmeal.ui.views.tdee_form.TdeeFormViewModel
 import org.koin.core.context.startKoin
@@ -28,6 +29,7 @@ val appModule = module {
     factory { TdeeFormViewModel() }
     factory { BmiFormViewModel() }
     factory { HomeViewModel() }
+    factory { SearchViewModel() }
     factory {
         SelectionViewModel(
             mealName = get(),

@@ -27,6 +27,7 @@ import org.example.smartmeal.model.utils.recipe.RecipesSubTabHome
 import org.example.smartmeal.ui.theme.Colors
 import org.example.smartmeal.ui.views.home.HomeContent
 import org.example.smartmeal.ui.views.own.OwnContent
+import org.example.smartmeal.ui.views.search.SearchContent
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import smartmeal_project.composeapp.generated.resources.Res
@@ -87,7 +88,7 @@ object HomeTab : Tab {
                     }
 
                     RecipesSubTabHome.Search -> {
-                        Text("Widok Szukania", modifier = Modifier.align(Alignment.Center))
+                        SearchContent(viewModel = koinViewModel())
                     }
 
                     RecipesSubTabHome.Own -> {

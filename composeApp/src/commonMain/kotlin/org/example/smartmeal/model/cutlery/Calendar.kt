@@ -1,4 +1,4 @@
-package org.example.smartmeal.model.utils.cutlery
+package org.example.smartmeal.model.cutlery
 
 import kotlinx.datetime.LocalDate
 

@@ -25,6 +25,7 @@ import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import org.example.smartmeal.model.utils.recipe.RecipesSubTabHome
 import org.example.smartmeal.ui.theme.Colors
+import org.example.smartmeal.ui.views.favorite.FavoriteContent
 import org.example.smartmeal.ui.views.home.HomeContent
 import org.example.smartmeal.ui.views.own.OwnContent
 import org.example.smartmeal.ui.views.search.SearchContent
@@ -96,7 +97,7 @@ object HomeTab : Tab {
                     }
 
                     RecipesSubTabHome.Favorites -> {
-                        Text("Widok Ulubiony", modifier = Modifier.align(Alignment.Center))
+                        FavoriteContent(viewModel = koinViewModel())
                     }
                 }
             }

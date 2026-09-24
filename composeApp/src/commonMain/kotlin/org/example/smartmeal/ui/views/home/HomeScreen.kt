@@ -15,6 +15,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import org.example.smartmeal.model.recipe.HomeDemoData
 import org.example.smartmeal.ui.components.CustomRecipeCard
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -42,11 +45,7 @@ fun HomeContent(
     viewModel: HomeViewModel
 ) {
 
-    val allRecipes = HomeDemoData.allRecipes
-    val recommended = allRecipes.take(5)
-    val breakfast = allRecipes.drop(5).take(5)
-    val lunch = allRecipes.drop(10).take(5)
-    val dinner = allRecipes.drop(15).take(5)
+    val state by viewModel.uiState.collectAsState()
 
     Surface(
         modifier = Modifier
@@ -85,22 +84,26 @@ fun HomeContent(
 
             RecipeSection(
                 title = "Rekomendowane",
-                recipes = recommended
+                recipes = state.recommended,
+                favoriteIds = state.favoriteIds
             )
 
             RecipeSection(
                 title = "Śniadanie",
-                recipes = breakfast
+                recipes = state.breakfast,
+                favoriteIds = state.favoriteIds
             )
 
             RecipeSection(
                 title = "Obiad",
-                recipes = lunch
+                recipes = state.lunch,
+                favoriteIds = state.favoriteIds
             )
 
             RecipeSection(
                 title = "Kolacja",
-                recipes = dinner
+                recipes = state.dinner,
+                favoriteIds = state.favoriteIds
             )
         }
     }

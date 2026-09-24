@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import org.example.smartmeal.model.utils.recipe.Recipe
+import org.example.smartmeal.model.recipe.Recipe
 
 data class OwnRecipeUIState(
     val recipes: List<Recipe> = emptyList(),
@@ -17,10 +17,11 @@ class OwnViewModel: ViewModel() {
 
     private val _uiState = MutableStateFlow(OwnRecipeUIState())
 
+    val uiState = _uiState.asStateFlow()
+
     fun onToggleForm(visible: Boolean) {
         _uiState.update { it.copy(isFormVisible = visible) }
     }
-    val uiState = _uiState.asStateFlow()
 
     fun onSearchQuery(newQuery: String) {
         _uiState.value = _uiState.value.copy(searchQuery = newQuery)

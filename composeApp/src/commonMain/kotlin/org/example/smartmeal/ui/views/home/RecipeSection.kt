@@ -14,7 +14,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.example.smartmeal.data.repository.FavoriteRepository
 import org.example.smartmeal.model.home.RecipeCardAction
+import org.example.smartmeal.model.recipe.Recipe
 import org.example.smartmeal.ui.components.CustomRecipeCard
 
 // Dodany widok kompozycyjny wyświetlający kategorie (na razie tylko do testów)
@@ -22,7 +24,8 @@ import org.example.smartmeal.ui.components.CustomRecipeCard
 @Composable
 fun RecipeSection(
     title: String,
-    recipes: List<HomeRecipe>,
+    recipes: List<Recipe>,
+    favoriteIds: Set<String>
 ) {
     Text(
         text = title,
@@ -43,14 +46,14 @@ fun RecipeSection(
             CustomRecipeCard(
                 title = recipe.title,
                 category = recipe.category,
-                type = recipe.cuisineType,
+                type = recipe.type,
                 hasImage = recipe.hasImage,
                 calories = recipe.calories,
                 time = recipe.time,
                 onClick = {},
                 action = RecipeCardAction.Favorite(
-                    isFavorite = false,
-                    onToggle = {}
+                    isFavorite = recipe.id in favoriteIds,
+                    onToggle = { FavoriteRepository.toggle(recipe.id)}
                 )
             )
         }

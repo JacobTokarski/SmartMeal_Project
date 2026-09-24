@@ -5,14 +5,13 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import org.example.smartmeal.ui.views.home.HomeDemoData
-import org.example.smartmeal.ui.views.home.HomeRecipe
+import org.example.smartmeal.model.recipe.HomeDemoData
+import org.example.smartmeal.model.recipe.Recipe
 
 data class SearchRecipeUIState(
-    val recipes: List<HomeRecipe> = emptyList(),
+    val recipes: List<Recipe> = emptyList(),
     val searchQuery: String = "",
 )
 class SearchViewModel: ViewModel() {

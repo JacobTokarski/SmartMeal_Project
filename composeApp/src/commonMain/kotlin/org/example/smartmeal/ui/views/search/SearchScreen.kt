@@ -72,7 +72,7 @@ fun SearchContent(
                         CustomRecipeCard(
                             title = recipe.title,
                             category = recipe.category,
-                            type = recipe.cuisineType,
+                            type = recipe.type,
                             hasImage = recipe.hasImage,
                             calories = recipe.calories,
                             time = recipe.time,

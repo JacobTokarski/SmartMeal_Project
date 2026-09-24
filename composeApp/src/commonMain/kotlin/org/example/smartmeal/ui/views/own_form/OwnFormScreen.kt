@@ -13,7 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import org.example.smartmeal.model.utils.recipe.Recipe
+import org.example.smartmeal.model.recipe.Recipe
 import org.example.smartmeal.ui.views.own_form.parts.OwnFormBody
 import org.example.smartmeal.ui.views.own_form.parts.OwnFormFooter
 import org.example.smartmeal.ui.views.own_form.parts.OwnFormHeader

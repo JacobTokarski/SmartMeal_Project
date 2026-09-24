@@ -9,7 +9,7 @@ import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Month
 import kotlinx.datetime.minus
 import kotlinx.datetime.plus
-import org.example.smartmeal.model.utils.cutlery.CalendarDay
+import org.example.smartmeal.model.cutlery.CalendarDay
 import kotlin.time.Clock
 
 class CutleryViewModel: ViewModel() {

@@ -1,6 +1,5 @@
-package org.example.smartmeal.model.utils.recipe
+package org.example.smartmeal.model.recipe
 
-// Just for now
 data class Recipe(
     val id: String = "",
     val title: String,
@@ -10,3 +9,17 @@ data class Recipe(
     val category: String,
     val hasImage: Boolean = false
 )
+
+object HomeDemoData {
+    val allRecipes = List(20) { index ->
+        Recipe(
+            id = "demo_$index",
+            title = "Kotlet schabowy z ziemniakami",
+            category = "Obiad",
+            type = "Polska",
+            hasImage = true,
+            calories = "2000kcal",
+            time = "20 minut",
+        )
+    }
+}

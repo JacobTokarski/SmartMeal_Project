@@ -3,6 +3,7 @@ package org.example.smartmeal.di
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import org.example.smartmeal.data.remote.createHttpClient
+import org.example.smartmeal.ui.views.ai.ChatViewModel
 import org.example.smartmeal.ui.views.bmi_form.BmiFormViewModel
 import org.example.smartmeal.ui.views.cutlery.CutleryViewModel
 import org.example.smartmeal.ui.views.favorite.FavoriteViewModel
@@ -32,6 +33,7 @@ val appModule = module {
     factory { HomeViewModel() }
     factory { SearchViewModel() }
     factory { FavoriteViewModel() }
+    factory { ChatViewModel() }
     factory {
         SelectionViewModel(
             mealName = get(),

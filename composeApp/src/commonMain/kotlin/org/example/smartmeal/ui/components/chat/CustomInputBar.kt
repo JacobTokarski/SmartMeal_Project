@@ -43,7 +43,7 @@ fun CustomInputBar(
         textStyle = TextStyle(
             fontFamily = FontFamily.Serif,
             fontSize = 15.sp,
-            color = Color.Gray
+            color = Color.Black
         ),
         singleLine = true,
         shape = RoundedCornerShape(15.dp),

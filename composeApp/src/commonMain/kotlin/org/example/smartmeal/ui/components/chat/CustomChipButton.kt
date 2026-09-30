@@ -36,7 +36,7 @@ fun CustomChipButton(
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
         modifier = modifier
-            .background(Colors.Form_Header_Background, RoundedCornerShape(15.dp))
+            .background(Colors.Form_Header_Background.copy(alpha = 0.5f), RoundedCornerShape(15.dp))
             .clickable(onClick = onClick)
             .padding(horizontal = 15.dp, vertical = 10.dp)
     )

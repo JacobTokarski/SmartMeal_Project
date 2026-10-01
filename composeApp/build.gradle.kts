@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.google.services)
 }
 
 kotlin {
@@ -58,6 +59,7 @@ kotlin {
             implementation(libs.ktor.client.logging)
             implementation(libs.compottie)
             implementation(libs.kotlinx.datetime)
+            implementation(libs.gitlive.firebase.auth)
 
         }
         commonTest.dependencies {

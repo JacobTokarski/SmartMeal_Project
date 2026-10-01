@@ -3,6 +3,8 @@ agp = "9.4.1"
 android-compileSdk = "36"
 android-minSdk = "24"
 android-targetSdk = "36"
+firebaseGitlive = "2.6.0"
+googleServices = "4.4.2"
 androidx-activity = "1.12.2"
 androidx-appcompat = "1.7.1"
 androidx-core = "1.17.0"
@@ -19,7 +21,7 @@ kotlinxDatetime = "0.6.0"
 material3 = "1.10.0-alpha05"
 koin = "4.0.0"
 ktor = "3.0.1"
-voyager = "1.1.0-beta03"
+voyager = "2.2.21-1.10.3"
 serialization = "1.7.3"
 napier = "2.7.1"
 
@@ -61,8 +63,10 @@ napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 voyager-tab-navigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
+gitlive-firebase-auth = { module = "dev.gitlive:firebase-auth", version.ref = "firebaseGitlive" }
 
 [plugins]
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }

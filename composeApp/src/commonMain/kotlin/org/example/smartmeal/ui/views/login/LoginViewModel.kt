@@ -1,10 +1,13 @@
 package org.example.smartmeal.ui.views.login
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import org.example.smartmeal.data.repository.AuthenticationRepository
 import org.example.smartmeal.model.errors.AuthError
 
 
@@ -18,7 +21,9 @@ data class LoginUIState(
     val passwordError: AuthError = AuthError.None,
 )
 
-class LoginViewModel: ViewModel() {
+class LoginViewModel(
+    private val authRepository: AuthenticationRepository
+): ViewModel() {
 
     private val _uiState = MutableStateFlow(LoginUIState())
 
@@ -30,7 +35,7 @@ class LoginViewModel: ViewModel() {
     }
 
     fun onPasswordChange(newValue: String) {
-        _uiState.value = uiState.value.copy(password = newValue, passwordError = AuthError.None,)
+        _uiState.value = uiState.value.copy(password = newValue, passwordError = AuthError.None)
     }
 
     fun onLoginClick() {
@@ -46,7 +51,24 @@ class LoginViewModel: ViewModel() {
         ) }
 
         if (mailError == AuthError.None && passwordError == AuthError.None) {
-            _uiState.update { it.copy(isLoginSuccessful = true) } // W przyszłości tutaj będzie się znajdować logika Firebase-a
+
+            _uiState.update { it.copy(isLoading = true) }
+
+            viewModelScope.launch {
+
+                val result = authRepository.login(currentState.email, currentState.password)
+
+                when (result) {
+
+                    is AuthenticationRepository.AuthResult.Success -> {
+                        _uiState.update { it.copy(isLoading = false, isLoginSuccessful = true) }
+                    }
+
+                    is AuthenticationRepository.AuthResult.Failure -> {
+                        _uiState.update { it.copy(isLoading = false, passwordError = AuthError.None) }
+                    }
+                }
+            }
         }
     }
 }

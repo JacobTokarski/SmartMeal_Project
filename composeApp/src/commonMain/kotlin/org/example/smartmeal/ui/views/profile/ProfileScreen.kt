@@ -119,7 +119,7 @@ fun ProfileContent(
             Spacer(modifier = Modifier.height(20.dp))
 
             Text(
-                text = "Witaj ponownie Jakub!",
+                text = "Witaj ponownie Username!",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black

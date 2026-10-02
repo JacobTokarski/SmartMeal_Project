@@ -2,7 +2,9 @@ package org.example.smartmeal.di
 
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
+import kotlinx.datetime.LocalDate
 import org.example.smartmeal.data.remote.createHttpClient
+import org.example.smartmeal.data.repository.AuthenticationRepository
 import org.example.smartmeal.ui.views.ai.ChatViewModel
 import org.example.smartmeal.ui.views.bmi_form.BmiFormViewModel
 import org.example.smartmeal.ui.views.cutlery.CutleryViewModel
@@ -22,8 +24,9 @@ import org.koin.dsl.module
 
 val appModule = module {
     single { createHttpClient() }
-    factory { LoginViewModel() }
-    factory { RegisterViewModel() }
+    single { AuthenticationRepository() }
+    factory { LoginViewModel(authRepository = get()) }
+    factory { RegisterViewModel(authRepository = get()) }
     factory { OwnViewModel() }
     factory { CutleryViewModel() }
     factory { ProfileViewModel() }
@@ -34,10 +37,10 @@ val appModule = module {
     factory { SearchViewModel() }
     factory { FavoriteViewModel() }
     factory { ChatViewModel() }
-    factory {
+    factory { (mealName: String, selectedDate: LocalDate) ->
         SelectionViewModel(
-            mealName = get(),
-            selectedDate = get()
+            mealName = mealName,
+            selectedDate = selectedDate
         )
     }
 }

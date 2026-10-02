@@ -1,10 +1,13 @@
 package org.example.smartmeal.ui.views.register
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import org.example.smartmeal.data.repository.AuthenticationRepository
 import org.example.smartmeal.model.errors.AuthError
 
 data class RegisterUIState(
@@ -23,7 +26,9 @@ data class RegisterUIState(
     val confirmPasswordError: AuthError = AuthError.None
 )
 
-class RegisterViewModel: ViewModel() {
+class RegisterViewModel(
+    private val authRepository: AuthenticationRepository
+): ViewModel() {
 
     private val _uiState = MutableStateFlow(RegisterUIState())
 
@@ -70,7 +75,7 @@ class RegisterViewModel: ViewModel() {
             currentState.password.isBlank() -> AuthError.EmptyField
             currentState.password.length < 6 -> AuthError.PasswordTooShort
             !currentState.password.any { it.isUpperCase()} -> AuthError.MissingUppercase
-            !currentState.password.any { it.isLetterOrDigit()} -> AuthError.MissingSpecialChar
+            !currentState.password.any { !it.isLetterOrDigit()} -> AuthError.MissingSpecialChar
             else -> AuthError.None
         }
 
@@ -91,7 +96,28 @@ class RegisterViewModel: ViewModel() {
             .all { it == AuthError.None }
 
         if (isDataValid) {
-            // W przyszłości logika Firebase-a
+
+            _uiState.update { it.copy(isLoading = true) }
+
+            viewModelScope.launch {
+
+                val result = authRepository.register(
+                    email = currentState.email,
+                    password = currentState.password,
+                    displayName = currentState.username
+                )
+
+                when (result) {
+
+                    is AuthenticationRepository.AuthResult.Success -> {
+                        _uiState.update { it.copy(isLoading = false, isRegisterSuccessful = true) }
+                    }
+
+                    is AuthenticationRepository.AuthResult.Failure -> {
+                        _uiState.update { it.copy(isLoading = false, emailError = AuthError.InvalidEmailFormat) }
+                    }
+                }
+            }
         }
     }
 }

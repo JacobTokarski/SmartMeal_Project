@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -19,6 +20,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import org.example.smartmeal.ui.views.login.LoginScreen
+import org.example.smartmeal.ui.views.main.MainScreen
 import org.example.smartmeal.ui.views.register.parts.RegisterFooter
 import org.example.smartmeal.ui.views.register.parts.RegisterForm
 import org.example.smartmeal.ui.views.register.parts.RegisterHeader
@@ -30,6 +32,13 @@ object RegisterScreen : Screen {
 
         val viewModel = koinViewModel<RegisterViewModel>()
         val navigator = LocalNavigator.currentOrThrow
+        val state by viewModel.uiState.collectAsState()
+
+        LaunchedEffect(state.isRegisterSuccessful) {
+            if (state.isRegisterSuccessful) {
+                navigator.replaceAll(MainScreen)
+            }
+        }
 
         RegisterContent(
             viewModel = viewModel,

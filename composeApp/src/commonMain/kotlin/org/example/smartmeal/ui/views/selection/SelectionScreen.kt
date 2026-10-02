@@ -95,11 +95,12 @@ fun SelectionContent(
                 )
             }
         }
-    ) {
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(vertical = 15.dp, horizontal = 20.dp)
+                .padding(paddingValues)
+                .padding(horizontal = 20.dp)
                 .background(Color.White),
         ) {
 

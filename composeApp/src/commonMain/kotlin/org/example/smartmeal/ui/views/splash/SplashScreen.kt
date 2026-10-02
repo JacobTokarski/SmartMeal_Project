@@ -21,8 +21,11 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.coroutines.delay
+import org.example.smartmeal.data.repository.AuthenticationRepository
 import org.example.smartmeal.ui.views.login.LoginScreen
+import org.example.smartmeal.ui.views.main.MainScreen
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.koinInject
 import smartmeal_project.composeapp.generated.resources.Res
 import smartmeal_project.composeapp.generated.resources.pic_leaf
 import smartmeal_project.composeapp.generated.resources.pic_logo
@@ -35,10 +38,17 @@ object SplashScreen : Screen {
 
         val navigator = LocalNavigator.currentOrThrow
 
+        val authRepository = koinInject<AuthenticationRepository>()
+
         LaunchedEffect(Unit) {
             delay(2500.milliseconds)
 
-            navigator.replace(LoginScreen)
+            val isLoggedIn = authRepository.currentUser.value != null
+
+            if (isLoggedIn) {
+                navigator.replaceAll(MainScreen)
+            } else
+                navigator.replaceAll(LoginScreen)
         }
         SplashContent()
     }

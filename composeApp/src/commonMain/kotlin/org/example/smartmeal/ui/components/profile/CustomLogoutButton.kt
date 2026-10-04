@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -44,7 +45,7 @@ fun CustomLogoutButton(
             .height(50.dp),
         shape = RoundedCornerShape(15.dp),
         color = Color.White,
-        border = BorderStroke(1.dp, Colors.Primary),
+        border = BorderStroke(1.dp, Color(0xFFE24C4D)),
         shadowElevation = 2.dp,
     ) {
         Row(
@@ -55,6 +56,7 @@ fun CustomLogoutButton(
         ) {
             Image(
                 painter = painterResource(leadingIcon),
+                colorFilter = ColorFilter.tint(Color(0xFFE24C4D)),
                 contentDescription = "Leading Media Icon",
                 modifier = Modifier
                     .size(24.dp)
@@ -65,7 +67,7 @@ fun CustomLogoutButton(
             Text(
                 text = text,
                 fontSize = 16.sp,
-                color = Color.Black,
+                color = Color(0xFFE24C4D),
                 fontWeight = FontWeight.Normal,
                 modifier = Modifier
                     .weight(1f)
@@ -77,7 +79,7 @@ fun CustomLogoutButton(
                 modifier = Modifier
                     .size(20.dp)
                     .rotate(180f),
-                tint = Colors.Primary
+                tint = Color(0xFFE24C4D)
             )
         }
     }

@@ -29,7 +29,7 @@ val appModule = module {
     factory { RegisterViewModel(authRepository = get()) }
     factory { OwnViewModel() }
     factory { CutleryViewModel() }
-    factory { ProfileViewModel() }
+    factory { ProfileViewModel(authRepository = get()) }
     factory { HealthViewModel() }
     factory { TdeeFormViewModel() }
     factory { BmiFormViewModel() }

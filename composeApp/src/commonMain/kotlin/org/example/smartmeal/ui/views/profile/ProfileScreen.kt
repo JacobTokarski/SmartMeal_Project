@@ -1,7 +1,6 @@
 package org.example.smartmeal.ui.views.profile
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,13 +11,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,6 +29,9 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,6 +42,7 @@ import org.example.smartmeal.ui.components.profile.CustomLogoutButton
 import org.example.smartmeal.ui.components.profile.CustomProfileAlertDialog
 import org.example.smartmeal.ui.components.profile.CustomSocialButtons
 import org.example.smartmeal.ui.components.profile.CustomStatsCard
+import org.example.smartmeal.ui.theme.Colors
 import org.example.smartmeal.ui.views.login.LoginScreen
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -49,7 +53,6 @@ import smartmeal_project.composeapp.generated.resources.ic_instagram
 import smartmeal_project.composeapp.generated.resources.ic_logout
 import smartmeal_project.composeapp.generated.resources.ic_stat_favorite
 import smartmeal_project.composeapp.generated.resources.ic_stat_kitchen
-import smartmeal_project.composeapp.generated.resources.ic_stat_ai
 import smartmeal_project.composeapp.generated.resources.ic_twitter
 import smartmeal_project.composeapp.generated.resources.pic_background
 
@@ -72,6 +75,18 @@ fun ProfileContent(
     var showAppBar by remember { mutableStateOf(false) }
     val url = LocalUriHandler.current
     val tabNavigator = LocalNavigator.currentOrThrow
+    val state by viewModel.uiState.collectAsState()
+    val logout by viewModel.logoutEvent.collectAsState()
+
+
+    LaunchedEffect(logout) {
+        if (logout) {
+            val rootNavigator = tabNavigator.parent ?: tabNavigator
+            rootNavigator.replaceAll(LoginScreen)
+        }
+    }
+
+
 
     Surface(
         modifier = Modifier
@@ -95,23 +110,23 @@ fun ProfileContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 30.dp, vertical = 20.dp),
+                .padding(horizontal = 25.dp, vertical = 15.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Surface(
                 modifier = Modifier
                     .size(120.dp),
                 shape = CircleShape,
-                color = MaterialTheme.colorScheme.secondaryContainer,
                 shadowElevation = 8.dp,
+                color = Colors.Primary,
             ) {
                 Box(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "J",
-                        style = MaterialTheme.typography.displayLarge
+                        text = state.avatarName,
+                        style = MaterialTheme.typography.displayLarge,
+                        color = Color.White
                     )
                 }
             }
@@ -119,62 +134,69 @@ fun ProfileContent(
             Spacer(modifier = Modifier.height(20.dp))
 
             Text(
-                text = "Witaj ponownie Username!",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
+                text = "Witaj serdecznie ${state.displayName}!",
+                style = TextStyle(
+                    fontFamily = FontFamily.Serif,
+                    fontStyle = FontStyle.Italic,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    color = Color.Black.copy(alpha = 0.7f),
+                )
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(25.dp))
 
             Text(
                 text = "Statystyki",
-                fontSize = 17.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = Color.Black,
+                style = TextStyle(
+                    fontFamily = FontFamily.Serif,
+                    fontStyle = FontStyle.Italic,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 15.sp,
+                    color = Color.Black.copy(alpha = 0.7f),
+                ),
                 modifier = Modifier
                     .align(Alignment.Start)
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(15.dp))
 
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .horizontalScroll(rememberScrollState()),
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 CustomStatsCard(
                     statsName = "Ulubione",
-                    statsNumber = "14",
-                    statsIcon = Res.drawable.ic_stat_favorite
+                    statsNumber = state.favoriteCount.toString(),
+                    statsIcon = Res.drawable.ic_stat_favorite,
+                    modifier = Modifier.weight(1f)
                 )
 
                 CustomStatsCard(
                     statsName = "Moja kuchnia",
-                    statsNumber = "7",
-                    statsIcon = Res.drawable.ic_stat_kitchen
-                )
-
-                CustomStatsCard(
-                    statsName = "Wsparcie AI",
-                    statsNumber = "10",
-                    statsIcon = Res.drawable.ic_stat_ai
+                    statsNumber = state.ownRecipesCount.toString(),
+                    statsIcon = Res.drawable.ic_stat_kitchen,
+                    modifier = Modifier.weight(1f)
                 )
             }
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(25.dp))
 
             Text(
-                text = "Śledź nas po więcej inspiracji",
-                fontSize = 17.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = Color.Black,
+                text = "Śledź nas po więcej inspiracji!",
+                style = TextStyle(
+                    fontFamily = FontFamily.Serif,
+                    fontStyle = FontStyle.Italic,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 15.sp,
+                    color = Color.Black.copy(alpha = 0.7f),
+                ),
                 modifier = Modifier
                     .align(Alignment.Start)
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(15.dp))
 
             CustomSocialButtons(
                 text = "Instagram",
@@ -204,7 +226,16 @@ fun ProfileContent(
                 trailingIcon = Res.drawable.ic_arrow
             )
 
-            Spacer(modifier = Modifier.height(60.dp))
+            Spacer(modifier = Modifier.height(30.dp))
+
+            HorizontalDivider(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                thickness = 0.5.dp,
+                color = Color.Gray
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
 
             CustomLogoutButton(
                 text = "Wyloguj się",
@@ -218,10 +249,7 @@ fun ProfileContent(
                 CustomProfileAlertDialog(
                     onConfirmClick = {
                         showAppBar = false
-
-                        val rootNavigator = tabNavigator.parent ?: tabNavigator
-
-                        rootNavigator.replaceAll(LoginScreen)
+                        viewModel.onLogoutClick()
                     },
                     onDismissClick = {
                         showAppBar = false

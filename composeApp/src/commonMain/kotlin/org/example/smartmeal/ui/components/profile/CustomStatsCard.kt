@@ -33,16 +33,17 @@ fun CustomStatsCard(
     statsName : String,
     statsNumber: String,
     statsIcon: DrawableResource,
+    modifier: Modifier = Modifier,
 ) {
     Surface(
-        modifier = Modifier
-            .size(140.dp),
+        modifier = modifier
+            .height(170.dp),
         shape = RoundedCornerShape(15.dp),
         color = Color.White,
         border = BorderStroke(1.dp, Colors.Primary)
     ) {
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxHeight()
                 .padding(horizontal = 10.dp, vertical = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -51,7 +52,7 @@ fun CustomStatsCard(
 
             Text(
                 text = statsNumber,
-                fontSize = 48.sp,
+                fontSize = 58.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Colors.Stats_Number
             )
@@ -60,12 +61,13 @@ fun CustomStatsCard(
                 painter = painterResource(statsIcon),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(24.dp),
+                    .size(32.dp),
+                tint = Colors.Primary
             )
 
             Text(
                 text = statsName,
-                fontSize = 15.sp,
+                fontSize = 18.sp,
                 fontWeight = FontWeight.Normal,
                 color = Colors.Stats_Number
             )

@@ -1,21 +1,11 @@
 package org.example.smartmeal.ui.views.profile
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -29,31 +19,18 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import org.example.smartmeal.ui.components.profile.CustomLogoutButton
 import org.example.smartmeal.ui.components.profile.CustomProfileAlertDialog
-import org.example.smartmeal.ui.components.profile.CustomSocialButtons
-import org.example.smartmeal.ui.components.profile.CustomStatsCard
-import org.example.smartmeal.ui.theme.Colors
 import org.example.smartmeal.ui.views.login.LoginScreen
+import org.example.smartmeal.ui.views.profile.parts.ProfileBody
+import org.example.smartmeal.ui.views.profile.parts.ProfileFooter
+import org.example.smartmeal.ui.views.profile.parts.ProfileHeader
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import smartmeal_project.composeapp.generated.resources.Res
-import smartmeal_project.composeapp.generated.resources.ic_arrow
-import smartmeal_project.composeapp.generated.resources.ic_facebook
-import smartmeal_project.composeapp.generated.resources.ic_instagram
-import smartmeal_project.composeapp.generated.resources.ic_logout
-import smartmeal_project.composeapp.generated.resources.ic_stat_favorite
-import smartmeal_project.composeapp.generated.resources.ic_stat_kitchen
-import smartmeal_project.composeapp.generated.resources.ic_twitter
 import smartmeal_project.composeapp.generated.resources.pic_background
 
 class ProfileScreen : Screen {
@@ -86,8 +63,6 @@ fun ProfileContent(
         }
     }
 
-
-
     Surface(
         modifier = Modifier
             .fillMaxSize(),
@@ -97,8 +72,9 @@ fun ProfileContent(
             modifier = Modifier
                 .fillMaxSize()
         ) {
+
             Image(
-                painter = painterResource(Res.drawable.pic_background), // zdjęcie to ulegnie zmianie
+                painter = painterResource(Res.drawable.pic_background),
                 contentDescription = "Background Image",
                 modifier = Modifier
                     .fillMaxSize()
@@ -113,136 +89,22 @@ fun ProfileContent(
                 .padding(horizontal = 25.dp, vertical = 15.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Surface(
-                modifier = Modifier
-                    .size(120.dp),
-                shape = CircleShape,
-                shadowElevation = 8.dp,
-                color = Colors.Primary,
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = state.avatarName,
-                        style = MaterialTheme.typography.displayLarge,
-                        color = Color.White
-                    )
-                }
-            }
 
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Text(
-                text = "Witaj serdecznie ${state.displayName}!",
-                style = TextStyle(
-                    fontFamily = FontFamily.Serif,
-                    fontStyle = FontStyle.Italic,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp,
-                    color = Color.Black.copy(alpha = 0.7f),
-                )
+            ProfileHeader(
+                displayName = state.displayName,
+                avatarName = state.avatarName
             )
 
-            Spacer(modifier = Modifier.height(25.dp))
-
-            Text(
-                text = "Statystyki",
-                style = TextStyle(
-                    fontFamily = FontFamily.Serif,
-                    fontStyle = FontStyle.Italic,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 15.sp,
-                    color = Color.Black.copy(alpha = 0.7f),
-                ),
-                modifier = Modifier
-                    .align(Alignment.Start)
+            ProfileBody(
+                favoriteCount = state.favoriteCount,
+                ownRecipesCount = state.ownRecipesCount,
+                onInstagramClick = { url.openUri("https://www.instagram.com") },
+                onFacebookClick = { url.openUri("https://www.facebook.com") },
+                onTwitterClick = { url.openUri("https://www.x.com") }
             )
 
-            Spacer(modifier = Modifier.height(15.dp))
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                CustomStatsCard(
-                    statsName = "Ulubione",
-                    statsNumber = state.favoriteCount.toString(),
-                    statsIcon = Res.drawable.ic_stat_favorite,
-                    modifier = Modifier.weight(1f)
-                )
-
-                CustomStatsCard(
-                    statsName = "Moja kuchnia",
-                    statsNumber = state.ownRecipesCount.toString(),
-                    statsIcon = Res.drawable.ic_stat_kitchen,
-                    modifier = Modifier.weight(1f)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(25.dp))
-
-            Text(
-                text = "Śledź nas po więcej inspiracji!",
-                style = TextStyle(
-                    fontFamily = FontFamily.Serif,
-                    fontStyle = FontStyle.Italic,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 15.sp,
-                    color = Color.Black.copy(alpha = 0.7f),
-                ),
-                modifier = Modifier
-                    .align(Alignment.Start)
-            )
-
-            Spacer(modifier = Modifier.height(15.dp))
-
-            CustomSocialButtons(
-                text = "Instagram",
-                onClick = { url.openUri("https://www.instagram.com")},
-                enabled = true,
-                leadingIcon = Res.drawable.ic_instagram,
-                trailingIcon = Res.drawable.ic_arrow
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            CustomSocialButtons(
-                text = "Facebook",
-                onClick = { url.openUri("https://www.facebook.com")},
-                enabled = true,
-                leadingIcon = Res.drawable.ic_facebook,
-                trailingIcon = Res.drawable.ic_arrow
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            CustomSocialButtons(
-                text = "X",
-                onClick = { url.openUri("https://www.twitter.com")},
-                enabled = true,
-                leadingIcon = Res.drawable.ic_twitter,
-                trailingIcon = Res.drawable.ic_arrow
-            )
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            HorizontalDivider(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                thickness = 0.5.dp,
-                color = Color.Gray
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            CustomLogoutButton(
-                text = "Wyloguj się",
-                onClick = { showAppBar = true },
-                enabled = true,
-                leadingIcon = Res.drawable.ic_logout,
-                trailingIcon = Res.drawable.ic_arrow
+            ProfileFooter(
+                onLogoutClick = { showAppBar = true }
             )
 
             if (showAppBar) {

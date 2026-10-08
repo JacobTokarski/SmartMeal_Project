@@ -60,6 +60,8 @@ kotlin {
             implementation(libs.compottie)
             implementation(libs.kotlinx.datetime)
             implementation(libs.gitlive.firebase.auth)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor3)
 
         }
         commonTest.dependencies {

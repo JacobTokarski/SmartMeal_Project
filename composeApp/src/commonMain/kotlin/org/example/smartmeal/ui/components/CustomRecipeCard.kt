@@ -1,6 +1,5 @@
 package org.example.smartmeal.ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -30,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
 import org.example.smartmeal.model.home.RecipeCardAction
 import org.example.smartmeal.ui.theme.Colors
 import org.jetbrains.compose.resources.painterResource
@@ -39,9 +39,7 @@ import smartmeal_project.composeapp.generated.resources.ic_clock
 import smartmeal_project.composeapp.generated.resources.ic_delete
 import smartmeal_project.composeapp.generated.resources.ic_edit
 import smartmeal_project.composeapp.generated.resources.ic_heart
-import smartmeal_project.composeapp.generated.resources.pic_burger
 import smartmeal_project.composeapp.generated.resources.pic_camera
-
 @Composable
 fun CustomRecipeCard(
     title: String,
@@ -49,6 +47,7 @@ fun CustomRecipeCard(
     type: String,
     action: RecipeCardAction,
     hasImage: Boolean = false,
+    imageUrl: String? = null,
     calories: String = "1500 kcal",
     time: String = "35 minut",
     onClick: () -> Unit,
@@ -77,9 +76,9 @@ fun CustomRecipeCard(
                 .fillMaxWidth()
                 .aspectRatio(0.85f)
         ) {
-            if (hasImage) {
-                Image(
-                    painter = painterResource(Res.drawable.pic_burger),
+            if (hasImage && imageUrl != null) {
+                AsyncImage(
+                    model = imageUrl,
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()

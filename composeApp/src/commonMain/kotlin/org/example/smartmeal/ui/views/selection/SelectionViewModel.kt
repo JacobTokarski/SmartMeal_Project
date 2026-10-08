@@ -5,9 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import kotlinx.datetime.LocalDate
-import org.example.smartmeal.data.repository.CustomRecipe
+import org.example.smartmeal.data.repository.home.CustomRecipe
 import org.example.smartmeal.data.repository.DietPlanRepository
-import org.example.smartmeal.data.repository.RecipeRepository
+import org.example.smartmeal.data.repository.home.RecipeRepository
 class SelectionViewModel(
     private val mealName: String,
     private val selectedDate: LocalDate

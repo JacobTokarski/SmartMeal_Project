@@ -1,7 +1,6 @@
-package org.example.smartmeal.data.repository
+package org.example.smartmeal.data.repository.home
 
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 
 data class CustomRecipe(
     val id: String,

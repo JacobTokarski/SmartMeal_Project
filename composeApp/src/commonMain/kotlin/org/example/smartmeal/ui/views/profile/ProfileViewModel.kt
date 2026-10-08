@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.example.smartmeal.data.repository.AuthenticationRepository
-import org.example.smartmeal.data.repository.FavoriteRepository
-import org.example.smartmeal.data.repository.RecipeRepository
+import org.example.smartmeal.data.repository.favorite.FavoriteRepository
+import org.example.smartmeal.data.repository.home.RecipeRepository
 
 
 data class ProfileUIState(
@@ -22,12 +22,13 @@ data class ProfileUIState(
 )
 
 class ProfileViewModel(
-    private val authRepository: AuthenticationRepository
+    private val authRepository: AuthenticationRepository,
+    private val favoriteRepository: FavoriteRepository
 ) : ViewModel() {
 
     val uiState: StateFlow<ProfileUIState> = combine(
         authRepository.currentUser,
-        FavoriteRepository.favoriteIds,
+        favoriteRepository.favoriteIds,
         snapshotFlow { RecipeRepository.userRecipes.size }
     ) { user, favoriteIds, ownCount ->
 

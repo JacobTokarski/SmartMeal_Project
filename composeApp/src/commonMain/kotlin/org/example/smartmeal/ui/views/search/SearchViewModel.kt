@@ -5,39 +5,53 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import org.example.smartmeal.model.recipe.HomeDemoData
+import org.example.smartmeal.data.repository.favorite.FavoriteRepository
+import org.example.smartmeal.data.repository.home.CatalogRepository
+import org.example.smartmeal.data.repository.home.CatalogState
 import org.example.smartmeal.model.recipe.Recipe
 
 data class SearchRecipeUIState(
     val recipes: List<Recipe> = emptyList(),
     val searchQuery: String = "",
 )
-class SearchViewModel: ViewModel() {
+class SearchViewModel(
+    private val catalogRepository: CatalogRepository,
+    private val favoriteRepository: FavoriteRepository
+): ViewModel() {
 
     private val _searchQuery = MutableStateFlow("")
 
-    val uiState: StateFlow<SearchRecipeUIState> = _searchQuery
-        .map { query ->
-            val filtered = if (query.isBlank()) {
-                HomeDemoData.allRecipes
-            } else {
-                HomeDemoData.allRecipes.filter {
-                    it.title.contains(query, ignoreCase = true)
-                }
-            }
+    fun onSearchQuery(newQuery: String) {
+        _searchQuery.value = newQuery
+    }
 
-            SearchRecipeUIState(searchQuery = query, recipes = filtered)
+    fun onToggleFavorite(recipeId: String) {
+        favoriteRepository.toggle(recipeId)
+    }
+
+    val uiState: StateFlow<SearchRecipeUIState> = combine(
+        catalogRepository.state,
+        favoriteRepository.favoriteIds,
+        _searchQuery
+    ) { catalogState, favoriteIds ,  query ->
+
+        val all = (catalogState as? CatalogState.Loaded)?.recipes.orEmpty()
+        val filtered = if (query.isBlank()) all else all.filter { it.title.contains(query, ignoreCase = true) }
+
+        val mappedWithFavorites = filtered.map { recipe ->
+            recipe.copy(isFavorite = recipe.id in favoriteIds)
         }
 
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = SearchRecipeUIState(recipes = HomeDemoData.allRecipes)
+        SearchRecipeUIState(
+            recipes = mappedWithFavorites,
+            searchQuery = query
         )
 
-    fun onSearchQuery(value: String) {
-        _searchQuery.value = value
-    }
+    } .stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = SearchRecipeUIState()
+    )
 }

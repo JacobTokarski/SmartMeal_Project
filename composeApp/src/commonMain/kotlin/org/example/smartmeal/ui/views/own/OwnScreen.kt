@@ -23,8 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import cafe.adriel.voyager.core.screen.Screen
-import org.example.smartmeal.data.repository.CustomRecipe
-import org.example.smartmeal.data.repository.RecipeRepository
+import org.example.smartmeal.data.repository.home.CustomRecipe
+import org.example.smartmeal.data.repository.home.RecipeRepository
 import org.example.smartmeal.model.home.RecipeCardAction
 import org.example.smartmeal.ui.components.CustomRecipeCard
 import org.example.smartmeal.ui.views.own.parts.OwnEmptyState

@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
-import org.example.smartmeal.data.repository.FavoriteRepository
 import org.example.smartmeal.model.home.RecipeCardAction
 import org.example.smartmeal.ui.components.CustomRecipeCard
 import org.example.smartmeal.ui.views.favorite.parts.FavoriteEmptyState
@@ -82,16 +81,20 @@ fun FavoriteContent(
                             verticalArrangement = Arrangement.spacedBy(16.dp),
                             modifier = Modifier.fillMaxSize()
                         ) {
-                            items(state.recipes) { recipe ->
+                            items(
+                                items = state.recipes,
+                                key = { recipe -> recipe.id }
+                            ) { recipe ->
                                 CustomRecipeCard(
                                     title = recipe.title,
                                     category = recipe.category,
                                     type = recipe.type,
                                     action = RecipeCardAction.Favorite(
                                         isFavorite = true,
-                                        onToggle = { FavoriteRepository.toggle(recipe.id)}
+                                        onToggle = { viewModel.onToggleFavorite(recipe.id)}
                                     ),
                                     hasImage = recipe.hasImage,
+                                    imageUrl = recipe.imageUrl,
                                     calories = recipe.calories,
                                     time = recipe.time,
                                     onClick = {}

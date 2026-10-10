@@ -34,7 +34,7 @@ val appModule = module {
     factory { LoginViewModel(authRepository = get()) }
     factory { RegisterViewModel(authRepository = get()) }
     factory { OwnViewModel() }
-    factory { CutleryViewModel() }
+    factory { CutleryViewModel(catalogRepository = get()) }
     factory { ProfileViewModel(authRepository = get(), favoriteRepository = get()) }
     factory { HealthViewModel() }
     factory { TdeeFormViewModel() }
@@ -46,7 +46,9 @@ val appModule = module {
     factory { (mealName: String, selectedDate: LocalDate) ->
         SelectionViewModel(
             mealName = mealName,
-            selectedDate = selectedDate
+            selectedDate = selectedDate,
+            catalogRepository = get(),
+            favoriteRepository = get()
         )
     }
 }

@@ -29,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,8 +49,11 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
 import org.example.smartmeal.data.repository.DietPlanRepository
 import org.example.smartmeal.data.repository.home.RecipeRepository
+import org.example.smartmeal.model.selection.RecipeSource
+import org.example.smartmeal.model.selection.SelectableRecipe
+import org.example.smartmeal.model.selection.toSelectable
 import org.example.smartmeal.ui.components.CustomCutleryCard
-import org.example.smartmeal.ui.components.CustomFilledRecipeCard
+import org.example.smartmeal.ui.components.cutlery.CustomFilledRecipeCard
 import org.example.smartmeal.ui.theme.Colors
 import org.example.smartmeal.ui.views.selection.SelectionScreen
 import org.jetbrains.compose.resources.painterResource
@@ -76,6 +80,7 @@ fun CutleryContent(
     val calendarDays = remember { viewModel.getCalendarDays() }
     var showDataPicker by remember { mutableStateOf(false) }
     val navigator = LocalNavigator.currentOrThrow
+    val catalog by viewModel.catalogRecipes.collectAsState()
 
     Surface(
         modifier = Modifier
@@ -242,14 +247,17 @@ fun CutleryContent(
                         key = { it }
                     ) { category ->
 
-                        val assignedRecipeId =
-                            DietPlanRepository.getRecipeId(viewModel.selectedDate, category)
+                        val reference = DietPlanRepository.getReference(viewModel.selectedDate, category)
 
-                        val selectedRecipe = assignedRecipeId?.let { id ->
-                            RecipeRepository.userRecipes.find { it.id == id }
+                        val selectedRecipe: SelectableRecipe? = reference?.let { ref ->
+                            when (ref.source) {
+                                RecipeSource.OWN -> RecipeRepository.userRecipes.find { it.id == ref.id }?.toSelectable()
+                                RecipeSource.CATALOG -> catalog.find { it.id == ref.id }?.toSelectable()
+                            }
                         }
 
                         if (selectedRecipe != null) {
+
                             CustomFilledRecipeCard(
                                 mealName = category,
                                 mealCategory = selectedRecipe.type,
@@ -257,6 +265,7 @@ fun CutleryContent(
                                 calories = selectedRecipe.calories,
                                 time = selectedRecipe.time,
                                 hasImage = selectedRecipe.hasImage,
+                                imageUrl = selectedRecipe.imageUrl,
                                 onDeleteClick = {
                                     DietPlanRepository.removeRecipe(
                                         viewModel.selectedDate,

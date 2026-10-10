@@ -20,6 +20,7 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -69,6 +70,8 @@ fun SelectionContent(
 ) {
     var selectedTab by remember { mutableStateOf(RecipeSubTabSelection.Own) }
 
+    val state by viewModel.uiState.collectAsState()
+
     Scaffold(
         bottomBar = {
             Button(
@@ -81,7 +84,7 @@ fun SelectionContent(
                     .padding(horizontal = 20.dp, vertical = 20.dp)
                     .height(50.dp)
                     .background(Color.White),
-                enabled = viewModel.selectedRecipeId != null,
+                enabled = state.selected != null,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Colors.Primary,
                 ),
@@ -150,8 +153,8 @@ fun SelectionContent(
             Spacer(modifier = Modifier.height(15.dp))
 
             val recipesToShow = when (selectedTab) {
-                RecipeSubTabSelection.Own -> viewModel.ownRecipes
-                RecipeSubTabSelection.Favorites -> viewModel.favoriteRecipes
+                RecipeSubTabSelection.Own -> state.ownRecipes
+                RecipeSubTabSelection.Favorites -> state.favoriteRecipes
             }
 
             LazyVerticalGrid(
@@ -167,12 +170,13 @@ fun SelectionContent(
                         category = recipe.category,
                         type = recipe.type,
                         hasImage = recipe.hasImage,
+                        imageUrl = recipe.imageUrl,
                         calories = recipe.calories,
                         time = recipe.time,
                         action = RecipeCardAction.Selection(
-                            isSelected = recipe.id == viewModel.selectedRecipeId,
+                            isSelected = recipe.reference == state.selected
                         ),
-                        onClick = { viewModel.toggleRecipeSelection(recipe.id)},
+                        onClick = { viewModel.toggleRecipeSelection(recipe.reference)},
                     )
                 }
             }

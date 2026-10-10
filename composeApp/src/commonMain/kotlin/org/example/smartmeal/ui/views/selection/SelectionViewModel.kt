@@ -3,49 +3,77 @@ package org.example.smartmeal.ui.views.selection
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.datetime.LocalDate
 import org.example.smartmeal.data.repository.home.CustomRecipe
 import org.example.smartmeal.data.repository.DietPlanRepository
+import org.example.smartmeal.data.repository.favorite.FavoriteRepository
+import org.example.smartmeal.data.repository.home.CatalogRepository
+import org.example.smartmeal.data.repository.home.CatalogState
 import org.example.smartmeal.data.repository.home.RecipeRepository
+import org.example.smartmeal.model.recipe.Recipe
+import org.example.smartmeal.model.selection.RecipeReference
+import org.example.smartmeal.model.selection.SelectableRecipe
+import org.example.smartmeal.model.selection.toSelectable
+
+
+data class SelectionUIState(
+    val ownRecipes: List<SelectableRecipe> = emptyList(),
+    val favoriteRecipes: List<SelectableRecipe> = emptyList(),
+    val selected: RecipeReference? = null,
+)
+
 class SelectionViewModel(
     private val mealName: String,
-    private val selectedDate: LocalDate
+    private val selectedDate: LocalDate,
+    catalogRepository: CatalogRepository,
+    favoriteRepository: FavoriteRepository
 ) : ViewModel() {
-
-    init {
-        println("DEBUG_TAG: Inicjalizacja SelectionViewModel")
-        println("DEBUG_TAG: Zawartość RecipeRepository przy starcie: ${RecipeRepository.userRecipes.map { it.title }}")
-        println("DEBUG_TAG: Łączna liczba przepisów w repozytorium: ${RecipeRepository.userRecipes.size}")
-    }
 
     var searchQuery by mutableStateOf("")
         private set
 
-    var selectedRecipeId by mutableStateOf<String?>(null)
-        private set
+    private val _selected = MutableStateFlow<RecipeReference?>(null)
 
-    val ownRecipes: List<CustomRecipe>
-        get() = RecipeRepository.userRecipes.filter {
-            it.title.contains(searchQuery, ignoreCase = true)
+    val uiState: StateFlow<SelectionUIState> = combine(
+        catalogRepository.state,
+        favoriteRepository.favoriteIds,
+        snapshotFlow { RecipeRepository.userRecipes.toList() },
+        snapshotFlow { searchQuery },
+        _selected,
+    ) { catalogState, favoriteIds, ownRecipes, query, selected ->
+
+        val catalog = (catalogState as? CatalogState.Loaded)?.recipes.orEmpty()
+
+        SelectionUIState(
+            ownRecipes = ownRecipes
+                .filter { it.title.contains(query, ignoreCase = true) }
+                .map { it.toSelectable() },
+            favoriteRecipes = catalog
+                .filter { it.id in favoriteIds && it.title.contains(query, ignoreCase = true) }
+                .map { it.toSelectable() },
+            selected = selected
+        )
+    }. stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), SelectionUIState())
+    
+        fun onSearchQueryChanged(newQuery: String) {
+            searchQuery = newQuery
         }
 
-    val favoriteRecipes: List<CustomRecipe>
-        get() = RecipeRepository.userRecipes.filter {
-            it.isFavorite && it.title.contains(searchQuery, ignoreCase = true)
+        fun toggleRecipeSelection(reference: RecipeReference) {
+            _selected.value = if (_selected.value == reference ) null else reference
         }
 
-    fun onSearchQueryChanged(newQuery: String) {
-        searchQuery = newQuery
-    }
-
-    fun toggleRecipeSelection(recipeId: String) {
-        selectedRecipeId = if (selectedRecipeId == recipeId) null else recipeId
-    }
-
-    fun confirmSelection() {
-        selectedRecipeId?.let { recipeId ->
-            DietPlanRepository.assignRecipe(selectedDate, mealName, recipeId)
+        fun confirmSelection() {
+            _selected.value?.let { reference ->
+                DietPlanRepository.assignRecipe(selectedDate, mealName, reference)
+            }
         }
     }
-}

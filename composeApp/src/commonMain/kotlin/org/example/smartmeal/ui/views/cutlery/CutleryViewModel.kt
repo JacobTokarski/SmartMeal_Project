@@ -4,16 +4,30 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Month
 import kotlinx.datetime.minus
 import kotlinx.datetime.plus
+import org.example.smartmeal.data.repository.favorite.FavoriteRepository
+import org.example.smartmeal.data.repository.home.CatalogRepository
+import org.example.smartmeal.data.repository.home.CatalogState
 import org.example.smartmeal.model.cutlery.CalendarDay
+import org.example.smartmeal.model.recipe.Recipe
 import kotlin.time.Clock
 
-class CutleryViewModel: ViewModel() {
+class CutleryViewModel(
+    catalogRepository: CatalogRepository
+) : ViewModel() {
 
+    val catalogRecipes: StateFlow<List<Recipe>> = catalogRepository.state
+        .map { (it as? CatalogState.Loaded)?.recipes.orEmpty()}
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
     val mealCategories = listOf("Śniadanie", "II Śniadanie", "Obiad", "Podwieczorek", "Kolacja")
 
     private val today = kotlinx.datetime.LocalDate.Companion.fromEpochDays(

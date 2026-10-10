@@ -1,4 +1,4 @@
-package org.example.smartmeal.ui.components
+package org.example.smartmeal.ui.components.cutlery
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,15 +28,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
 import org.example.smartmeal.ui.theme.Colors
 import org.jetbrains.compose.resources.painterResource
 import smartmeal_project.composeapp.generated.resources.Res
-import smartmeal_project.composeapp.generated.resources.ic_delete
 import smartmeal_project.composeapp.generated.resources.ic_delete_custom
 import smartmeal_project.composeapp.generated.resources.pic_burger
 import smartmeal_project.composeapp.generated.resources.pic_camera
 
-// Jest to komponent wykorzystywany w ekranie "Cutlery", który wyświetla się podczas przypisania przepisu do danej kategorii (np. Śniadanie)
 @Composable
 fun CustomFilledRecipeCard(
     mealName: String,
@@ -45,6 +44,7 @@ fun CustomFilledRecipeCard(
     calories: String,
     time: String,
     hasImage: Boolean,
+    imageUrl: String? = null,
     onDeleteClick: () -> Unit
 ) {
     Surface(
@@ -66,10 +66,10 @@ fun CustomFilledRecipeCard(
                     .clip(RoundedCornerShape(10.dp))
                     .background(Color.White)
             ) {
-                if (hasImage) {
+                if (hasImage && imageUrl != null) {
 
-                    Image(
-                        painter = painterResource(Res.drawable.pic_burger),
+                    AsyncImage(
+                        model = imageUrl,
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier

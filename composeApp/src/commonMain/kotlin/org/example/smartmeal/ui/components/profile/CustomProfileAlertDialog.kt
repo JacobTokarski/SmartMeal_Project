@@ -6,7 +6,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,7 +18,6 @@ import org.example.smartmeal.ui.theme.Colors
 
 // Komponent ten zawiera okno dialogowe, które użytkownik otrzymuje podczas wylogowania się z aplikacji (aktualny stan -> Part 1)
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomProfileAlertDialog(
     onConfirmClick: () -> Unit,

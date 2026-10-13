@@ -8,19 +8,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import org.example.smartmeal.ui.components.login.CustomEmailField
-import org.example.smartmeal.ui.components.CustomFormField
-import org.example.smartmeal.ui.theme.Colors
+import org.example.smartmeal.model.health.HealthFormError
+import org.example.smartmeal.ui.components.health.CustomFormBmiFields
 
 @Composable
-
 fun OwnFormBody(
     title: String,
     onTitleChange: (String) -> Unit,
@@ -44,89 +39,60 @@ fun OwnFormBody(
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        CustomEmailField(
+        CustomFormBmiFields(
             value = title,
             onValueChange = onTitleChange,
-            placeholder = "Nazwa potrawy *",
+            label = "Nazwa potrawy",
+            placeholder = "Wprowadź nazwę potrawy*",
+            maxLength = 35,
+            error = HealthFormError.None
         )
 
-        CustomEmailField(
+        CustomFormBmiFields(
             value = category,
             onValueChange = onCategoryChange,
-            placeholder = "Kategoria potrawy (np. obiad)*",
+            label = "Kategoria potrawy",
+            placeholder = "Wprowadź kategorię potrawy (np. obiad)*",
+            maxLength = 25,
+            error = HealthFormError.None
         )
 
-        CustomEmailField(
+
+        CustomFormBmiFields(
             value = type,
             onValueChange = onTypeChange,
-            placeholder = "Typ kuchni (np. azjatycka) *",
+            label = "Typ kuchni",
+            placeholder = "Wprowadź typ kuchni (np. azjatycka)*",
+            maxLength = 25,
+            error = HealthFormError.None
         )
 
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Text(
-                text = "Czas przygotowania: ",
-                fontSize = 15.sp,
-                color = Colors.Text_Form.copy(alpha = 0.5f),
-            )
-
-            Spacer(modifier = Modifier.width(5.dp))
-
-            CustomFormField(
+            CustomFormBmiFields(
                 value = time,
                 onValueChange = onTimeChange,
-                modifier = Modifier
-                    .width(70.dp)
-                    .height(50.dp)
+                label = "Czas",
+                placeholder = "np. 30",
+                unit = "min",
+                maxLength = 5,
+                modifier = Modifier.weight(1f),
+                error = HealthFormError.None
             )
 
-            Spacer(modifier = Modifier.width(5.dp))
-
-            Text(
-                text = "min",
-                fontSize = 15.sp,
-                color = Colors.Text_Form.copy(alpha = 0.5f)
-            )
-        }
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start
-        ) {
-            Text(
-                text = "Ilość kalorii: ",
-                fontSize = 15.sp,
-                color = Colors.Text_Form.copy(alpha = 0.5f)
-
-            )
-
-            Spacer(modifier = Modifier.width(5.dp))
-
-            CustomFormField(
+            CustomFormBmiFields(
                 value = calories,
                 onValueChange = onCaloriesChange,
-                modifier = Modifier
-                    .width(70.dp)
-                    .height(50.dp),
-            )
-
-            Spacer(modifier = Modifier.width(5.dp))
-
-            Text(
-                text = "kcal",
-                fontSize = 15.sp,
-                color = Colors.Text_Form.copy(alpha = 0.5f)
+                label = "Kalorie",
+                placeholder = "np. 450",
+                unit = "kcal",
+                maxLength = 5,
+                modifier = Modifier.weight(1f),
+                error = HealthFormError.None
             )
         }
-
-        Spacer(modifier = Modifier.height(10.dp))
     }
 }

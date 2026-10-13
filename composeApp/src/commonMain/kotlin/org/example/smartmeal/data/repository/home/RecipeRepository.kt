@@ -15,7 +15,17 @@ data class CustomRecipe(
 
 object RecipeRepository {
     val userRecipes = mutableStateListOf<CustomRecipe>()
+
     fun addRecipe(recipe: CustomRecipe) {
         userRecipes.add(recipe)
+    }
+
+    fun updateRecipe(updated: CustomRecipe) {
+        val index = userRecipes.indexOfFirst { it.id == updated.id }
+        if (index >= 0) userRecipes[index] = updated
+    }
+
+    fun removeRecipe(id: String) {
+        userRecipes.removeAll { it.id == id }
     }
 }

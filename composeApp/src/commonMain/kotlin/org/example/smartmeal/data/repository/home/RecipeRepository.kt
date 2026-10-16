@@ -7,11 +7,13 @@ data class CustomRecipe(
     val title: String,
     val category: String,
     val type: String,
-    val hasImage: Boolean,
+    val imageUrl: String? = null,
     val calories: String,
     val time: String,
     val isFavorite: Boolean
-)
+) {
+    val hasImage: Boolean get() = imageUrl != null
+}
 
 object RecipeRepository {
     val userRecipes = mutableStateListOf<CustomRecipe>()

@@ -121,6 +121,7 @@ fun OwnContent(
                                     category = currentRecipe.category,
                                     type = currentRecipe.type,
                                     hasImage = currentRecipe.hasImage,
+                                    imageUrl = currentRecipe.imageUrl,
                                     calories = currentRecipe.calories,
                                     time = currentRecipe.time,
                                     onClick = {},

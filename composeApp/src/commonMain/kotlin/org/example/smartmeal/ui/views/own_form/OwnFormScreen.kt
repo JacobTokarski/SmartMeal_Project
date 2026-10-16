@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,6 +18,7 @@ import org.example.smartmeal.data.repository.home.CustomRecipe
 import org.example.smartmeal.ui.views.own_form.parts.OwnFormBody
 import org.example.smartmeal.ui.views.own_form.parts.OwnFormFooter
 import org.example.smartmeal.ui.views.own_form.parts.OwnFormHeader
+import org.example.smartmeal.ui.views.own_form.parts.OwnImagePicker
 
 @Composable
 fun OwnFormScreen(
@@ -26,62 +28,89 @@ fun OwnFormScreen(
 ) {
 
     val isEditing = initialRecipe != null
+    var selectedImageUrl by remember(initialRecipe?.id) { mutableStateOf(initialRecipe?.imageUrl) }
+    var showPicker by remember { mutableStateOf(false) }
+    var showError by rememberSaveable { mutableStateOf(false) }
 
     var title by remember(initialRecipe?.id) { mutableStateOf(initialRecipe?.title.orEmpty()) }
-    var time by remember(initialRecipe?.id) { mutableStateOf(initialRecipe?.time.orEmpty().filter { it.isDigit() }) }
-    var calories by remember(initialRecipe?.id) { mutableStateOf(initialRecipe?.calories.orEmpty().filter { it.isDigit() }) }
+    var time by remember(initialRecipe?.id) {
+        mutableStateOf(
+            initialRecipe?.time.orEmpty().filter { it.isDigit() })
+    }
+    var calories by remember(initialRecipe?.id) {
+        mutableStateOf(
+            initialRecipe?.calories.orEmpty().filter { it.isDigit() })
+    }
     var category by remember(initialRecipe?.id) { mutableStateOf(initialRecipe?.category.orEmpty()) }
     var type by remember(initialRecipe?.id) { mutableStateOf(initialRecipe?.type.orEmpty()) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-    ) {
-        OwnFormHeader(
-            title = if (isEditing) "Edytuj przepis" else "Dodaj przepis",
+
+    if (showPicker) {
+        OwnImagePicker(
+            selectedUrl = selectedImageUrl,
+            onSelect = { selectedImageUrl = it; showPicker = false },
+            onClear = { selectedImageUrl = null; showPicker = false },
+            onBack = { showPicker = false }
         )
+    } else {
 
-        LazyColumn(
+        Column(
             modifier = Modifier
-                .padding(horizontal = 15.dp)
+                .fillMaxSize()
+                .background(Color.White)
         ) {
-            item {
-                OwnFormBody(
-                    title = title,
-                    onTitleChange = { title = it },
-                    category = category,
-                    onCategoryChange = { category = it},
-                    type = type,
-                    onTypeChange = { type = it},
-                    time = time,
-                    onTimeChange = { time = it },
-                    calories = calories,
-                    onCaloriesChange = { calories = it }
-                )
-            }
+            OwnFormHeader(
+                title = if (isEditing) "Edytuj przepis" else "Dodaj przepis",
+            )
 
-            item {
-                OwnFormFooter(
-                    onSaveClick = {
-                        if (title.isNotBlank()) {
-                            onSaveClick(
-                                CustomRecipe(
-                                    id = initialRecipe?.id.orEmpty(),
-                                    title = title,
-                                    category = category,
-                                    type = type,
-                                    hasImage = initialRecipe?.hasImage ?: true,
-                                    calories = if (calories.isNotEmpty()) "$calories kcal" else "",
-                                    time = if (time.isNotEmpty()) "$time min" else "",
-                                    isFavorite = initialRecipe?.isFavorite ?: false,
+            LazyColumn(
+                modifier = Modifier
+                    .padding(horizontal = 15.dp)
+            ) {
+                item {
+                    OwnFormBody(
+                        title = title,
+                        onTitleChange = { title = it },
+                        category = category,
+                        onCategoryChange = { category = it },
+                        type = type,
+                        onTypeChange = { type = it },
+                        time = time,
+                        onTimeChange = { time = it },
+                        calories = calories,
+                        onCaloriesChange = { calories = it },
+                        showError = showError
+                    )
+                }
+
+                item {
+                    OwnFormFooter(
+                        onSaveClick = {
+                            val isValid = title.isNotBlank() && category.isNotBlank() && type.isNotBlank()
+
+                            if (isValid) {
+                                showError = false
+                                onSaveClick(
+                                    CustomRecipe(
+                                        id = initialRecipe?.id.orEmpty(),
+                                        title = title.trim(),
+                                        category = category.trim(),
+                                        type = type.trim(),
+                                        imageUrl = selectedImageUrl,
+                                        calories = if (calories.isNotBlank()) "$calories kcal" else "",
+                                        time = if (time.isNotBlank()) "$time min" else "",
+                                        isFavorite = initialRecipe?.isFavorite ?: false,
+                                    )
                                 )
-                            )
-                        }
-                    },
-                    onBackClick = onBackClick,
-                    onAddImageClick = {}
-                )
+                            } else {
+                                showError = true
+                            }
+                        },
+                        onBackClick = onBackClick,
+                        onAddImageClick = { showPicker = true },
+                        selectedImageUrl = selectedImageUrl
+                    )
+                }
             }
         }
     }

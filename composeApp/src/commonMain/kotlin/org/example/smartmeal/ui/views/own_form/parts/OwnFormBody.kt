@@ -27,6 +27,7 @@ fun OwnFormBody(
     onTimeChange: (String) -> Unit,
     calories: String,
     onCaloriesChange: (String) -> Unit,
+    showError: Boolean = false
 ) {
 
     Column(
@@ -45,7 +46,7 @@ fun OwnFormBody(
             label = "Nazwa potrawy",
             placeholder = "Wprowadź nazwę potrawy*",
             maxLength = 35,
-            error = HealthFormError.None
+            error = if (showError && title.isBlank()) HealthFormError.EmptyField else HealthFormError.None
         )
 
         CustomFormBmiFields(
@@ -54,7 +55,7 @@ fun OwnFormBody(
             label = "Kategoria potrawy",
             placeholder = "Wprowadź kategorię potrawy (np. obiad)*",
             maxLength = 25,
-            error = HealthFormError.None
+            error = if (showError && category.isBlank()) HealthFormError.EmptyField else HealthFormError.None
         )
 
 
@@ -64,7 +65,7 @@ fun OwnFormBody(
             label = "Typ kuchni",
             placeholder = "Wprowadź typ kuchni (np. azjatycka)*",
             maxLength = 25,
-            error = HealthFormError.None
+            error = if (showError && type.isBlank()) HealthFormError.EmptyField else HealthFormError.None
         )
 
         Row(

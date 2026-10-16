@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -26,6 +27,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.example.smartmeal.ui.components.CustomRecipeImage
 import org.example.smartmeal.ui.components.health.CustomFormAcceptButton
 import org.example.smartmeal.ui.components.health.CustomFormCancelButton
 import org.example.smartmeal.ui.theme.Colors
@@ -37,7 +39,8 @@ import smartmeal_project.composeapp.generated.resources.pic_camera
 fun OwnFormFooter(
     onSaveClick: () -> Unit,
     onBackClick: () -> Unit,
-    onAddImageClick: () -> Unit
+    onAddImageClick: () -> Unit,
+    selectedImageUrl: String?,
 ) {
     Column(
         modifier = Modifier
@@ -50,7 +53,7 @@ fun OwnFormFooter(
                 .fillMaxWidth()
                 .height(150.dp)
                 .clip(RoundedCornerShape(15.dp))
-                .background(Color(0xFFF6F8F7)) // Kolor na razie na próbę jakikolwiek, potem dostosujemy
+                .background(Color(0xFFF6F8F7))
                 .drawBehind {
                     val stroke = Stroke(
                         width = 2.dp.toPx(),
@@ -65,26 +68,47 @@ fun OwnFormFooter(
                 .clickable { onAddImageClick() },
             contentAlignment = Alignment.Center
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Icon(
-                    painter = painterResource(Res.drawable.pic_camera),
-                    contentDescription = null,
-                    tint = Colors.Text_Form.copy(alpha = 0.6f),
-                    modifier = Modifier
-                        .size(54.dp)
-                )
 
-                Spacer(modifier = Modifier.height(8.dp))
+            if (selectedImageUrl != null) {
+                CustomRecipeImage(
+                    imageUrl = selectedImageUrl,
+                    modifier = Modifier
+                        .fillMaxSize()
+                )
 
                 Text(
-                    text = "Wybierz zdjęcie z galerii",
-                    fontSize = 13.sp,
-                    color = Colors.Text_Form.copy(alpha = 0.6f),
-                    fontWeight = FontWeight.Medium
+                    text = "Zmień zdjęcie",
+                    fontSize = 12.sp,
+                    color = Color.White,
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(8.dp)
+                        .background(Color.Black.copy(alpha = 0.5f), RoundedCornerShape(10.dp))
+                        .padding(horizontal = 10.dp, vertical = 4.dp)
                 )
+            } else {
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Icon(
+                        painter = painterResource(Res.drawable.pic_camera),
+                        contentDescription = null,
+                        tint = Colors.Text_Form.copy(alpha = 0.6f),
+                        modifier = Modifier
+                            .size(54.dp)
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        text = "Wybierz zdjęcie z galerii",
+                        fontSize = 13.sp,
+                        color = Colors.Text_Form.copy(alpha = 0.6f),
+                        fontWeight = FontWeight.Medium
+                    )
+                }
             }
         }
 

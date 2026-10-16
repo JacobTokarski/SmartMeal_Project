@@ -1,5 +1,7 @@
 package org.example.smartmeal.ui.components.health
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.OutlinedTextField
@@ -9,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.example.smartmeal.model.health.HealthFormError
@@ -19,10 +22,11 @@ import org.example.smartmeal.ui.theme.Colors
 fun CustomFormBmiFields(
     value: String,
     onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
     label: String? = null,
     placeholder: String,
-    unit: String,
-    modifier: Modifier = Modifier,
+    unit: String? = null,
+    maxLength: Int? = null,
     error: HealthFormError = HealthFormError.None
 ) {
 
@@ -30,7 +34,11 @@ fun CustomFormBmiFields(
 
     OutlinedTextField(
         value = value,
-        onValueChange = onValueChange,
+        onValueChange = { newValue ->
+            if (maxLength == null || newValue.length <= maxLength) {
+                onValueChange(newValue)
+            }
+        },
         isError = isError,
         supportingText = {
             if (isError) {
@@ -39,6 +47,18 @@ fun CustomFormBmiFields(
                     color = Colors.Error,
                     fontSize = 12.sp
                 )
+            } else if (maxLength != null) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Text(
+                        text = "${value.length} / $maxLength",
+                        color = Colors.Text_Form.copy(0.5f),
+                        fontSize = 12.sp,
+                        textAlign = TextAlign.End
+                    )
+                }
             }
         },
         label = label?.let { labelText ->
@@ -60,12 +80,14 @@ fun CustomFormBmiFields(
                 fontWeight = FontWeight.SemiBold
             )
         },
-        suffix = {
-            Text(
-                text = unit,
-                color = Colors.Text_Form.copy(0.7f),
-                fontSize = 15.sp
-            )
+        suffix = unit?.let { unitText ->
+            {
+                Text(
+                    text = unitText,
+                    color = Colors.Text_Form.copy(0.7f),
+                    fontSize = 15.sp
+                )
+            }
         },
         modifier = modifier
             .fillMaxWidth(),

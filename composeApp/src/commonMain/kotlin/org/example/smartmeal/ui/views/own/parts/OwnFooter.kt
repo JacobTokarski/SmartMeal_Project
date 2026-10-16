@@ -26,7 +26,8 @@ fun OwnFooter(
 ) {
     Row(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(end = 4.dp, bottom = 4.dp),
         horizontalArrangement = Arrangement.End
     ) {
         Surface(

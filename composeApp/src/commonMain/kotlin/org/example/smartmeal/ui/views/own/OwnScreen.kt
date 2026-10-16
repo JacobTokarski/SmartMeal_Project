@@ -12,10 +12,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,16 +29,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import cafe.adriel.voyager.core.screen.Screen
-import org.example.smartmeal.data.repository.home.CustomRecipe
-import org.example.smartmeal.data.repository.home.RecipeRepository
 import org.example.smartmeal.model.home.RecipeCardAction
 import org.example.smartmeal.ui.components.CustomRecipeCard
+import org.example.smartmeal.ui.theme.Colors
 import org.example.smartmeal.ui.views.own.parts.OwnEmptyState
 import org.example.smartmeal.ui.views.own.parts.OwnFooter
 import org.example.smartmeal.ui.views.own.parts.OwnHeader
 import org.example.smartmeal.ui.views.own_form.OwnFormScreen
 import org.koin.compose.viewmodel.koinViewModel
-import kotlin.time.Clock
 
 object OwnScreen : Screen {
     @Composable
@@ -60,7 +64,7 @@ fun OwnContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 10.dp, vertical = 15.dp)
+                .padding(start = 10.dp, end = 10.dp, top = 15.dp, bottom = 5.dp)
         ) {
 
             OwnHeader(
@@ -79,7 +83,7 @@ fun OwnContent(
 
                     state.isFormVisible -> {
                         Dialog(
-                            onDismissRequest = { viewModel.onToggleForm(false) },
+                            onDismissRequest = viewModel::onCloseForm,
                             properties = DialogProperties(
                                 usePlatformDefaultWidth = false,
                                 dismissOnBackPress = true
@@ -91,28 +95,9 @@ fun OwnContent(
                                     .background(Color.White)
                             ) {
                                 OwnFormScreen(
-                                    onSaveClick = { newRecipe ->
-                                        val globalRecipe = CustomRecipe(
-                                            id = Clock.System.now().toEpochMilliseconds().toString(),
-                                            title = newRecipe.title,
-                                            category = newRecipe.category,
-                                            type = newRecipe.type,
-                                            hasImage = newRecipe.hasImage,
-                                            calories = newRecipe.calories,
-                                            time = newRecipe.time,
-                                            isFavorite = false
-                                        )
-
-                                        RecipeRepository.addRecipe(globalRecipe)
-
-                                        viewModel.onAddRecipe(newRecipe)
-
-                                        viewModel.onToggleForm(false)
-                                    },
-
-                                    onBackClick = {
-                                        viewModel.onToggleForm(false)
-                                    }
+                                    initialRecipe = state.editRecipe,
+                                    onSaveClick = viewModel::onSaveRecipe,
+                                    onBackClick = viewModel::onCloseForm
                                 )
                             }
                         }
@@ -136,13 +121,14 @@ fun OwnContent(
                                     category = currentRecipe.category,
                                     type = currentRecipe.type,
                                     hasImage = currentRecipe.hasImage,
+                                    imageUrl = currentRecipe.imageUrl,
                                     calories = currentRecipe.calories,
                                     time = currentRecipe.time,
                                     onClick = {},
                                     action = RecipeCardAction.EditDelete(
-                                        onEditClick = {},
-                                        onDeleteClick = {}
-                                    ), //
+                                        onEditClick = { viewModel.onEditClick(currentRecipe) },
+                                        onDeleteClick = { viewModel.onDeleteClick(currentRecipe) }
+                                    ),
                                 )
                             }
                         }
@@ -150,11 +136,45 @@ fun OwnContent(
                 }
             }
 
-            OwnFooter(
-                onAddClick = {
-                    viewModel.onToggleForm(true)
-                }
-            )
+            OwnFooter(onAddClick = viewModel::onAddClick)
         }
+    }
+
+    state.recipePendingDelete?.let { recipe ->
+
+        AlertDialog(
+            onDismissRequest = viewModel::onDismissDelete,
+            title = {
+                Text(
+                    text = "Usunąć przepis?",
+                )
+            },
+
+            text = {
+                Text(
+                    text = "Przepis „${recipe.title}” zostanie trwale usunięty, także z jadłospisu."
+                )
+            },
+
+            confirmButton = {
+                TextButton(onClick = viewModel::onConfirmDelete)
+                {
+                    Text(
+                        text = "Usuń",
+                        color = Colors.Delete
+                    )
+                }
+            },
+
+            dismissButton = {
+                TextButton(onClick = viewModel::onDismissDelete) {
+                    Text(
+                        text = "Anuluj",
+                        color = Color.Black
+                    )
+                }
+            },
+            containerColor = Color.White,
+        )
     }
 }

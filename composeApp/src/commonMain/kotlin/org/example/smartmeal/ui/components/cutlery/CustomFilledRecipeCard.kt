@@ -1,6 +1,5 @@
 package org.example.smartmeal.ui.components.cutlery
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,17 +22,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.compose.AsyncImage
+import org.example.smartmeal.ui.components.CustomRecipeImage
 import org.example.smartmeal.ui.theme.Colors
 import org.jetbrains.compose.resources.painterResource
 import smartmeal_project.composeapp.generated.resources.Res
 import smartmeal_project.composeapp.generated.resources.ic_delete_custom
-import smartmeal_project.composeapp.generated.resources.pic_burger
 import smartmeal_project.composeapp.generated.resources.pic_camera
 
 @Composable
@@ -68,12 +65,10 @@ fun CustomFilledRecipeCard(
             ) {
                 if (hasImage && imageUrl != null) {
 
-                    AsyncImage(
-                        model = imageUrl,
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
+                    CustomRecipeImage(
+                        imageUrl = imageUrl,
                         modifier = Modifier
-                            .fillMaxSize()
+                            .fillMaxSize(),
                     )
 
                 } else {
@@ -104,7 +99,9 @@ fun CustomFilledRecipeCard(
                     Text(
                         text = mealCategory,
                         fontSize = 14.sp,
-                        color = Color.Black
+                        color = Color.Black,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
 
                     Box(
@@ -112,7 +109,7 @@ fun CustomFilledRecipeCard(
                             .size(5.dp)
                             .clip(RoundedCornerShape(15.dp))
                             .background(Color.Black)
-                    ) {}
+                    )
 
                     Text(
                         text = mealName,

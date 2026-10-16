@@ -19,8 +19,12 @@ object DietPlanRepository {
     fun getReference(date: LocalDate, mealName: String): RecipeReference? =
         assignedRecipes[generateKey(date, mealName)]
 
-
     fun removeRecipe(date: LocalDate, mealName: String) {
         assignedRecipes.remove(generateKey(date, mealName))
+    }
+
+    fun removeReferencesTo(reference: RecipeReference) {
+        val keys = assignedRecipes.filterValues { it == reference }.keys.toList()
+        keys.forEach { assignedRecipes.remove(it) }
     }
 }

@@ -40,6 +40,7 @@ import smartmeal_project.composeapp.generated.resources.ic_delete
 import smartmeal_project.composeapp.generated.resources.ic_edit
 import smartmeal_project.composeapp.generated.resources.ic_heart
 import smartmeal_project.composeapp.generated.resources.pic_camera
+
 @Composable
 fun CustomRecipeCard(
     title: String,
@@ -77,12 +78,13 @@ fun CustomRecipeCard(
                 .aspectRatio(0.85f)
         ) {
             if (hasImage && imageUrl != null) {
-                AsyncImage(
-                    model = imageUrl,
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
+
+                CustomRecipeImage(
+                    imageUrl = imageUrl,
+                    modifier = Modifier
+                        .fillMaxSize(),
                 )
+
             } else {
 
                 Icon(
@@ -230,7 +232,7 @@ fun CustomRecipeCard(
                 ) {
 
                     Icon(
-                        painter = painterResource(Res.drawable.ic_clock), // Na razie taka ikona
+                        painter = painterResource(Res.drawable.ic_clock),
                         contentDescription = "Ikona zegara",
                         modifier = Modifier
                             .size(10.dp),
@@ -250,7 +252,7 @@ fun CustomRecipeCard(
                             .size(6.dp)
                             .clip(RoundedCornerShape(15.dp))
                             .background(Colors.Primary)
-                    ) {}
+                    )
 
                     Text(
                         text = time,
@@ -262,19 +264,24 @@ fun CustomRecipeCard(
 
             } else {
 
-                Box(
+                Row(
                     modifier = Modifier
                         .align(Alignment.BottomStart)
-                        .clip(RoundedCornerShape(topEnd = 15.dp))
-                        .background(Color.Black.copy(alpha = 0.85f)) // Do zmiany w przypadku braku zdjęcia będzie na pewno tło profilu
-                        .padding(horizontal = 4.dp, vertical = 2.dp)
+                        .padding(5.dp)
+                        .clip(RoundedCornerShape(15.dp))
+                        .background(Color.White)
+                        .border(1.dp, Colors.Primary.copy(alpha = 0.35f), RoundedCornerShape(15.dp))
+                        .padding(horizontal = 6.dp, vertical = 3.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
+
                     Icon(
-                        painter = painterResource(Res.drawable.ic_edit),
+                        painter = painterResource(Res.drawable.ic_clock),
                         contentDescription = "Ikona zegara",
                         modifier = Modifier
-                            .size(10.dp), //
-                        tint = Color(0xFF4A3324) //
+                            .size(10.dp),
+                        tint = Color(0xFF4A3324)
 
                     )
 
@@ -282,21 +289,21 @@ fun CustomRecipeCard(
                         text = calories,
                         fontSize = 10.sp,
                         fontWeight = FontWeight.Normal,
-                        color = Color.Black
+                        color = Color(0xFF1E293B)
                     )
 
                     Box(
                         modifier = Modifier
-                            .size(5.dp)
+                            .size(6.dp)
                             .clip(RoundedCornerShape(15.dp))
-                            .background(Color.Black)
-                    ) {}
+                            .background(Colors.Primary)
+                    )
 
                     Text(
                         text = time,
                         fontSize = 10.sp,
                         fontWeight = FontWeight.Normal,
-                        color = Color.Black
+                        color = Color(0xFF1E293B)
                     )
                 }
             }
@@ -318,7 +325,7 @@ fun CustomRecipeCard(
                 overflow = TextOverflow.Ellipsis
             )
 
-            Spacer(modifier = Modifier.height(3.dp)) // Wartość może ulec zmianie
+            Spacer(modifier = Modifier.height(3.dp))
 
             Text(
                 text = category,

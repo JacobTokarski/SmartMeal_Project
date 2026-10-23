@@ -3,7 +3,9 @@ package org.example.smartmeal.di
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import kotlinx.datetime.LocalDate
+import org.example.smartmeal.data.remote.AiRepository
 import org.example.smartmeal.data.remote.MealDbApiService
+import org.example.smartmeal.data.remote.createAiRepository
 import org.example.smartmeal.data.remote.createHttpClient
 import org.example.smartmeal.data.repository.AuthenticationRepository
 import org.example.smartmeal.data.repository.favorite.FavoriteRepository
@@ -30,6 +32,7 @@ val appModule = module {
     single { AuthenticationRepository() }
     single { MealDbApiService(httpClient = get()) }
     single { CatalogRepository(apiService = get()) }
+    single<AiRepository> { createAiRepository() }
     single { FavoriteRepository() }
     factory { LoginViewModel(authRepository = get()) }
     factory { RegisterViewModel(authRepository = get()) }
@@ -42,7 +45,7 @@ val appModule = module {
     factory { HomeViewModel(catalogRepository = get(), authRepository = get(), favoriteRepository = get()) }
     factory { SearchViewModel(catalogRepository = get(), favoriteRepository = get()) }
     factory { FavoriteViewModel(catalogRepository = get(), favoriteRepository = get()) }
-    factory { ChatViewModel() }
+    factory { ChatViewModel(aiRepository = get()) }
     factory { (mealName: String, selectedDate: LocalDate) ->
         SelectionViewModel(
             mealName = mealName,

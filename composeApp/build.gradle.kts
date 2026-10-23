@@ -62,7 +62,9 @@ kotlin {
             implementation(libs.gitlive.firebase.auth)
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor3)
-
+            implementation(project.dependencies.platform(libs.firebase.bom))
+            implementation(libs.firebase.ai)
+            implementation(libs.firebase.appcheck.debug)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

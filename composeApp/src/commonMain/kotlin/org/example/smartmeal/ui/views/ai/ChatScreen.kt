@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -27,6 +28,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.example.smartmeal.model.chat.ChatMessage
 import org.example.smartmeal.model.chat.ChatMessage.Role
+import org.example.smartmeal.model.chat.ChatPrompts
 import org.example.smartmeal.ui.components.chat.CustomChipSuggestions
 import org.example.smartmeal.ui.components.chat.CustomMessageList
 import org.example.smartmeal.ui.views.ai.parts.ChatBackground
@@ -36,7 +38,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import kotlin.random.Random
 import kotlin.time.Duration.Companion.milliseconds
 
-class ChatScreen: Screen {
+class ChatScreen : Screen {
     @Composable
     override fun Content() {
 
@@ -52,48 +54,51 @@ class ChatScreen: Screen {
 fun ChatContent(
     viewModel: ChatViewModel
 ) {
-    var inputBarValue by remember { mutableStateOf("") }
-    var isBotTyping by remember { mutableStateOf(false) }
-    var placeholderChange by remember { mutableStateOf("Jakimi składnikami dysponujesz?")}
-    val scope = rememberCoroutineScope()
 
-    val messages = remember {
-        mutableStateListOf(
-            ChatMessage(
-                id = "Witaj",
-                role = Role.ASSISTANT,
-                content = "Cześć! Jestem Twoim kulinarnym asystentem. Podaj składniki z lodówki, a zaproponuję gotowe danie.",
-                timestamp = 0L
-            )
-        )
-    }
+    val state by viewModel.uiState.collectAsState()
 
-    fun sendMessage(text: String) {
-        if (text.isBlank()) return
+//    var inputBarValue by remember { mutableStateOf("") }
+//    var isBotTyping by remember { mutableStateOf(false) }
+//    var placeholderChange by remember { mutableStateOf("Jakimi składnikami dysponujesz?")}
+//    val scope = rememberCoroutineScope()
 
-        messages.add(
-            ChatMessage(
-                id = "sg-${Random.nextInt()}",
-                role = Role.USER,
-                content = text,
-                timestamp = 0L
-            )
-        )
-
-        scope.launch {
-            isBotTyping = true
-            delay(1200.milliseconds)
-            isBotTyping = false
-            messages.add(
-                ChatMessage(
-                    id = "sg-${Random.nextInt()}",
-                    role = Role.ASSISTANT,
-                    content = "Proponuję pełnoziarniste penne z grillowanym kurczakiem i szpinakiem w sosie jogurtowym.",
-                    timestamp = 0L
-                )
-            )
-        }
-    }
+//    val messages = remember {
+//        mutableStateListOf(
+//            ChatMessage(
+//                id = "Witaj",
+//                role = Role.ASSISTANT,
+//                content = "Cześć! Jestem Twoim kulinarnym asystentem. Podaj składniki z lodówki, a zaproponuję gotowe danie.",
+//                timestamp = 0L
+//            )
+//        )
+//    }
+//
+//    fun sendMessage(text: String) {
+//        if (text.isBlank()) return
+//
+//        messages.add(
+//            ChatMessage(
+//                id = "sg-${Random.nextInt()}",
+//                role = Role.USER,
+//                content = text,
+//                timestamp = 0L
+//            )
+//        )
+//
+//        scope.launch {
+//            isBotTyping = true
+//            delay(1200.milliseconds)
+//            isBotTyping = false
+//            messages.add(
+//                ChatMessage(
+//                    id = "sg-${Random.nextInt()}",
+//                    role = Role.ASSISTANT,
+//                    content = "Proponuję pełnoziarniste penne z grillowanym kurczakiem i szpinakiem w sosie jogurtowym.",
+//                    timestamp = 0L
+//                )
+//            )
+//        }
+//    }
 
     Box(
         modifier = Modifier
@@ -116,27 +121,25 @@ fun ChatContent(
             ) {
 
                 CustomMessageList(
-                    messages = messages,
-                    isBotTyping = isBotTyping,
+                    messages = state.messages,
+                    isBotTyping = state.isBotTyping,
                     modifier = Modifier
                         .weight(1f)
                 )
 
-                CustomChipSuggestions(
-                    onSuggestionClick = { suggestion ->
-                        placeholderChange = suggestion
-                    },
-                    modifier = Modifier.padding(top = 15.dp, bottom = 8.dp),
-                )
+                if (state.showSuggestions) {
+
+                    CustomChipSuggestions(
+                        suggestions = ChatPrompts.suggestions,
+                        onSuggestionClick = viewModel::onSuggestionsClick,
+                        modifier = Modifier.padding(top = 15.dp, bottom = 8.dp),
+                    )
+                }
 
                 ChatInputBar(
-                    value = inputBarValue,
-                    onValueChange = { inputBarValue = it},
-                    onSend = {
-                        sendMessage(inputBarValue)
-                        inputBarValue = ""
-                    },
-                    placeholder = placeholderChange
+                    value = state.input,
+                    onValueChange = viewModel::onInputChange,
+                    onSend = viewModel::onSendClick
                 )
             }
         }

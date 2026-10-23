@@ -6,28 +6,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-
-private val Suggestions = listOf(
-    "Szybki obiad",
-    "Coś na słodko",
-    "Potrawa dnia"
-)
+import org.example.smartmeal.model.chat.ChatSuggestion
 
 @Composable
 fun CustomChipSuggestions(
     onSuggestionClick: (String) -> Unit,
     modifier: Modifier = Modifier,
-    suggestions: List<String> = Suggestions
+    suggestions: List<ChatSuggestion>
 ) {
     Row(
         modifier = modifier
             .padding(horizontal = 15.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        suggestions.forEach { suggestions ->
+        suggestions.forEach { item ->
             CustomChipButton(
-                text = suggestions,
-                onClick = { onSuggestionClick(suggestions)},
+                text = item.label,
+                onClick = { onSuggestionClick(item.prompt)},
                 modifier = Modifier
                     .weight(1f)
             )

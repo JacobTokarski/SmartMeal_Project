@@ -7,6 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.google.firebase.Firebase
+import com.google.firebase.appcheck.appCheck
+import com.google.firebase.appcheck.debug.DebugAppCheckProviderFactory
 import org.example.smartmeal.di.initKoin
 import org.koin.android.ext.koin.androidContext
 
@@ -18,6 +21,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         super.onCreate(savedInstanceState)
+
+        Firebase.appCheck.installAppCheckProviderFactory(
+            DebugAppCheckProviderFactory.getInstance()
+        )
 
         initKoin {
             androidContext(this@MainActivity)

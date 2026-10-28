@@ -12,13 +12,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.datetime.LocalDate
-import org.example.smartmeal.data.repository.home.CustomRecipe
-import org.example.smartmeal.data.repository.DietPlanRepository
+import org.example.smartmeal.data.repository.cutlery.DietPlanRepository
 import org.example.smartmeal.data.repository.favorite.FavoriteRepository
 import org.example.smartmeal.data.repository.home.CatalogRepository
 import org.example.smartmeal.data.repository.home.CatalogState
 import org.example.smartmeal.data.repository.home.RecipeRepository
-import org.example.smartmeal.model.recipe.Recipe
 import org.example.smartmeal.model.selection.RecipeReference
 import org.example.smartmeal.model.selection.SelectableRecipe
 import org.example.smartmeal.model.selection.toSelectable

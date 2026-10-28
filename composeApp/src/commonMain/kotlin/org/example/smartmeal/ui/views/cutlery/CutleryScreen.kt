@@ -47,7 +47,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
-import org.example.smartmeal.data.repository.DietPlanRepository
+import org.example.smartmeal.data.repository.cutlery.DietPlanRepository
 import org.example.smartmeal.data.repository.home.RecipeRepository
 import org.example.smartmeal.model.selection.RecipeSource
 import org.example.smartmeal.model.selection.SelectableRecipe

@@ -1,4 +1,4 @@
-package org.example.smartmeal.data.repository
+package org.example.smartmeal.data.repository.authentication
 
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.FirebaseUser

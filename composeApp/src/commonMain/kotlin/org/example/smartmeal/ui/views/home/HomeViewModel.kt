@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import org.example.smartmeal.data.repository.AuthenticationRepository
+import org.example.smartmeal.data.repository.authentication.AuthenticationRepository
 import org.example.smartmeal.data.repository.favorite.FavoriteRepository
 import org.example.smartmeal.data.repository.home.CatalogRepository
 import org.example.smartmeal.data.repository.home.CatalogState

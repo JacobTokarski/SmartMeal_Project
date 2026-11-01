@@ -17,6 +17,7 @@ data class BmiFormUIState (
     val height: String = "",
     val weight: String = "",
     val isSaved: Boolean = false,
+    val isEditMode: Boolean = false,
     val heightError: HealthFormError = HealthFormError.None,
     val weightError: HealthFormError = HealthFormError.None,
 )
@@ -26,12 +27,30 @@ class BmiFormViewModel: ViewModel() {
 
     val uiState: StateFlow<BmiFormUIState> = _uiState.asStateFlow()
 
+        init {
+        val currentEntry = BmiRepository.current.value
+        if (currentEntry != null) {
+            _uiState.update {
+                it.copy(
+                    height = currentEntry.heightCm.toString(),
+                    weight = currentEntry.weightKg.toString(),
+                    isEditMode = true
+                )
+            }
+        }
+    }
+
     fun onHeightChange(newValue: String) {
         _uiState.value = _uiState.value.copy(height = newValue, heightError = HealthFormError.None)
     }
 
     fun onWeightChange(newValue: String) {
         _uiState.value = _uiState.value.copy(weight = newValue, weightError = HealthFormError.None)
+    }
+
+    fun onDeleteClick() {
+        BmiRepository.clearCurrent()
+        _uiState.update { it.copy(isSaved = true) }
     }
 
     fun onAcceptClick() {

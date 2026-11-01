@@ -65,6 +65,7 @@ kotlin {
             implementation(project.dependencies.platform(libs.firebase.bom))
             implementation(libs.firebase.ai)
             implementation(libs.firebase.appcheck.debug)
+            implementation(libs.gitlive.firebase.firestore)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

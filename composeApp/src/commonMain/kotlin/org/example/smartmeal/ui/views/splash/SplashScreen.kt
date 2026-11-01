@@ -1,7 +1,6 @@
 package org.example.smartmeal.ui.views.splash
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,7 +20,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.coroutines.delay
-import org.example.smartmeal.data.repository.AuthenticationRepository
+import org.example.smartmeal.data.repository.authentication.AuthenticationRepository
 import org.example.smartmeal.ui.views.login.LoginScreen
 import org.example.smartmeal.ui.views.main.MainScreen
 import org.jetbrains.compose.resources.painterResource

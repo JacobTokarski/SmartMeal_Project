@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import org.example.smartmeal.data.repository.DietPlanRepository
+import org.example.smartmeal.data.repository.cutlery.DietPlanRepository
 import org.example.smartmeal.data.repository.home.CustomRecipe
 import org.example.smartmeal.data.repository.home.RecipeRepository
 import org.example.smartmeal.model.selection.RecipeReference

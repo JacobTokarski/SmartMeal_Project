@@ -68,6 +68,7 @@ gitlive-firebase-auth = { module = "dev.gitlive:firebase-auth", version.ref = "f
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-ai = { group = "com.google.firebase", name = "firebase-ai" }
 firebase-appcheck-debug = { group = "com.google.firebase", name = "firebase-appcheck-debug" }
+gitlive-firebase-firestore = { module = "dev.gitlive:firebase-firestore", version.ref = "firebaseGitlive" }
 
 [plugins]
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }

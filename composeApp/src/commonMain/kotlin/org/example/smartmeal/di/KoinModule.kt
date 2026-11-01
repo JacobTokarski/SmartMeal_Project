@@ -5,11 +5,14 @@ import io.github.aakira.napier.Napier
 import kotlinx.datetime.LocalDate
 import org.example.smartmeal.data.remote.AiRepository
 import org.example.smartmeal.data.remote.MealDbApiService
+import org.example.smartmeal.data.remote.cloud.SessionDataSync
 import org.example.smartmeal.data.remote.createAiRepository
 import org.example.smartmeal.data.remote.createHttpClient
-import org.example.smartmeal.data.repository.AuthenticationRepository
+import org.example.smartmeal.data.repository.authentication.AuthenticationRepository
+import org.example.smartmeal.data.repository.cutlery.DietPlanRepository
 import org.example.smartmeal.data.repository.favorite.FavoriteRepository
 import org.example.smartmeal.data.repository.home.CatalogRepository
+import org.example.smartmeal.data.repository.home.RecipeRepository
 import org.example.smartmeal.ui.views.ai.ChatViewModel
 import org.example.smartmeal.ui.views.bmi_form.BmiFormViewModel
 import org.example.smartmeal.ui.views.cutlery.CutleryViewModel
@@ -34,6 +37,9 @@ val appModule = module {
     single { CatalogRepository(apiService = get()) }
     single<AiRepository> { createAiRepository() }
     single { FavoriteRepository() }
+    single(createdAtStart = true) {
+        SessionDataSync(authRepository = get(),  favoriteRepository = get()).also { it.start() }
+    }
     factory { LoginViewModel(authRepository = get()) }
     factory { RegisterViewModel(authRepository = get()) }
     factory { OwnViewModel() }

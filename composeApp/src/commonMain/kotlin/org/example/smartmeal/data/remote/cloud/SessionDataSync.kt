@@ -1,6 +1,7 @@
 package org.example.smartmeal.data.remote.cloud
 
 import io.github.aakira.napier.Napier
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -11,6 +12,8 @@ import kotlinx.coroutines.launch
 import org.example.smartmeal.data.repository.authentication.AuthenticationRepository
 import org.example.smartmeal.data.repository.cutlery.DietPlanRepository
 import org.example.smartmeal.data.repository.favorite.FavoriteRepository
+import org.example.smartmeal.data.repository.health.BmiRepository
+import org.example.smartmeal.data.repository.health.TdeeRepository
 import org.example.smartmeal.data.repository.home.RecipeRepository
 
 class SessionDataSync(
@@ -35,13 +38,22 @@ class SessionDataSync(
         RecipeRepository.clear()
         favoriteRepository.clear()
         DietPlanRepository.clear()
+        BmiRepository.clear()
+        TdeeRepository.clear()
     }
 
     private suspend fun loadAll() {
+        safeLoad("przepisy") { RecipeRepository.loadFromCloud() }
+        safeLoad("ulubione") { favoriteRepository.loadFromCloud() }
+        safeLoad("jadłospis") { DietPlanRepository.loadFromCloud() }
+        safeLoad("BMI") { BmiRepository.loadFromCloud() }
+        safeLoad("TDEE") { TdeeRepository.loadFromCloud() }
+    }
+    private suspend fun safeLoad(name: String, block: suspend () -> Unit) {
         try {
-            RecipeRepository.loadFromCloud()
-            favoriteRepository.loadFromCloud()
-            DietPlanRepository.loadFromCloud()
+            block()
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Napier.e("Nie udało się wczytać danych użytkownika", e)
         }

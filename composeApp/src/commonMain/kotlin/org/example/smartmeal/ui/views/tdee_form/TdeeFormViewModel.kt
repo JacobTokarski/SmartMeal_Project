@@ -23,6 +23,7 @@ data class TdeeFormUiState(
     val selectedGender: Gender? = null,
     val selectedActivity: ActivityLevel? = null,
     val isSaved: Boolean = false,
+    val isEditMode: Boolean = false,
     val ageError: HealthFormError = HealthFormError.None,
     val heightError: HealthFormError = HealthFormError.None,
     val weightError: HealthFormError = HealthFormError.None,
@@ -37,10 +38,25 @@ class TdeeFormViewModel: ViewModel() {
 
     val uiState: StateFlow<TdeeFormUiState> = _uiState.asStateFlow()
 
+    init {
+        val currentEntry = TdeeRepository.current.value
+        if (currentEntry != null) {
+            _uiState.update {
+                it.copy(
+                    age = currentEntry.age.toString(),
+                    height = currentEntry.heightCm.toString(),
+                    weight = currentEntry.weightKg.toString(),
+                    selectedGender = currentEntry.gender,
+                    selectedActivity = currentEntry.activity,
+                    isEditMode = true
+                )
+            }
+        }
+    }
+
     fun onAgeChange(newValue: String) {
         _uiState.value = _uiState.value.copy(age = newValue, ageError = HealthFormError.None)
     }
-
     fun onHeightChange(newValue: String) {
         _uiState.value = _uiState.value.copy(height = newValue, heightError = HealthFormError.None)
     }
@@ -53,7 +69,12 @@ class TdeeFormViewModel: ViewModel() {
     fun onActivityLevel(level: ActivityLevel) {
         _uiState.value = _uiState.value.copy(selectedActivity = level, activityError = HealthFormError.None)
     }
-    
+
+    fun onDeleteClick() {
+        TdeeRepository.clearCurrent()
+        _uiState.update { it.copy(isSaved = true) }
+    }
+
     fun onAcceptClick() {
 
         val state = uiState.value

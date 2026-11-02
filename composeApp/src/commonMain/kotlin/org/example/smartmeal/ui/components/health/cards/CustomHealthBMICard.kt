@@ -25,8 +25,6 @@ import org.example.smartmeal.model.health.BmiCategory
 import org.example.smartmeal.model.health.formatOneDecimal
 import org.example.smartmeal.model.health.formatPolishDate
 
-// Komponent ten będzie reprezentował wizualną reprezentację wskaźnika BMI na ekranie "Główna"
-
 @Composable
 fun CustomHealthBMICard(
     onClick: () -> Unit,
@@ -82,7 +80,7 @@ fun CustomHealthBMICard(
 
             Text(
                 text = "Wskaźnik masy ciała (BMI)",
-                fontSize = 15.sp, //
+                fontSize = 15.sp,
                 fontWeight = FontWeight.Normal,
                 color = Color.Black
             )
@@ -100,7 +98,7 @@ fun CustomHealthBMICard(
                 text = "Ostatni pomiar: ${formatPolishDate(date)}",
                 fontSize = 11.sp,
                 fontWeight = FontWeight.Normal,
-                color = Color.LightGray
+                color = Color.Gray
             )
         }
     }

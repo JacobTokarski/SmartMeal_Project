@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,8 +21,6 @@ import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import io.github.alexzhirkevich.compottie.rememberLottiePainter
 import smartmeal_project.composeapp.generated.resources.Res
-
-// Widok odpowiedzialny za przechowywanie pustego stanu (bez komponentów TDEE/BMI) ekranu Health (animacja Lottie + tekst)
 
 @Composable
 fun HealthEmptyState() {
@@ -45,24 +44,30 @@ fun HealthEmptyState() {
             ),
             contentDescription = "Empty state animation",
             modifier = Modifier
-                .size(200.dp)
+                .size(220.dp)
         )
 
-        Text(
-            text = "Brak obliczonych wskaźników",
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 20.sp,
-            color = Color.Black
-        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .offset(y = (-35).dp)
+        ) {
+            Text(
+                text = "Brak obliczonych wskaźników",
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 20.sp,
+                color = Color.Black
+            )
 
-        Spacer(modifier = Modifier.height(5.dp))
+            Spacer(modifier = Modifier.height(5.dp))
 
-        Text(
-            text = "Oblicz swoje wskaźniki zdrowotne wybierając je z menu powyżej",
-            fontWeight = FontWeight.Normal,
-            fontSize = 15.sp,
-            textAlign = TextAlign.Center,
-            color = Color.Black
-        )
+            Text(
+                text = "Oblicz swoje wskaźniki zdrowotne wybierając je z menu powyżej",
+                fontWeight = FontWeight.Normal,
+                fontSize = 15.sp,
+                textAlign = TextAlign.Center,
+                color = Color.Black
+            )
+        }
     }
 }

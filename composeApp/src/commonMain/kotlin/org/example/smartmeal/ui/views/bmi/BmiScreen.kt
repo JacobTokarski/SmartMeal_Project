@@ -14,7 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
@@ -57,7 +60,12 @@ fun BmiContent(
         )
 
         Text(
-            text = "BMI (Body Mass Index) - to prosty wskaźnik masy ciała, który pozwala ocenić czy nasza waga jest odpowiednia do wzrostu.",
+            text = buildAnnotatedString {
+                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                    append("BMI (Body Mass Index) ")
+                }
+                append(" to prosty wskaźnik masy ciała, który pozwala ocenić czy nasza waga jest odpowiednia do wzrostu.")
+            },
             fontSize = 16.sp,
             fontWeight = FontWeight.Normal,
             color = Color.Black,

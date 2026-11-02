@@ -24,16 +24,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.compose.AsyncImage
 import org.example.smartmeal.model.home.RecipeCardAction
 import org.example.smartmeal.ui.theme.Colors
 import org.jetbrains.compose.resources.painterResource
 import smartmeal_project.composeapp.generated.resources.Res
+import smartmeal_project.composeapp.generated.resources.ic_favorite_filled
 import smartmeal_project.composeapp.generated.resources.ic_checked
 import smartmeal_project.composeapp.generated.resources.ic_clock
 import smartmeal_project.composeapp.generated.resources.ic_delete
@@ -84,9 +83,7 @@ fun CustomRecipeCard(
                     modifier = Modifier
                         .fillMaxSize(),
                 )
-
             } else {
-
                 Icon(
                     painter = painterResource(Res.drawable.pic_camera),
                     contentDescription = null,
@@ -98,7 +95,6 @@ fun CustomRecipeCard(
             }
 
             if (action is RecipeCardAction.Selection && action.isSelected) {
-
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -119,7 +115,7 @@ fun CustomRecipeCard(
                     text = type,
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Normal,
-                    color = Color.Black, //
+                    color = Color.Black,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -156,7 +152,7 @@ fun CustomRecipeCard(
                     is RecipeCardAction.EditDelete -> {
 
                         val iconBackground =
-                            if (hasImage) Color.White.copy(alpha = 0.5f) else Color.Transparent
+                            if (hasImage) Color.White.copy(alpha = 0.7f) else Color.Transparent
 
                         Box(
                             modifier = Modifier
@@ -168,7 +164,7 @@ fun CustomRecipeCard(
                         ) {
                             Icon(
                                 painter = painterResource(Res.drawable.ic_edit),
-                                contentDescription = "Ikona edycji",
+                                contentDescription = "Edit icon",
                                 modifier = Modifier
                                     .size(20.dp)
                             )
@@ -193,7 +189,7 @@ fun CustomRecipeCard(
 
                     is RecipeCardAction.Favorite -> {
                         val iconBackground =
-                            if (hasImage) Color.White.copy(alpha = 0.5f) else Color.Transparent
+                            if (hasImage) Color(0xFF92846F).copy(alpha = 0.7f) else Color.Transparent
 
                         Box(
                             modifier = Modifier
@@ -205,12 +201,11 @@ fun CustomRecipeCard(
                         ) {
                             Icon(
                                 painter = painterResource(
-                                    if (action.isFavorite) Res.drawable.ic_edit // Ikona będzie do poprawy
-                                    else Res.drawable.ic_heart
+                                    if (action.isFavorite) Res.drawable.ic_favorite_filled else Res.drawable.ic_heart
                                 ),
                                 contentDescription = "Favorite Home Icon",
                                 modifier = Modifier.size(20.dp),
-                                tint = Colors.Icon_Color
+                                tint = if (action.isFavorite) Color.Yellow else Colors.Icon_Color
                             )
                         }
                     }

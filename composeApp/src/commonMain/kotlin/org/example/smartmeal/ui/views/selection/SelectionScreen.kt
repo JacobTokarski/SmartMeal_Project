@@ -2,11 +2,13 @@ package org.example.smartmeal.ui.views.selection
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -16,6 +18,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SecondaryScrollableTabRow
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
@@ -69,33 +72,45 @@ fun SelectionContent(
     onBackNavigate: () -> Unit
 ) {
     var selectedTab by remember { mutableStateOf(RecipeSubTabSelection.Own) }
-
     val state by viewModel.uiState.collectAsState()
 
     Scaffold(
+        containerColor = Color.White,
         bottomBar = {
-            Button(
-                onClick = {
-                    viewModel.confirmSelection()
-                    onBackNavigate()
-                }, //
+            Surface(
+                color = Color.White,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 20.dp)
-                    .height(50.dp)
-                    .background(Color.White),
-                enabled = state.selected != null,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Colors.Primary,
-                ),
-                shape = RoundedCornerShape(20.dp)
             ) {
-                Text(
-                    text = "Zatwierdź wybór",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
+                Box(
+                 modifier = Modifier
+                     .fillMaxWidth()
+                     .navigationBarsPadding()
+                     .padding(horizontal = 25.dp)
+                     .padding(top = 10.dp, bottom = 25.dp)
+                ) {
+                    Button(
+                        onClick = {
+                            viewModel.confirmSelection()
+                            onBackNavigate()
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp),
+                        enabled = state.selected != null,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Colors.Primary,
+                        ),
+                        shape = RoundedCornerShape(20.dp)
+                    ) {
+                        Text(
+                            text = "Zatwierdź wybór",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                    }
+                }
             }
         }
     ) { paddingValues ->

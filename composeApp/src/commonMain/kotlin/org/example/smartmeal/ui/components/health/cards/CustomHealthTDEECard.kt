@@ -1,5 +1,6 @@
 package org.example.smartmeal.ui.components.health.cards
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,6 +13,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -29,6 +31,8 @@ fun CustomHealthTDEECard(
 ) {
 
     val tdeeRounded = round(tdee).toInt()
+    val lossRange = "${tdeeRounded - 500} - ${tdeeRounded - 300} kcal"
+    val maintenanceRange = "${tdeeRounded - 100} - ${tdeeRounded + 100} kcal"
 
     OutlinedCard(
         onClick = onClick,
@@ -56,14 +60,16 @@ fun CustomHealthTDEECard(
                 text = "Dzienne zapotrzebowanie kaloryczne (TDEE)",
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Normal,
-                color = Color.Black
+                color = Color(0xFF616161)
             )
 
             Spacer(modifier = Modifier.height(10.dp))
 
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = "Utrata wagi:",
@@ -75,7 +81,7 @@ fun CustomHealthTDEECard(
                 Spacer(modifier = Modifier.width(3.dp))
 
                 Text(
-                    text = "${tdeeRounded - 250} - ${tdeeRounded - 50} kcal",
+                    text = lossRange,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = Color.Black
@@ -86,7 +92,9 @@ fun CustomHealthTDEECard(
 
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = "Utrzymanie wagi:",
@@ -98,7 +106,7 @@ fun CustomHealthTDEECard(
                 Spacer(modifier = Modifier.width(3.dp))
 
                 Text(
-                    text = "${tdeeRounded - 250} - ${tdeeRounded - 50} kcal",
+                    text = maintenanceRange,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = Color.Black
@@ -111,7 +119,7 @@ fun CustomHealthTDEECard(
                 text = "Ostatni pomiar: ${formatPolishDate(date)}",
                 fontSize = 11.sp,
                 fontWeight = FontWeight.Normal,
-                color = Color.LightGray
+                color = Color.Gray
             )
         }
     }

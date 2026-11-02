@@ -87,8 +87,6 @@ fun LoginContent(
                 onLoginClick = {viewModel.onLoginClick()}
             )
 
-            Spacer(modifier = Modifier.height(30.dp))
-
             LoginFooter(
                 onRegisterClick = onRegisterClick
             )

@@ -72,12 +72,4 @@ fun LoginForm(
     )
 
     Spacer(modifier = Modifier.height(45.dp))
-
-    Image(
-        painter = painterResource(Res.drawable.pic_socials),
-        contentDescription = null,
-        modifier = Modifier
-            .height(92.dp)
-            .width(272.dp)
-    )
 }

@@ -69,9 +69,9 @@ fun RegisterHeader(
                 contentScale = ContentScale.None,
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .offset(x = 55.dp, y = 20.dp)
+                    .offset(x = 55.dp, y = 25.dp)
                     .width(112.dp)
-                    .height(220.dp)
+                    .height(235.dp)
             )
         }
 

@@ -68,7 +68,7 @@ fun HomeContent(
                     text = "Jaką potrawę dzisiaj wybierasz?",
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal,
-                    color = Color.LightGray
+                    color = Color.Gray
                 )
             }
 
